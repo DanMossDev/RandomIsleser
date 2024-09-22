@@ -10,10 +10,14 @@ namespace RandomIsleser
         
         public static event Action<Vector2> MoveInput;
         public static event Action<Vector2> CameraInput;
+        public static event Action RollInput;
+
+        public static event Action<bool> TargetInput;
         
         //Input cache
         private Vector2 _moveInput;
         private Vector2 _cameraInput;
+        private bool _targetHeld;
 
         private void OnEnable()
         {
@@ -40,6 +44,11 @@ namespace RandomIsleser
             _inputActions["Look"].started += OnLook;
             _inputActions["Look"].performed += OnLook;
             _inputActions["Look"].canceled += OnLook;
+            
+            _inputActions["Roll"].performed += OnRoll;
+
+            _inputActions["Target"].started += OnTargetStart;
+            _inputActions["Target"].canceled += OnTargetEnd;
         }
 
         private void Unsubscribe()
@@ -51,6 +60,11 @@ namespace RandomIsleser
             _inputActions["Look"].started -= OnLook;
             _inputActions["Look"].performed -= OnLook;
             _inputActions["Look"].canceled -= OnLook;
+            
+            _inputActions["Roll"].performed -= OnRoll;
+            
+            _inputActions["Target"].started -= OnTargetStart;
+            _inputActions["Target"].canceled -= OnTargetEnd;
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -63,6 +77,21 @@ namespace RandomIsleser
         {
             _cameraInput = context.ReadValue<Vector2>();
             CameraInput?.Invoke(_cameraInput);
+        }
+
+        private void OnRoll(InputAction.CallbackContext context)
+        {
+            RollInput?.Invoke();
+        }
+
+        private void OnTargetStart(InputAction.CallbackContext context)
+        {
+            TargetInput?.Invoke(true);
+        }
+
+        private void OnTargetEnd(InputAction.CallbackContext context)
+        {
+            TargetInput?.Invoke(false);
         }
     }
 }

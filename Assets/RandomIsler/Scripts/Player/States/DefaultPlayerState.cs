@@ -6,5 +6,10 @@ namespace RandomIsleser
         {
             context.Move();
         }
+
+        public override void Roll(PlayerController context)
+        {
+            context.SetState(context.RollState);
+        }
     }
 }
