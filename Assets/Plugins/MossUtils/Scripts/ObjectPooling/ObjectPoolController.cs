@@ -1,0 +1,47 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MossUtils
+{
+    public class ObjectPoolController : MonoSingleton<ObjectPoolController>
+    {
+        private ObjectPoolModel _model;
+        private Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
+
+        private void Awake()
+        {
+            _model = Resources.Load<ObjectPoolModel>("Models/ObjectPoolModel");
+            Debug.Assert(_model != null, "Object pool model is null");
+        }
+
+        public GameObject Get(string key)
+        {
+            if (!_pools.ContainsKey(key))
+            {
+                var parent = new GameObject($"{key} pool");
+                parent.transform.parent = transform;
+                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            }
+            return _pools[key].Get();
+        }
+
+        public GameObject Get(string key, Transform owner)
+        {
+            if (!_pools.ContainsKey(key))
+            {
+                var parent = new GameObject($"{key} pool");
+                parent.transform.parent = transform;
+                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            }
+            var obj = _pools[key].Get();
+            obj.transform.position = owner.position;
+
+            return obj;
+        }
+
+        public void Return(GameObject returned, string key)
+        {
+            _pools[key].Return(returned);
+        }
+    }
+}
