@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 173455838}
   - component: {fileID: 173455837}
   m_Layer: 0
-  m_Name: SpawnPoint (3)
+  m_Name: SpawnPointHGap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b921561c45aef1d47a1edbdb2d8e331d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lockedBehind: 0
+  _lockedBehind: 4
   ItemToSpawn: {fileID: 0}
 --- !u!4 &173455838
 Transform:
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 269084569}
   - component: {fileID: 269084568}
   m_Layer: 0
-  m_Name: SpawnPoint (6)
+  m_Name: SpawnPointSurf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b921561c45aef1d47a1edbdb2d8e331d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lockedBehind: 14
+  _lockedBehind: 32
   ItemToSpawn: {fileID: 0}
 --- !u!4 &269084569
 Transform:
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 489902497}
   - component: {fileID: 489902496}
   m_Layer: 0
-  m_Name: SpawnPoint (4)
+  m_Name: SpawnPointVGap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b921561c45aef1d47a1edbdb2d8e331d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lockedBehind: 22
+  _lockedBehind: 8
   ItemToSpawn: {fileID: 0}
 --- !u!4 &489902497
 Transform:
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 716334339}
   - component: {fileID: 716334338}
   m_Layer: 0
-  m_Name: SpawnPoint (5)
+  m_Name: SpawnPointIce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b921561c45aef1d47a1edbdb2d8e331d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lockedBehind: 26
+  _lockedBehind: 16
   ItemToSpawn: {fileID: 0}
 --- !u!4 &716334339
 Transform:
@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 1438433888}
   - component: {fileID: 1438433887}
   m_Layer: 0
-  m_Name: SpawnPoint (2)
+  m_Name: SpawnPointHVGap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 1797727282}
   - component: {fileID: 1797727281}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: SpawnPointFree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 1813987207}
   - component: {fileID: 1813987206}
   m_Layer: 0
-  m_Name: SpawnPoint (1)
+  m_Name: SpawnPointMetal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -738,6 +738,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3083035674000308966}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1929904215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929904217}
+  - component: {fileID: 1929904216}
+  m_Layer: 0
+  m_Name: SpawnPointPhoto
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1929904216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929904215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b921561c45aef1d47a1edbdb2d8e331d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lockedBehind: 64
+  ItemToSpawn: {fileID: 0}
+--- !u!4 &1929904217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929904215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2089964165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,8 +1308,9 @@ SceneRoots:
   - {fileID: 637746890}
   - {fileID: 1797727282}
   - {fileID: 1813987207}
-  - {fileID: 1438433888}
   - {fileID: 173455838}
   - {fileID: 489902497}
   - {fileID: 716334339}
   - {fileID: 269084569}
+  - {fileID: 1929904217}
+  - {fileID: 1438433888}

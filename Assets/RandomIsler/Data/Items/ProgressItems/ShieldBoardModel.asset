@@ -22,7 +22,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _itemPrefab: {fileID: 0}
-  _canNavigate: 40
+  _canNavigate: 36
   references:
     version: 2
     RefIds: []
