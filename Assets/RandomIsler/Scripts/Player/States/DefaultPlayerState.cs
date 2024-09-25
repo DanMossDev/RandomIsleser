@@ -11,5 +11,10 @@ namespace RandomIsleser
         {
             context.SetState(context.RollState);
         }
+
+        public override void HammerAttack(PlayerController context)
+        {
+            context.Attack();
+        }
     }
 }

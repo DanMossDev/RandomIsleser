@@ -11,6 +11,7 @@ namespace RandomIsleser
         public static event Action<Vector2> MoveInput;
         public static event Action<Vector2> CameraInput;
         public static event Action RollInput;
+        public static event Action HammerAttackInput;
 
         public static event Action<bool> TargetInput;
         
@@ -49,6 +50,8 @@ namespace RandomIsleser
 
             _inputActions["Target"].started += OnTargetStart;
             _inputActions["Target"].canceled += OnTargetEnd;
+
+            _inputActions["HammerAttack"].performed += OnHammerAttack;
         }
 
         private void Unsubscribe()
@@ -65,6 +68,8 @@ namespace RandomIsleser
             
             _inputActions["Target"].started -= OnTargetStart;
             _inputActions["Target"].canceled -= OnTargetEnd;
+            
+            _inputActions["HammerAttack"].performed -= OnHammerAttack;
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -92,6 +97,11 @@ namespace RandomIsleser
         private void OnTargetEnd(InputAction.CallbackContext context)
         {
             TargetInput?.Invoke(false);
+        }
+
+        private void OnHammerAttack(InputAction.CallbackContext context)
+        {
+            HammerAttackInput?.Invoke();
         }
     }
 }

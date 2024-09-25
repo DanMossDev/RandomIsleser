@@ -40,6 +40,7 @@ namespace RandomIsleser
             InputManager.MoveInput += SetMoveInput;
             InputManager.RollInput += SetRollInput;
             InputManager.TargetInput += SetTargetInput;
+            InputManager.HammerAttackInput += HammerAttackPressed;
             
             CurrentState = DefaultState;
         }
@@ -49,6 +50,7 @@ namespace RandomIsleser
             InputManager.MoveInput -= SetMoveInput;
             InputManager.RollInput -= SetRollInput;
             InputManager.TargetInput -= SetTargetInput;
+            InputManager.HammerAttackInput -= HammerAttackPressed;
         }
 
         public void SetState(BasePlayerState newState)
@@ -92,6 +94,11 @@ namespace RandomIsleser
             _targetHeld = isHeld;
         }
 
+        private void HammerAttackPressed()
+        {
+            CurrentState.HammerAttack(this);
+        }
+
         public void Move()
         {
             if (!_characterController.isGrounded)
@@ -121,6 +128,12 @@ namespace RandomIsleser
                 rollDirection.y = -1;
             
             _characterController.Move(_model.RollSpeed * Time.deltaTime * rollDirection);
+        }
+
+        public void Attack()
+        {
+            _animator.ResetTrigger(Animations.HammerAttackHash);
+            _animator.SetTrigger(Animations.HammerAttackHash);
         }
     }
 }
