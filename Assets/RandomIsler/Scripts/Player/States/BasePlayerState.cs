@@ -9,7 +9,5 @@ namespace RandomIsleser
         public virtual void OnLeaveState(PlayerController context, BasePlayerState nextState) { }
         
         public virtual void Roll(PlayerController context) { }
-        
-        public virtual void HammerAttack(PlayerController context) { }
     }
 }

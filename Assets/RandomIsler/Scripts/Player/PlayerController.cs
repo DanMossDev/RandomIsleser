@@ -1,6 +1,5 @@
-using System;
+using System.Collections.Generic;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -21,10 +20,16 @@ namespace RandomIsleser
         
         public Vector3 LastMoveDirection { get; private set; }
         
+        //Properties
+        public bool CanAttack => CurrentMovementState == _defaultMovementState;
+        
         //States
-        public BasePlayerState CurrentState { get; private set; }
-        public readonly DefaultPlayerState DefaultState = new DefaultPlayerState();
-        public readonly RollPlayerState RollState = new RollPlayerState();
+        public BaseMovementState CurrentMovementState { get; private set; }
+        private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
+        private readonly RollMovementState _rollMovementState = new RollMovementState();
+        
+        public BaseCombatState CurrentCombatState { get; private set; }
+        private readonly DefaultCombatState _defaultCombatState = new DefaultCombatState();
         
         //Cameras
         [SerializeField] private CinemachineFreeLook _mainCamera;
@@ -37,7 +42,68 @@ namespace RandomIsleser
         public Animator Animator => _animator;
         
         public static PlayerController Instance { get; private set; }
+        
+        #region Setters
+        public void SetCanMove(bool value) => _canMove = value;
+        public void SetCanRotate(bool value) => _canRotate = value;
+        public void SetAttacking(bool value) => _attacking = value;
+        
+        public void SetState(PlayerStates newState)
+        {
+            switch (newState.GetStateType())
+            {
+                case PlayerStateTypes.Movement:
+                    SetState(GetMovementState(newState));
+                    return;
+                case PlayerStateTypes.Combat:
+                    SetState(GetCombatState(newState));
+                    return;
+            }
+        }
 
+        private void SetState(BaseMovementState newState)
+        {
+            CurrentMovementState.OnLeaveState(this, newState);
+            newState.OnEnterState(this, CurrentMovementState);
+            CurrentMovementState = newState;
+        }
+        
+        private void SetState(BaseCombatState newState)
+        {
+            CurrentCombatState.OnLeaveState(this, newState);
+            newState.OnEnterState(this, CurrentCombatState);
+            CurrentCombatState = newState;
+        }
+        #endregion
+        
+        #region Getters
+        private BaseMovementState GetMovementState(PlayerStates state)
+        {
+            switch (state)
+            {
+                case PlayerStates.DefaultMove:
+                    return _defaultMovementState;
+                case PlayerStates.RollMove:
+                    return _rollMovementState;
+            }
+
+            return null;
+        }
+        
+        private BaseCombatState GetCombatState(PlayerStates state)
+        {
+            switch (state)
+            {
+                case PlayerStates.DefaultCombat:
+                    return _defaultCombatState;
+            }
+
+            return null;
+        }
+        
+        #endregion
+
+        #region Initialisation
         private void OnEnable()
         {
             if (Instance == null)
@@ -62,7 +128,8 @@ namespace RandomIsleser
             InputManager.TargetInput += SetTargetInput;
             InputManager.HammerAttackInput += HammerAttackPressed;
             
-            CurrentState = DefaultState;
+            CurrentMovementState = _defaultMovementState;
+            CurrentCombatState = _defaultCombatState;
         }
 
         private void OnDestroy()
@@ -72,55 +139,19 @@ namespace RandomIsleser
             InputManager.TargetInput -= SetTargetInput;
             InputManager.HammerAttackInput -= HammerAttackPressed;
         }
-
-        public void SetState(BasePlayerState newState)
-        {
-            CurrentState.OnLeaveState(this, newState);
-            newState.OnEnterState(this, CurrentState);
-            CurrentState = newState;
-        }
         
-        public void SetCanMove(bool value) => _canMove = value;
-        public void SetCanRotate(bool value) => _canRotate = value;
-        public void SetAttacking(bool value) => _attacking = value;
+        #endregion
 
         private void FixedUpdate()
         {
-            CurrentState.OnUpdateState(this);
+            CurrentMovementState.OnUpdateState(this);
 
             _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld;
         }
-
-        private void SetMoveInput(Vector2 movement)
-        {
-            _movementInput.x = movement.x;
-            _movementInput.z = movement.y;
-
-            _movement.x = _movementInput.x;
-            _movement.z = _movementInput.z;
-            
-            if (_movementInput != Vector3.zero)
-                LastMoveDirection = RotateVectorToCamera(_movementInput);
-        }
-
+        
         private Vector3 RotateVectorToCamera(Vector3 input)
         {
             return Quaternion.AngleAxis(_cameraTransform.rotation.eulerAngles.y, Vector3.up) * input;
-        }
-
-        private void SetRollInput()
-        {
-            CurrentState.Roll(this);
-        }
-
-        private void SetTargetInput(bool isHeld)
-        {
-            _targetHeld = isHeld;
-        }
-
-        private void HammerAttackPressed()
-        {
-            CurrentState.HammerAttack(this);
         }
 
         public void Move()
@@ -140,7 +171,7 @@ namespace RandomIsleser
             _characterController.Move(_model.MovementSpeed * Time.deltaTime * _movement);
         }
 
-        public void RotateCamera()
+        public void RotatePlayer()
         {
             if (!_targetHeld && _canRotate)
                 RotateTowards(RotateVectorToCamera(_movementInput));
@@ -183,5 +214,36 @@ namespace RandomIsleser
             _animator.ResetTrigger(Animations.HammerAttackHash);
             _animator.SetTrigger(Animations.HammerAttackHash);
         }
+        
+        
+        #region Input
+        private void SetMoveInput(Vector2 movement)
+        {
+            _movementInput.x = movement.x;
+            _movementInput.z = movement.y;
+
+            _movement.x = _movementInput.x;
+            _movement.z = _movementInput.z;
+            
+            if (_movementInput != Vector3.zero)
+                LastMoveDirection = RotateVectorToCamera(_movementInput);
+        }
+
+        private void SetRollInput()
+        {
+            CurrentMovementState.Roll(this);
+        }
+
+        private void SetTargetInput(bool isHeld)
+        {
+            _targetHeld = isHeld;
+        }
+
+        private void HammerAttackPressed()
+        {
+            CurrentCombatState.HammerAttack(this);
+        }
+        
+        #endregion
     }
 }

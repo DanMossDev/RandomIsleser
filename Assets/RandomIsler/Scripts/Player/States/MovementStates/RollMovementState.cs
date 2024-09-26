@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class RollPlayerState : BasePlayerState
+    public class RollMovementState : BaseMovementState
     {
         private Vector3 _rollDirection;
         private float _timeStarted;
@@ -11,7 +11,6 @@ namespace RandomIsleser
         {
             _timeStarted = Time.time;
             _rollDirection = context.LastMoveDirection.normalized;
-            // context.SnapToInputDirection(_rollDirection);
             context.Animator.SetTrigger(Animations.RollHash);
         }
         
@@ -20,7 +19,7 @@ namespace RandomIsleser
             context.Roll(_rollDirection);
             
             if (Time.time - _timeStarted > context.PlayerModel.RollDuration)
-                context.SetState(context.DefaultState);
+                context.SetState(PlayerStates.DefaultMove);
         }
 
         public override void OnLeaveState(PlayerController context, BasePlayerState nextState)
