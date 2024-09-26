@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class ResetHammerTrigger : StateMachineBehaviour
+    public class ReenableMovementBehaviour : StateMachineBehaviour
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.ResetTrigger(Animations.HammerAttackHash);
+            PlayerController.Instance.SetCanMove(true);
         }
     }
 }

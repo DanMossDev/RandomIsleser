@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,10 @@ namespace RandomIsleser
         private Vector3 _movementInput;
         private Vector3 _movement;
         private bool _targetHeld;
+        private bool _attacking = false;
+
+        private bool _canMove = true;
+        private bool _canRotate = true;
         
         public Vector3 LastMoveDirection { get; private set; }
         
@@ -31,7 +36,22 @@ namespace RandomIsleser
         
         public Animator Animator => _animator;
         
-        
+        public static PlayerController Instance { get; private set; }
+
+        private void OnEnable()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(this);
+        }
+
+        private void OnDisable()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
@@ -59,6 +79,10 @@ namespace RandomIsleser
             newState.OnEnterState(this, CurrentState);
             CurrentState = newState;
         }
+        
+        public void SetCanMove(bool value) => _canMove = value;
+        public void SetCanRotate(bool value) => _canRotate = value;
+        public void SetAttacking(bool value) => _attacking = value;
 
         private void FixedUpdate()
         {
@@ -75,7 +99,7 @@ namespace RandomIsleser
             _movement.x = _movementInput.x;
             _movement.z = _movementInput.z;
             
-            if (_movementInput != default)
+            if (_movementInput != Vector3.zero)
                 LastMoveDirection = RotateVectorToCamera(_movementInput);
         }
 
@@ -105,19 +129,43 @@ namespace RandomIsleser
                 _movement.y += Physics.gravity.y * Time.deltaTime;
             else
                 _movement.y = -1;
+
+            var movement = Vector3.zero;
+            if (_canMove) 
+                movement = RotateVectorToCamera(_movementInput);
             
-            var movement = RotateVectorToCamera(_movementInput);
             _movement.x = movement.x;
             _movement.z = movement.z;
             
             _characterController.Move(_model.MovementSpeed * Time.deltaTime * _movement);
-            SnapToInputDirection(movement);
+        }
+
+        public void RotateCamera()
+        {
+            if (!_targetHeld && _canRotate)
+                RotateTowards(RotateVectorToCamera(_movementInput));
         }
 
         public void SnapToInputDirection(Vector3 direction)
         {
-            if (direction != default)
+            if (direction != Vector3.zero)
                 transform.forward = direction.normalized;
+        }
+
+        private void RotateTowards(Vector3 direction)
+        {
+            if (direction == Vector3.zero)
+                return;
+
+            float rotationMulti = 1;
+            if (_attacking)
+                rotationMulti = _model.AttackingRotationMultiplier;
+
+            transform.forward = Vector3.RotateTowards(
+                transform.forward, 
+                direction, 
+                Time.deltaTime * _model.RotationSpeed * rotationMulti, 
+                0);
         }
 
         public void Roll(Vector3 rollDirection)

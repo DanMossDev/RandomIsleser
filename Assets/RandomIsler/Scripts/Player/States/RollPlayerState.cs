@@ -11,7 +11,7 @@ namespace RandomIsleser
         {
             _timeStarted = Time.time;
             _rollDirection = context.LastMoveDirection.normalized;
-            context.SnapToInputDirection(_rollDirection);
+            // context.SnapToInputDirection(_rollDirection);
             context.Animator.SetTrigger(Animations.RollHash);
         }
         

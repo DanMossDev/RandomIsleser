@@ -5,6 +5,7 @@ namespace RandomIsleser
         public override void OnUpdateState(PlayerController context)
         {
             context.Move();
+            context.RotateCamera();
         }
 
         public override void Roll(PlayerController context)
