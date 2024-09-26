@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: PlayerModel
   m_EditorClassIdentifier: 
   _movementSpeed: 10
+  _rotationSpeed: 20
+  _attackingRotationMultiplier: 0.3
   _rollSpeed: 10
   _rollDuration: 0.5
