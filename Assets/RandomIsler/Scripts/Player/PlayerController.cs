@@ -17,6 +17,8 @@ namespace RandomIsleser
 
         private bool _canMove = true;
         private bool _canRotate = true;
+
+        private bool _isGrounded = false;
         
         public Vector3 LastMoveDirection { get; private set; }
         
@@ -145,7 +147,7 @@ namespace RandomIsleser
         private void FixedUpdate()
         {
             CurrentMovementState.OnUpdateState(this);
-
+            
             _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld;
         }
         
@@ -156,11 +158,11 @@ namespace RandomIsleser
 
         public void Move()
         {
-            if (!_characterController.isGrounded)
+            if (!_isGrounded)
                 _movement.y += Physics.gravity.y * Time.deltaTime;
             else
                 _movement.y = -1;
-
+            
             var movement = Vector3.zero;
             if (_canMove) 
                 movement = RotateVectorToCamera(_movementInput);
@@ -169,11 +171,12 @@ namespace RandomIsleser
             _movement.z = movement.z;
             
             _characterController.Move(_model.MovementSpeed * Time.deltaTime * _movement);
+            _isGrounded = _characterController.isGrounded;
         }
 
         public void RotatePlayer()
         {
-            if (!_targetHeld && _canRotate)
+            if (!_targetHeld && !_attacking && _canRotate)
                 RotateTowards(RotateVectorToCamera(_movementInput));
         }
 
@@ -201,12 +204,13 @@ namespace RandomIsleser
 
         public void Roll(Vector3 rollDirection)
         {
-            if (!_characterController.isGrounded)
+            if (!_isGrounded)
                 rollDirection.y += Physics.gravity.y * Time.deltaTime;
             else
                 rollDirection.y = -1;
             
             _characterController.Move(_model.RollSpeed * Time.deltaTime * rollDirection);
+            _isGrounded = _characterController.isGrounded;
         }
 
         public void Attack()

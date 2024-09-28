@@ -72,6 +72,6 @@ Material:
     - _USE_FRESNEL: 1
     m_Colors:
     - _Specular_Colour: {r: 1, g: 0.6496688, b: 0, a: 0}
-    - _Tint: {r: 0.83723825, g: 0.49028906, b: 0.84276724, a: 0}
+    - _Tint: {r: 0.51555026, g: 0.369571, b: 0.5188679, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -7,7 +7,5 @@ namespace RandomIsleser
         public abstract void OnUpdateState(PlayerController context);
         
         public virtual void OnLeaveState(PlayerController context, BasePlayerState nextState) { }
-        
-        public virtual void Roll(PlayerController context) { }
     }
 }

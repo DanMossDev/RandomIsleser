@@ -63,7 +63,6 @@ namespace RandomIsleser
                 {
                     if ((_accessibleObstacles & point.LockedBehind) == point.LockedBehind)
                     {
-                        Debug.Log($"{_accessibleObstacles} contains all of {point.LockedBehind}");
                         _accessibleObstacles |= ((ProgressItemModel)point.ItemToSpawn).CanNavigate;
                         newSpawnPoints.Remove(point);
                     }
