@@ -19,16 +19,19 @@ namespace RandomIsleser
         private bool _canRotate = true;
 
         private bool _isGrounded = false;
+        private float _heightRelativeToWater;
         
         public Vector3 LastMoveDirection { get; private set; }
         
         //Properties
         public bool CanAttack => CurrentMovementState == _defaultMovementState;
+        public float HeightRelativeToWater => _heightRelativeToWater;
         
         //States
         public BaseMovementState CurrentMovementState { get; private set; }
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
+        private readonly SwimMovementState _swimMovementState = new SwimMovementState();
         
         public BaseCombatState CurrentCombatState { get; private set; }
         private readonly DefaultCombatState _defaultCombatState = new DefaultCombatState();
@@ -87,6 +90,8 @@ namespace RandomIsleser
                     return _defaultMovementState;
                 case PlayerStates.RollMove:
                     return _rollMovementState;
+                case PlayerStates.SwimMove:
+                    return _swimMovementState;
             }
 
             return null;
@@ -146,16 +151,27 @@ namespace RandomIsleser
 
         private void FixedUpdate()
         {
+            if (GetHeightRelativeToWater() < 0)
+                SetState(PlayerStates.SwimMove);
             CurrentMovementState.OnUpdateState(this);
             
             _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld;
         }
         
+        //Utils
         private Vector3 RotateVectorToCamera(Vector3 input)
         {
             return Quaternion.AngleAxis(_cameraTransform.rotation.eulerAngles.y, Vector3.up) * input;
         }
 
+        private float GetHeightRelativeToWater()
+        {
+            _heightRelativeToWater = transform.position.y + 1 - OceanController.Instance.GetHeightAtPosition(transform.position);
+
+            return _heightRelativeToWater;
+        }
+
+        //MOVEMENT
         public void Move()
         {
             if (!_isGrounded)
@@ -172,6 +188,45 @@ namespace RandomIsleser
             
             _characterController.Move(_model.MovementSpeed * Time.deltaTime * _movement);
             _isGrounded = _characterController.isGrounded;
+        }
+        
+        public void Roll(Vector3 rollDirection)
+        {
+            if (!_isGrounded)
+                rollDirection.y += Physics.gravity.y * Time.deltaTime;
+            else
+                rollDirection.y = -1;
+            
+            _characterController.Move(_model.RollSpeed * Time.deltaTime * rollDirection);
+            _isGrounded = _characterController.isGrounded;
+        }
+        
+        public void Swim()
+        {
+            if (_heightRelativeToWater < 0)
+                _movement.y += _model.BuoyancyForce * Time.deltaTime * Mathf.Abs(_heightRelativeToWater);
+            else
+            {
+                if (_movement.y > 0)
+                    _movement.y = 0;
+                _movement.y += Physics.gravity.y * Time.deltaTime;
+            }
+            
+            var movement = Vector3.zero;
+            if (_canMove) 
+                movement = RotateVectorToCamera(_movementInput);
+            
+            _movement.x = movement.x;
+            _movement.z = movement.z;
+            
+            _characterController.Move(_model.SwimSpeed * Time.deltaTime * _movement);
+            _isGrounded = _characterController.isGrounded;
+            GetHeightRelativeToWater();
+
+            if (_isGrounded || _heightRelativeToWater > 1)
+            {
+                SetState(PlayerStates.DefaultMove);
+            }
         }
 
         public void RotatePlayer()
@@ -200,17 +255,6 @@ namespace RandomIsleser
                 direction, 
                 Time.deltaTime * _model.RotationSpeed * rotationMulti, 
                 0);
-        }
-
-        public void Roll(Vector3 rollDirection)
-        {
-            if (!_isGrounded)
-                rollDirection.y += Physics.gravity.y * Time.deltaTime;
-            else
-                rollDirection.y = -1;
-            
-            _characterController.Move(_model.RollSpeed * Time.deltaTime * rollDirection);
-            _isGrounded = _characterController.isGrounded;
         }
 
         public void Attack()

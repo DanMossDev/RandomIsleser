@@ -34,9 +34,12 @@ namespace RandomIsleser
         public float GetHeightAtPosition(Vector3 worldPosition)
         {
             var posSum = worldPosition.x + worldPosition.z;
+            var posDif = worldPosition.x - worldPosition.z;
             var t = Time.time * _waveSpeed;
 
-            return Mathf.Sin((posSum + t) * _waveFrequency ) * _waveAmplitude + transform.position.y;
+            var sineAmoumnt = Mathf.Sin((posSum + t) * _waveFrequency) * _waveAmplitude;
+            var cosineAmount = Mathf.Cos((posDif + t) * _waveFrequency) * _waveAmplitude; 
+            return sineAmoumnt * cosineAmount + transform.position.y;
         }
     }
 
