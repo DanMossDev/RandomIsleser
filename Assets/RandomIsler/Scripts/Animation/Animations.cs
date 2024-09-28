@@ -8,5 +8,6 @@ namespace RandomIsleser
     {
         public static int RollHash = Animator.StringToHash("OnRoll");
         public static int HammerAttackHash = Animator.StringToHash("OnHammerAttack");
+        public static int IsAimingHash = Animator.StringToHash("IsAiming");
     }
 }

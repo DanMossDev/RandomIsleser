@@ -57,7 +57,7 @@ Material:
     - _QueueOffset: 0
     - _Size: 0.1
     - _USE_RANDOM: 0
-    - _WaveSpeed: 1
+    - _WaveSpeed: 5
     - _Wave_Amplitude: 1.25
     - _Wave_Frequency: 0.1
     - _test: 0

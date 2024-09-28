@@ -1,6 +1,6 @@
 namespace RandomIsleser
 {
-    public class DefaultCombatState : BaseCombatState
+    public class IdleCombatState : BaseCombatState
     {
         public override void OnUpdateState(PlayerController context)
         { }

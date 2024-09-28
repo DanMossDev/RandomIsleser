@@ -10,7 +10,8 @@ namespace RandomIsleser
         SwimMove,
         
         //Combat
-        DefaultCombat
+        IdleCombat,
+        AimCombat
     }
 
     public enum PlayerStateTypes
@@ -28,7 +29,8 @@ namespace RandomIsleser
             {
                 case PlayerStates.None:
                     return PlayerStateTypes.None;
-                case PlayerStates.DefaultCombat:
+                case PlayerStates.IdleCombat:
+                case PlayerStates.AimCombat:
                     return PlayerStateTypes.Combat;
                 default:
                     return PlayerStateTypes.Movement;
