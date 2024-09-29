@@ -7,13 +7,13 @@ namespace RandomIsleser
 		[SerializeField] private bool _reenable = true;
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
-			PlayerController.Instance.SetAttacking(true);
+			PlayerController.Instance.SetState(PlayerStates.AttackCombat);
 		}
         
 		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			if (_reenable)
-				PlayerController.Instance.SetAttacking(false);
+				PlayerController.Instance.SetState(PlayerStates.DefaultMove);
 		}
 	}
 }

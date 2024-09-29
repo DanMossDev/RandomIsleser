@@ -5,6 +5,7 @@ namespace RandomIsleser
         public override void OnEnterState(PlayerController context, BasePlayerState previousState)
         {
             context.BeginAim();
+            context.EquipAimable(context.FishingRodController);
         }
         
         public override void OnUpdateState(PlayerController context)
@@ -16,12 +17,12 @@ namespace RandomIsleser
         public override void OnLeaveState(PlayerController context, BasePlayerState nextState)
         {
             context.EndAim();
+            context.EquipAimable(null);
         }
         
         public override void Shoot(PlayerController context)
         {
-            if (context.CanAttack)
-                context.Attack();
+            //context.CurrentAimableWeapon.Shoot();
         }
     }
 }

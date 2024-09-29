@@ -12,5 +12,14 @@ namespace RandomIsleser
         {
             context.SetState(PlayerStates.RollMove);
         }
+        
+        public override void HammerAttack(PlayerController context)
+        {
+            if (context.CanAttack)
+            {
+                context.Attack();
+                context.SetState(PlayerStates.AttackCombat);
+            }
+        }
     }
 }

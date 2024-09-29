@@ -18,4 +18,5 @@ MonoBehaviour:
   _rollSpeed: 10
   _rollDuration: 0.5
   _swimSpeed: 5
-  _buoyancyForce: 2
+  _buoyancyForce: 14
+  _aimSpeed: 90

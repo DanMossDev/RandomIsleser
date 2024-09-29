@@ -6,7 +6,7 @@ namespace RandomIsleser
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            PlayerController.Instance.SetAttacking(false);
+            PlayerController.Instance.SetState(PlayerStates.DefaultMove);
         }
     }
 }

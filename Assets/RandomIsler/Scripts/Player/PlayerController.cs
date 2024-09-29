@@ -14,9 +14,10 @@ namespace RandomIsleser
         //Variables
         private Vector3 _movementInput;
         private Vector2 _cameraInput;
+
         private Vector3 _movement;
+
         private bool _targetHeld;
-        private bool _attacking = false;
 
         private bool _canMove = true;
         private bool _canRotate = true;
@@ -27,26 +28,28 @@ namespace RandomIsleser
         public Vector3 LastMoveDirection { get; private set; }
         
         //Properties
-        public bool CanAttack => CurrentMovementState == _defaultMovementState;
+        public bool CanAttack => true;
         public float HeightRelativeToWater => _heightRelativeToWater;
         public bool TargetHeld => _targetHeld;
-        public bool CanMove => _canMove && !_attacking && CurrentCombatState is IdleCombatState or AimCombatState;
-        public bool CanRotate => !_targetHeld && _canRotate && !_attacking && CurrentCombatState is IdleCombatState;
+        public bool CanMove => _canMove;
+        public bool CanRotate => !_targetHeld && _canRotate;
         public bool CanAim => _isGrounded && CanAttack;
+        public bool IsAttacking => CurrentState is AttackCombatState;
         
         //States
-        public BaseMovementState CurrentMovementState { get; private set; }
+        public BasePlayerState CurrentState { get; private set; }
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
         
-        public BaseCombatState CurrentCombatState { get; private set; }
-        private readonly IdleCombatState _idleCombatState = new IdleCombatState();
         private readonly AimCombatState _aimCombatState = new AimCombatState();
+        private readonly AttackCombatState _attackCombatState = new AttackCombatState();
         
         //Weapons
-        //public Weapon CurrentWeapon
+        public AimableController CurrentAimableWeapon;
+        [SerializeField] private FishingRodController _fishingRodController;
         
+        public FishingRodController FishingRodController => _fishingRodController;
         
         //Cameras
         [Header("Cameras")]
@@ -64,41 +67,39 @@ namespace RandomIsleser
         
         public static PlayerController Instance { get; private set; }
         
+        #region Debug
+
+        private void OnGUI()
+        {
+            GUI.Label(new Rect(10, 10, 500, 20), $"Current State: {CurrentState}");
+            GUI.Label(new Rect(10, 50, 500, 20), $"Current Speed: {_movement.y}");
+        }
+        #endregion
+        
         #region Setters
         public void SetCanMove(bool value) => _canMove = value;
         public void SetCanRotate(bool value) => _canRotate = value;
-        public void SetAttacking(bool value) => _attacking = value;
         
         public void SetState(PlayerStates newState)
         {
-            switch (newState.GetStateType())
-            {
-                case PlayerStateTypes.Movement:
-                    SetState(GetMovementState(newState));
-                    return;
-                case PlayerStateTypes.Combat:
-                    SetState(GetCombatState(newState));
-                    return;
-            }
-        }
-
-        private void SetState(BaseMovementState newState)
-        {
-            CurrentMovementState.OnLeaveState(this, newState);
-            newState.OnEnterState(this, CurrentMovementState);
-            CurrentMovementState = newState;
+            SetState(GetState(newState));
         }
         
-        private void SetState(BaseCombatState newState)
+        private void SetState(BasePlayerState newState)
         {
-            CurrentCombatState.OnLeaveState(this, newState);
-            newState.OnEnterState(this, CurrentCombatState);
-            CurrentCombatState = newState;
+            CurrentState.OnLeaveState(this, newState);
+            newState.OnEnterState(this, CurrentState);
+            CurrentState = newState;
+        }
+
+        public void EquipAimable(AimableController aimable)
+        {
+            CurrentAimableWeapon = aimable;
         }
         #endregion
         
         #region Getters
-        private BaseMovementState GetMovementState(PlayerStates state)
+        private BasePlayerState GetState(PlayerStates state)
         {
             switch (state)
             {
@@ -108,19 +109,10 @@ namespace RandomIsleser
                     return _rollMovementState;
                 case PlayerStates.SwimMove:
                     return _swimMovementState;
-            }
-
-            return null;
-        }
-        
-        private BaseCombatState GetCombatState(PlayerStates state)
-        {
-            switch (state)
-            {
-                case PlayerStates.IdleCombat:
-                    return _idleCombatState;
                 case PlayerStates.AimCombat:
                     return _aimCombatState;
+                case PlayerStates.AttackCombat:
+                    return _attackCombatState;
             }
 
             return null;
@@ -154,9 +146,8 @@ namespace RandomIsleser
             InputManager.TargetInput += SetTargetInput;
             InputManager.HammerAttackInput += HammerAttackPressed;
             InputManager.AimInput += SetAimInput;
-            
-            CurrentMovementState = _defaultMovementState;
-            CurrentCombatState = _idleCombatState;
+
+            CurrentState = new DefaultMovementState();
         }
 
         private void OnDestroy()
@@ -172,13 +163,12 @@ namespace RandomIsleser
 
         private void FixedUpdate()
         {
-            if (CurrentMovementState is not SwimMovementState && GetHeightRelativeToWater() < 0)
+            if (CurrentState is not SwimMovementState && GetHeightRelativeToWater() < 0)
                 SetState(PlayerStates.SwimMove);
             
-            CurrentMovementState.OnUpdateState(this);
-            CurrentCombatState.OnUpdateState(this);
+            CurrentState.OnUpdateState(this);
             
-            _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentCombatState is AimCombatState;
+            _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
         }
         
         //UTILS
@@ -193,6 +183,8 @@ namespace RandomIsleser
 
             return _heightRelativeToWater;
         }
+        
+        private void OnAnimatorMove() {}
 
         //MOVEMENT
         public void Move()
@@ -227,22 +219,20 @@ namespace RandomIsleser
         public void Swim()
         {
             if (_heightRelativeToWater < 0)
-                _movement.y += _model.BuoyancyForce * Time.deltaTime * Mathf.Abs(_heightRelativeToWater);
-            else
-            {
-                if (_movement.y > 0)
-                    _movement.y = 0;
-                _movement.y += Physics.gravity.y * Time.deltaTime;
-            }
+                    _movement.y += _model.BuoyancyForce * Time.deltaTime * Mathf.Abs(_heightRelativeToWater);
+            else if (_movement.y > 0) 
+                _movement.y = 0;
+            
+            _movement.y += Physics.gravity.y * Time.deltaTime;
             
             var movement = Vector3.zero;
-            if (_canMove) 
+            if (_canMove)
                 movement = RotateVectorToCamera(_movementInput);
             
             _movement.x = movement.x;
             _movement.z = movement.z;
             
-            _characterController.Move(_model.SwimSpeed * Time.deltaTime * _movement);
+            _characterController.Move(Time.deltaTime * _model.SwimSpeed * _movement);
             _isGrounded = _characterController.isGrounded;
             GetHeightRelativeToWater();
 
@@ -291,6 +281,8 @@ namespace RandomIsleser
             var transEulerAngles = transform.eulerAngles;
             transEulerAngles.y += _cameraInput.x * _model.AimSpeed * Time.deltaTime;
             transform.eulerAngles = transEulerAngles;
+            
+            CurrentAimableWeapon.CheckAim(_aimCamera.transform.forward);
         }
 
         public void RotatePlayer()
@@ -311,7 +303,7 @@ namespace RandomIsleser
                 return;
 
             float rotationMulti = 1;
-            if (_attacking)
+            if (IsAttacking)
                 rotationMulti = _model.AttackingRotationMultiplier;
 
             transform.forward = Vector3.RotateTowards(
@@ -348,7 +340,7 @@ namespace RandomIsleser
 
         private void SetRollInput()
         {
-            CurrentMovementState.Roll(this);
+            CurrentState.Roll(this);
         }
 
         private void SetTargetInput(bool isHeld)
@@ -358,7 +350,7 @@ namespace RandomIsleser
 
         private void HammerAttackPressed()
         {
-            CurrentCombatState.HammerAttack(this);
+            CurrentState.HammerAttack(this);
         }
 
         private void SetAimInput(bool isHeld)
@@ -367,8 +359,8 @@ namespace RandomIsleser
 
             if (isHeld)
                 TryAim();
-            else if (CurrentCombatState is AimCombatState)
-                SetState(PlayerStates.IdleCombat);
+            else if (CurrentState is AimCombatState)
+                SetState(PlayerStates.DefaultMove);
         }
         
         #endregion
