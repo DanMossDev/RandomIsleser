@@ -9,5 +9,8 @@ namespace RandomIsleser
         
         public virtual void Shoot(Vector3 aimDirection)
         { }
+        
+        public virtual void ProcessShot()
+        { }
     }
 }

@@ -9,5 +9,9 @@ namespace RandomIsleser
         public float AimTolerance = 1;
         public LayerMask HitLayers;
         public LayerMask InteractLayer;
+
+        //Fishing Rod
+        public float WindUpTime = 0.5f;
+        public float CastTime = 0.5f;
     }
 }

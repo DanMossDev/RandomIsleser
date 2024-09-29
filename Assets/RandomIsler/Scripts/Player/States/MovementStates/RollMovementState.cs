@@ -22,7 +22,7 @@ namespace RandomIsleser
                 context.SetState(PlayerStates.DefaultMove);
         }
 
-        public override void OnLeaveState(PlayerController context, BasePlayerState nextState)
+        public override void OnExitState(PlayerController context, BasePlayerState nextState)
         {
             context.Animator.ResetTrigger(Animations.RollHash);
         }

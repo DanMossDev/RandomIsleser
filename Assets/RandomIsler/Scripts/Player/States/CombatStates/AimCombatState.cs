@@ -14,15 +14,18 @@ namespace RandomIsleser
             context.Move();
         }
         
-        public override void OnLeaveState(PlayerController context, BasePlayerState nextState)
+        public override void OnExitState(PlayerController context, BasePlayerState nextState)
         {
+            if (nextState is CastRodCombatState)
+                return;
+            
             context.EndAim();
             context.EquipAimable(null);
         }
         
-        public override void Shoot(PlayerController context)
+        public override void CastRod(PlayerController context)
         {
-            //context.CurrentAimableWeapon.Shoot();
+            context.CastRodFromAim();
         }
     }
 }

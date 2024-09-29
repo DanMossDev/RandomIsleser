@@ -24,6 +24,8 @@ namespace RandomIsleser
 
         private bool _isGrounded = false;
         private float _heightRelativeToWater;
+
+        private Transform _grapplePoint;
         
         public Vector3 LastMoveDirection { get; private set; }
         
@@ -41,9 +43,11 @@ namespace RandomIsleser
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
+        private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
         
         private readonly AimCombatState _aimCombatState = new AimCombatState();
         private readonly AttackCombatState _attackCombatState = new AttackCombatState();
+        private readonly CastRodCombatState _shootCombatState = new CastRodCombatState();
         
         //Weapons
         public AimableController CurrentAimableWeapon;
@@ -87,7 +91,7 @@ namespace RandomIsleser
         
         private void SetState(BasePlayerState newState)
         {
-            CurrentState.OnLeaveState(this, newState);
+            CurrentState.OnExitState(this, newState);
             newState.OnEnterState(this, CurrentState);
             CurrentState = newState;
         }
@@ -96,6 +100,12 @@ namespace RandomIsleser
         {
             CurrentAimableWeapon = aimable;
         }
+
+        public void SetGrapplePoint(Transform grapplePoint)
+        {
+            _grapplePoint = grapplePoint;
+        }
+        
         #endregion
         
         #region Getters
@@ -109,10 +119,14 @@ namespace RandomIsleser
                     return _rollMovementState;
                 case PlayerStates.SwimMove:
                     return _swimMovementState;
+                case PlayerStates.GrappleMove:
+                    return _grappleMovementState;
                 case PlayerStates.AimCombat:
                     return _aimCombatState;
                 case PlayerStates.AttackCombat:
                     return _attackCombatState;
+                case PlayerStates.CastRodCombat:
+                    return _shootCombatState;
             }
 
             return null;
@@ -146,6 +160,7 @@ namespace RandomIsleser
             InputManager.TargetInput += SetTargetInput;
             InputManager.HammerAttackInput += HammerAttackPressed;
             InputManager.AimInput += SetAimInput;
+            InputManager.CastRodInput += CastRodPressed;
 
             CurrentState = new DefaultMovementState();
         }
@@ -157,6 +172,7 @@ namespace RandomIsleser
             InputManager.CameraInput -= SetCameraInput;
             InputManager.TargetInput -= SetTargetInput;
             InputManager.HammerAttackInput -= HammerAttackPressed;
+            InputManager.CastRodInput -= CastRodPressed;
         }
         
         #endregion
@@ -285,6 +301,11 @@ namespace RandomIsleser
             CurrentAimableWeapon.CheckAim(_aimCamera.transform.forward);
         }
 
+        public void CastRodFromAim()
+        {
+            CurrentAimableWeapon.Shoot(_aimCamera.transform.forward);
+        }
+
         public void RotatePlayer()
         {
             if (CanRotate)
@@ -361,6 +382,11 @@ namespace RandomIsleser
                 TryAim();
             else if (CurrentState is AimCombatState)
                 SetState(PlayerStates.DefaultMove);
+        }
+
+        private void CastRodPressed()
+        {
+            CurrentState.CastRod(this);
         }
         
         #endregion

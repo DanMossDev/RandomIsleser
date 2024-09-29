@@ -8,9 +8,11 @@ namespace RandomIsleser
         DefaultMove,
         RollMove,
         SwimMove,
+        GrappleMove,
         
         //Combat
         AimCombat,
-        AttackCombat
+        AttackCombat,
+        CastRodCombat,
     }
 }
