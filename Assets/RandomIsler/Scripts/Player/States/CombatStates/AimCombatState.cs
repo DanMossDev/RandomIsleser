@@ -4,8 +4,10 @@ namespace RandomIsleser
     {
         public override void OnEnterState(PlayerController context, BasePlayerState previousState)
         {
+            if (previousState is CastRodCombatState)
+                return;
+            
             context.BeginAim();
-            context.EquipAimable(context.FishingRodController);
         }
         
         public override void OnUpdateState(PlayerController context)
@@ -20,12 +22,11 @@ namespace RandomIsleser
                 return;
             
             context.EndAim();
-            context.EquipAimable(null);
         }
-        
-        public override void CastRod(PlayerController context)
+
+        public override void UseItem(PlayerController context)
         {
-            context.CastRodFromAim();
+            context.CurrentlyEquippedItem.UseItem();
         }
     }
 }

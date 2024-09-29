@@ -3,7 +3,7 @@ using DG.Tweening;
 
 namespace RandomIsleser
 {
-    public class FishingRodController : AimableController
+    public class FishingRodController : EquippableController
     {
         [SerializeField] private AimableModel _model;
         [SerializeField] private GameObject _fishHook;
@@ -52,9 +52,10 @@ namespace RandomIsleser
             }
         }
 
-        public override void Shoot(Vector3 aimDirection)
+        public override void UseItem()
         {
             PlayerController.Instance.SetState(PlayerStates.CastRodCombat);
+            var aimDirection = PlayerController.Instance.AimDirection;
 
             if (Physics.SphereCast(
                     transform.position,

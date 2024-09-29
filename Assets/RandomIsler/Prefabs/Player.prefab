@@ -78,7 +78,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 11400000, guid: e139e51b38062f448ac9cb36fa57e17b, type: 2}
-  CurrentAimableWeapon: {fileID: 0}
+  CurrentlyEquippedItem: {fileID: 0}
+  Slot1Item: {fileID: 8772213194094920121}
+  _mainWeapon: {fileID: 1033571552874260082}
   _fishingRodController: {fileID: 8772213194094920121}
   _mainCamera: {fileID: 0}
   _aimCamera: {fileID: 5013485157140722283}
@@ -176,6 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a18685a65e7474598bcc63e54b3868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemIndex: 1
+  _isAimable: 1
   _model: {fileID: 11400000, guid: bd904a07a407c934c8e68e356df43fe3, type: 2}
   _fishHook: {fileID: 6288248528468171026}
 --- !u!1 &3305337021923534230
@@ -251,6 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5256603311272722738}
+  - component: {fileID: 1033571552874260082}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -275,6 +280,20 @@ Transform:
   - {fileID: 7039669076651166603}
   m_Father: {fileID: 8353471399624227619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1033571552874260082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4718142236028628844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ec15d5d5e43b94eab576ebf8dec0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemIndex: 0
+  _isAimable: 0
 --- !u!1 &4931235828761089199
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,5 +21,11 @@ namespace RandomIsleser
                 context.SetState(PlayerStates.AttackCombat);
             }
         }
+
+        public override bool TryAim(PlayerController context)
+        {
+            context.SetState(PlayerStates.AimCombat);
+            return true;
+        }
     }
 }

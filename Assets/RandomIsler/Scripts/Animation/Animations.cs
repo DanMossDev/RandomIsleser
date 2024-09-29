@@ -10,5 +10,6 @@ namespace RandomIsleser
         public static int HammerAttackHash = Animator.StringToHash("OnHammerAttack");
         public static int IsAimingHash = Animator.StringToHash("IsAiming");
         public static int FishingRodCastHash = Animator.StringToHash("FishingRodCast");
+        public static int WeaponIndexHash = Animator.StringToHash("WeaponIndex");
     }
 }

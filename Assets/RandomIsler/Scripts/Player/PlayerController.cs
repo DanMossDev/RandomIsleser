@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RandomIsleser
 {
@@ -37,6 +38,8 @@ namespace RandomIsleser
         public bool CanRotate => !_targetHeld && _canRotate;
         public bool CanAim => _isGrounded && CanAttack;
         public bool IsAttacking => CurrentState is AttackCombatState;
+
+        public Vector3 AimDirection => _aimCamera.transform.forward;
         
         //States
         public BasePlayerState CurrentState { get; private set; }
@@ -50,9 +53,13 @@ namespace RandomIsleser
         private readonly CastRodCombatState _shootCombatState = new CastRodCombatState();
         
         //Weapons
-        public AimableController CurrentAimableWeapon;
-        [SerializeField] private FishingRodController _fishingRodController;
+        public EquippableController CurrentlyEquippedItem;
+        public EquippableController Slot1Item;
         
+        [SerializeField] private EquippableController _mainWeapon;
+        [SerializeField] private FishingRodController _fishingRodController;
+
+        public EquippableController MainWeapon => _mainWeapon;
         public FishingRodController FishingRodController => _fishingRodController;
         
         //Cameras
@@ -96,9 +103,10 @@ namespace RandomIsleser
             CurrentState = newState;
         }
 
-        public void EquipAimable(AimableController aimable)
+        public void EquipItem(EquippableController equippable)
         {
-            CurrentAimableWeapon = aimable;
+            CurrentlyEquippedItem = equippable;
+            _animator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
         }
 
         public void SetGrapplePoint(Transform grapplePoint)
@@ -160,7 +168,7 @@ namespace RandomIsleser
             InputManager.TargetInput += SetTargetInput;
             InputManager.HammerAttackInput += HammerAttackPressed;
             InputManager.AimInput += SetAimInput;
-            InputManager.CastRodInput += CastRodPressed;
+            InputManager.ItemSlot1Input += ItemSlot1Pressed;
 
             CurrentState = new DefaultMovementState();
         }
@@ -172,7 +180,7 @@ namespace RandomIsleser
             InputManager.CameraInput -= SetCameraInput;
             InputManager.TargetInput -= SetTargetInput;
             InputManager.HammerAttackInput -= HammerAttackPressed;
-            InputManager.CastRodInput -= CastRodPressed;
+            InputManager.ItemSlot1Input -= ItemSlot1Pressed;
         }
         
         #endregion
@@ -298,12 +306,7 @@ namespace RandomIsleser
             transEulerAngles.y += _cameraInput.x * _model.AimSpeed * Time.deltaTime;
             transform.eulerAngles = transEulerAngles;
             
-            CurrentAimableWeapon.CheckAim(_aimCamera.transform.forward);
-        }
-
-        public void CastRodFromAim()
-        {
-            CurrentAimableWeapon.Shoot(_aimCamera.transform.forward);
+            CurrentlyEquippedItem.CheckAim(_aimCamera.transform.forward);
         }
 
         public void RotatePlayer()
@@ -384,9 +387,17 @@ namespace RandomIsleser
                 SetState(PlayerStates.DefaultMove);
         }
 
-        private void CastRodPressed()
+        private void ItemSlot1Pressed()
         {
-            CurrentState.CastRod(this);
+            EquipItem(Slot1Item);
+            
+            if (Slot1Item.IsAimable) //TODO - handle what happens if z targetting
+            {
+                if (CurrentState.TryAim(this))
+                    return;
+            }
+
+            CurrentState.UseItem(this);
         }
         
         #endregion

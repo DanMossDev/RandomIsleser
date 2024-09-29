@@ -6,8 +6,10 @@ namespace RandomIsleser
 {
     public class AttackCombatState : BaseCombatState
     {
-        public override void OnUpdateState(PlayerController context)
-        { }
+        public override void OnEnterState(PlayerController context, BasePlayerState previousState)
+        {
+            context.EquipItem(context.MainWeapon);
+        }
         
         public override void HammerAttack(PlayerController context)
         {

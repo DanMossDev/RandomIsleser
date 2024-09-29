@@ -14,7 +14,7 @@ namespace RandomIsleser
         public static event Action<bool> TargetInput;
         public static event Action HammerAttackInput;
         public static event Action<bool> AimInput;
-        public static event Action CastRodInput;
+        public static event Action ItemSlot1Input;
 
         
         //Input cache
@@ -58,7 +58,8 @@ namespace RandomIsleser
             _inputActions["Aim"].started += OnAimStart;
             _inputActions["Aim"].canceled += OnAimEnd;
 
-            _inputActions["Cast"].performed += OnCastRod;
+            _inputActions["ItemSlot1"].performed += OnItemSlot1;
+
         }
 
         private void Unsubscribe()
@@ -81,7 +82,7 @@ namespace RandomIsleser
             _inputActions["Aim"].started -= OnAimStart;
             _inputActions["Aim"].canceled -= OnAimEnd;
             
-            _inputActions["Cast"].performed -= OnCastRod;
+            _inputActions["ItemSlot1"].performed -= OnItemSlot1;
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -125,10 +126,10 @@ namespace RandomIsleser
         {
             AimInput?.Invoke(false);
         }
-
-        private void OnCastRod(InputAction.CallbackContext context)
+        
+        private void OnItemSlot1(InputAction.CallbackContext context)
         {
-            CastRodInput?.Invoke();
+            ItemSlot1Input?.Invoke();
         }
     }
 }

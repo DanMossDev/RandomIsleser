@@ -9,6 +9,9 @@ namespace RandomIsleser
 
         public override void OnExitState(PlayerController context, BasePlayerState nextState)
         {
+            if (nextState is AimCombatState)
+                return;
+            
             context.EndAim();
         }
     }
