@@ -4,6 +4,8 @@ namespace RandomIsleser
     {
         public override void OnEnterState(PlayerController context, BasePlayerState previousState)
         {
+            Services.Instance.UIManager.SetAimingUIVisible(true);
+            
             if (previousState is CastRodCombatState)
                 return;
             
@@ -18,6 +20,8 @@ namespace RandomIsleser
         
         public override void OnExitState(PlayerController context, BasePlayerState nextState)
         {
+            Services.Instance.UIManager.SetAimingUIVisible(false);
+            
             if (nextState is CastRodCombatState)
                 return;
             
@@ -27,6 +31,11 @@ namespace RandomIsleser
         public override void UseItem(PlayerController context)
         {
             context.CurrentlyEquippedItem.UseItem();
+        }
+
+        public override void Back(PlayerController context)
+        {
+            context.SetState(PlayerStates.DefaultMove);
         }
     }
 }

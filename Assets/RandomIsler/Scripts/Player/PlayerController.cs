@@ -167,8 +167,8 @@ namespace RandomIsleser
             InputManager.CameraInput += SetCameraInput;
             InputManager.TargetInput += SetTargetInput;
             InputManager.HammerAttackInput += HammerAttackPressed;
-            InputManager.AimInput += SetAimInput;
             InputManager.ItemSlot1Input += ItemSlot1Pressed;
+            InputManager.BackInput += SetBackInput;
 
             CurrentState = new DefaultMovementState();
         }
@@ -181,6 +181,7 @@ namespace RandomIsleser
             InputManager.TargetInput -= SetTargetInput;
             InputManager.HammerAttackInput -= HammerAttackPressed;
             InputManager.ItemSlot1Input -= ItemSlot1Pressed;
+            InputManager.BackInput -= SetBackInput;
         }
         
         #endregion
@@ -377,16 +378,6 @@ namespace RandomIsleser
             CurrentState.HammerAttack(this);
         }
 
-        private void SetAimInput(bool isHeld)
-        {
-            //_aimHeld = isHeld; 
-
-            if (isHeld)
-                TryAim();
-            else if (CurrentState is AimCombatState)
-                SetState(PlayerStates.DefaultMove);
-        }
-
         private void ItemSlot1Pressed()
         {
             EquipItem(Slot1Item);
@@ -398,6 +389,11 @@ namespace RandomIsleser
             }
 
             CurrentState.UseItem(this);
+        }
+
+        private void SetBackInput()
+        {
+            CurrentState.Back(this);
         }
         
         #endregion

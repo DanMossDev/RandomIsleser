@@ -17,5 +17,8 @@ namespace RandomIsleser
         
         //Movement Methods
         public virtual void Roll(PlayerController context) { }
+        
+        //Navigation Methods
+        public virtual void Back(PlayerController context) { }
     }
 }

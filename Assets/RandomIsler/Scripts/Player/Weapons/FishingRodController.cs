@@ -35,7 +35,7 @@ namespace RandomIsleser
         
         public override void CheckAim(Vector3 aimDirection)
         {
-            Debug.DrawLine(transform.position, transform.position + (aimDirection * _model.Range), Color.red);
+            bool showInteractReticle = false;
             if (Physics.SphereCast(
                     transform.position, 
                     _model.AimTolerance, 
@@ -44,12 +44,9 @@ namespace RandomIsleser
                     _model.Range, 
                     _model.HitLayers))
             {
-                if ((_model.InteractLayer & 1 << hit.collider.gameObject.layer) != 0)
-                {
-                    //TODO - show "interact" icon instead of aim icon
-                    Debug.Log("You can interact with this!");
-                }
+                showInteractReticle = (_model.InteractLayer & 1 << hit.collider.gameObject.layer) != 0;
             }
+            Services.Instance.UIManager.SetAimingReticle(showInteractReticle);
         }
 
         public override void UseItem()
