@@ -51,7 +51,7 @@ namespace RandomIsleser
 
         public override void UseItem()
         {
-            PlayerController.Instance.SetState(PlayerStates.CastRodCombat);
+            PlayerController.Instance.SetState(PlayerStates.CastRodMovement);
             var aimDirection = PlayerController.Instance.AimDirection;
 
             if (Physics.SphereCast(
@@ -90,12 +90,11 @@ namespace RandomIsleser
         {
             if (!_grappleHit)
             {
-                //TODO - make a "rod return" state
-                PlayerController.Instance.SetState(PlayerStates.AimCombat);
+                PlayerController.Instance.Animator.SetTrigger(Animations.FishingRodReturnHash);
                 return;
             }
-            
             PlayerController.Instance.SetGrapplePoint(_grapplePoint.transform);
+            PlayerController.Instance.SetState(PlayerStates.RodGrappleMovement);
             //TODO - Make a grapple state
         }
     }

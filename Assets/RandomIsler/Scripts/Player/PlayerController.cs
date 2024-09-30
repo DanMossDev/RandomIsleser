@@ -50,7 +50,8 @@ namespace RandomIsleser
         
         private readonly AimCombatState _aimCombatState = new AimCombatState();
         private readonly AttackCombatState _attackCombatState = new AttackCombatState();
-        private readonly CastRodCombatState _shootCombatState = new CastRodCombatState();
+        private readonly CastRodMovementState _castRodMovementState = new CastRodMovementState();
+        private readonly RodGrappleMovementState _rodGrappleMovementState = new RodGrappleMovementState();
         
         //Weapons
         public EquippableController CurrentlyEquippedItem;
@@ -133,8 +134,10 @@ namespace RandomIsleser
                     return _aimCombatState;
                 case PlayerStates.AttackCombat:
                     return _attackCombatState;
-                case PlayerStates.CastRodCombat:
-                    return _shootCombatState;
+                case PlayerStates.CastRodMovement:
+                    return _castRodMovementState;
+                case PlayerStates.RodGrappleMovement:
+                    return _rodGrappleMovementState;
             }
 
             return null;
@@ -196,6 +199,11 @@ namespace RandomIsleser
             _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
         }
         
+        private void OnAnimatorMove()
+        {
+            transform.rotation = _animator.rootRotation;
+        }
+        
         //UTILS
         private Vector3 RotateVectorToCamera(Vector3 input)
         {
@@ -208,8 +216,6 @@ namespace RandomIsleser
 
             return _heightRelativeToWater;
         }
-        
-        private void OnAnimatorMove() {}
 
         //MOVEMENT
         public void Move()

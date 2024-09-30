@@ -6,7 +6,7 @@ namespace RandomIsleser
         {
             Services.Instance.UIManager.SetAimingUIVisible(true);
             
-            if (previousState is CastRodCombatState)
+            if (previousState is CastRodMovementState)
                 return;
             
             context.BeginAim();
@@ -22,7 +22,7 @@ namespace RandomIsleser
         {
             Services.Instance.UIManager.SetAimingUIVisible(false);
             
-            if (nextState is CastRodCombatState)
+            if (nextState is CastRodMovementState)
                 return;
             
             context.EndAim();
