@@ -26,7 +26,7 @@ namespace RandomIsleser
         private bool _isGrounded = false;
         private float _heightRelativeToWater;
 
-        private Transform _grapplePoint;
+        private Vector3 _grapplePoint;
         
         public Vector3 LastMoveDirection { get; private set; }
         
@@ -110,7 +110,7 @@ namespace RandomIsleser
             _animator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
         }
 
-        public void SetGrapplePoint(Transform grapplePoint)
+        public void SetGrapplePoint(Vector3 grapplePoint)
         {
             _grapplePoint = grapplePoint;
         }
@@ -273,6 +273,18 @@ namespace RandomIsleser
             }
         }
 
+        public void Grapple()
+        {
+            var grappleDirection = _grapplePoint - transform.position;
+            if (grappleDirection.sqrMagnitude < 0.5f)
+            {
+                SetState(PlayerStates.DefaultMove);
+                return;
+            }
+
+            _characterController.Move(Time.deltaTime * _fishingRodController.Model.GrappleSpeed * grappleDirection.normalized);
+        }
+
         private void TryAim()
         {
             if (CanAim)
@@ -346,6 +358,7 @@ namespace RandomIsleser
 
         public void Attack()
         {
+            _animator.SetInteger(Animations.WeaponIndexHash, 0);
             _animator.ResetTrigger(Animations.HammerAttackHash);
             _animator.SetTrigger(Animations.HammerAttackHash);
         }
