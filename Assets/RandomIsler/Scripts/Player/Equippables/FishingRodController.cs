@@ -23,12 +23,7 @@ namespace RandomIsleser
             _startingHookPosition = _fishHook.transform.localPosition;
         }
 
-        private void OnEnable()
-        {
-            Initialise();
-        }
-
-        private void Initialise()
+        protected override void Initialise()
         {
             _grapplePoint = Vector3.zero;
             _distanceTravelled = 0;

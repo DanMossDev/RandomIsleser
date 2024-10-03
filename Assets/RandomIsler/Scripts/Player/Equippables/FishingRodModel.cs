@@ -11,5 +11,8 @@ namespace RandomIsleser
         public float WindUpTime = 0.5f;
         public float CastTime = 0.5f;
         public float GrappleSpeed = 15f;
+        
+        public LayerMask HitLayers;
+        public LayerMask InteractLayer;
     }
 }

@@ -26,6 +26,9 @@ namespace RandomIsleser
         private bool _isGrounded = false;
         private float _heightRelativeToWater;
 
+        private float _stateSpeedMultiplier = 1;
+        private float _stateRotationMultiplier = 1;
+
         private Vector3 _grapplePoint;
         
         public Vector3 LastMoveDirection { get; private set; }
@@ -46,12 +49,16 @@ namespace RandomIsleser
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
-        private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
         
         private readonly AimCombatState _aimCombatState = new AimCombatState();
         private readonly AttackCombatState _attackCombatState = new AttackCombatState();
+        
         private readonly CastRodMovementState _castRodMovementState = new CastRodMovementState();
         private readonly RodGrappleMovementState _rodGrappleMovementState = new RodGrappleMovementState();
+        private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
+
+        private readonly CycloneSuctionCombatState _cycloneSuctionCombatState = new CycloneSuctionCombatState();
+        
         
         //Weapons
         public EquippableController CurrentlyEquippedItem;
@@ -70,10 +77,14 @@ namespace RandomIsleser
         
         //Cached components
         [Header("Cached Components")]
+        [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private ParticleSystem _blowParticles;
+        
         private CharacterController _characterController;
         private Animator _animator;
-        [SerializeField] private Transform _cameraTransform;
+
         
+        public ParticleSystem BlowParticles => _blowParticles;
         public Animator Animator => _animator;
         
         
@@ -91,6 +102,9 @@ namespace RandomIsleser
         #region Setters
         public void SetCanMove(bool value) => _canMove = value;
         public void SetCanRotate(bool value) => _canRotate = value;
+
+        public void SetStateSpeedMultiplier(float value) => _stateSpeedMultiplier = value;
+        public void SetStateRotationMultiplier(float value) => _stateRotationMultiplier = value;
         
         public void SetState(PlayerStates newState)
         {
@@ -138,6 +152,8 @@ namespace RandomIsleser
                     return _castRodMovementState;
                 case PlayerStates.RodGrappleMovement:
                     return _rodGrappleMovementState;
+                case PlayerStates.CycloneSuctionCombat:
+                    return _cycloneSuctionCombatState;
             }
 
             return null;
@@ -232,7 +248,7 @@ namespace RandomIsleser
             _movement.x = movement.x;
             _movement.z = movement.z;
             
-            _characterController.Move(_model.MovementSpeed * Time.deltaTime * _movement);
+            _characterController.Move(_model.MovementSpeed * _stateSpeedMultiplier * Time.deltaTime * _movement);
             _isGrounded = _characterController.isGrounded;
         }
         
@@ -345,14 +361,10 @@ namespace RandomIsleser
             if (direction == Vector3.zero)
                 return;
 
-            float rotationMulti = 1;
-            if (IsAttacking)
-                rotationMulti = _model.AttackingRotationMultiplier;
-
             transform.forward = Vector3.RotateTowards(
                 transform.forward, 
                 direction, 
-                Time.deltaTime * _model.RotationSpeed * rotationMulti, 
+                Time.deltaTime * _model.RotationSpeed * _stateRotationMultiplier, 
                 0);
         }
 
@@ -397,7 +409,7 @@ namespace RandomIsleser
             CurrentState.HammerAttack(this);
         }
 
-        private void ItemSlot1Pressed()
+        private void ItemSlot1Pressed(bool held)
         {
             EquipItem(Slot1Item);
             
@@ -406,8 +418,10 @@ namespace RandomIsleser
                 if (CurrentState.TryAim(this))
                     return;
             }
-
-            CurrentState.UseItem(this);
+            if (held)
+                CurrentState.UseItem(this);
+            else
+                CurrentState.ReleaseItem(this);
         }
 
         private void SetBackInput()

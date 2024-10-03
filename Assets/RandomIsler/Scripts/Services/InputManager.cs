@@ -13,7 +13,7 @@ namespace RandomIsleser
         public static event Action RollInput;
         public static event Action<bool> TargetInput;
         public static event Action HammerAttackInput;
-        public static event Action ItemSlot1Input;
+        public static event Action<bool> ItemSlot1Input;
         public static event Action BackInput;
 
         
@@ -55,7 +55,8 @@ namespace RandomIsleser
 
             _inputActions["HammerAttack"].performed += OnHammerAttack;
 
-            _inputActions["ItemSlot1"].performed += OnItemSlot1;
+            _inputActions["ItemSlot1"].started += OnItemSlot1Pressed;
+            _inputActions["ItemSlot1"].canceled += OnItemSlot1Released;
 
             _inputActions["Back"].performed += OnBack;
         }
@@ -77,7 +78,8 @@ namespace RandomIsleser
             
             _inputActions["HammerAttack"].performed -= OnHammerAttack;
             
-            _inputActions["ItemSlot1"].performed -= OnItemSlot1;
+            _inputActions["ItemSlot1"].started -= OnItemSlot1Pressed;
+            _inputActions["ItemSlot1"].canceled -= OnItemSlot1Released;
             
             _inputActions["Back"].performed -= OnBack;
         }
@@ -114,9 +116,14 @@ namespace RandomIsleser
             HammerAttackInput?.Invoke();
         }
         
-        private void OnItemSlot1(InputAction.CallbackContext context)
+        private void OnItemSlot1Pressed(InputAction.CallbackContext context)
         {
-            ItemSlot1Input?.Invoke();
+            ItemSlot1Input?.Invoke(true);
+        }
+
+        private void OnItemSlot1Released(InputAction.CallbackContext context)
+        {
+            ItemSlot1Input?.Invoke(false);
         }
 
         private void OnBack(InputAction.CallbackContext context)

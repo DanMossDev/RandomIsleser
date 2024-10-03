@@ -15,6 +15,9 @@ namespace RandomIsleser
         
         public virtual void UseItem(PlayerController context) { }
         
+        public virtual void ReleaseItem(PlayerController context) { }
+        
+        
         //Movement Methods
         public virtual void Roll(PlayerController context) { }
         

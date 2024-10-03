@@ -22,6 +22,14 @@ namespace RandomIsleser
             }
         }
 
+        public override void UseItem(PlayerController context)
+        {
+            if (context.CanAttack)
+            {
+                context.CurrentlyEquippedItem.UseItem();
+            }
+        }
+
         public override bool TryAim(PlayerController context)
         {
             context.SetState(PlayerStates.AimCombat);
