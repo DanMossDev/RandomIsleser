@@ -15,3 +15,6 @@ MonoBehaviour:
   ItemIndex: 2
   MovementSpeedMultiplier: 0
   RotationSpeedMultiplier: 0.25
+  ChargeSpeed: 1
+  CooldownTime: 0.5
+  SuctionForce: 5000

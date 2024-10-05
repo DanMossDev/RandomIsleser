@@ -6,8 +6,12 @@ namespace RandomIsleser
     public class CycloneJarController : EquippableController
     {
         [SerializeField] private CycloneJarModel _model;
+        [SerializeField] private ParticleSystem _blowParticles;
+        [SerializeField] private MeshCaster _suckCollider;
 
         private float _chargeRatio = 0;
+
+        private float _emissionRate;
         
         private bool _isFull = false;
         private bool _isCharging = false;
@@ -15,6 +19,11 @@ namespace RandomIsleser
         public override int ItemIndex => _model.ItemIndex;
         public float MovementSpeedMultiplier => _model.MovementSpeedMultiplier;
         public float RotationSpeedMultiplier => _model.RotationSpeedMultiplier;
+
+        private void Awake()
+        {
+            _emissionRate = _blowParticles.emission.rateOverTime.constant;
+        }
 
         protected override void Initialise()
         {
@@ -45,6 +54,8 @@ namespace RandomIsleser
         public override void UseItem()
         {
             _isCharging = true;
+            _chargeRatio = 0;
+            _hasFired = false;
             BeginSuction();
         }
 
@@ -56,6 +67,13 @@ namespace RandomIsleser
 
         private void Suck()
         {
+            var colliders = _suckCollider.GetColliders();
+
+            foreach (var coll in colliders)
+            {
+                if (coll.TryGetComponent(out WindMoveableController windController))
+                    windController.ApplyWindForce(transform.position, transform.forward * - _model.SuctionForce);
+            }
         }
 
         private void Blow()
@@ -64,8 +82,10 @@ namespace RandomIsleser
             player.SetStateRotationMultiplier(0);
             player.Animator.SetBool(Animations.CycloneJarChargingHash, false);
             _hasFired = true;
-
-            player.BlowParticles.Play();
+            
+            var em = _blowParticles.emission;
+            em.rateOverTime = _emissionRate * _chargeRatio;
+            _blowParticles.Play();
             
             var seq = DOTween.Sequence();
             seq.AppendInterval(_model.CooldownTime);

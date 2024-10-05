@@ -9,5 +9,6 @@ namespace RandomIsleser
         [Range(0,1)] public float RotationSpeedMultiplier = 0.25f;
         public float ChargeSpeed = 1;
         public float CooldownTime = 0.5f;
+        public float SuctionForce = 10f;
     }
 }

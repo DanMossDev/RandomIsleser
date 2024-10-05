@@ -78,13 +78,10 @@ namespace RandomIsleser
         //Cached components
         [Header("Cached Components")]
         [SerializeField] private Transform _cameraTransform;
-        [SerializeField] private ParticleSystem _blowParticles;
         
         private CharacterController _characterController;
         private Animator _animator;
 
-        
-        public ParticleSystem BlowParticles => _blowParticles;
         public Animator Animator => _animator;
         
         
