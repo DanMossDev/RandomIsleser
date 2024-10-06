@@ -18,3 +18,5 @@ MonoBehaviour:
   ChargeSpeed: 1
   CooldownTime: 0.5
   SuctionForce: 75
+  FiringForce: 10
+  SuckDistance: 2

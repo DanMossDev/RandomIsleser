@@ -7,13 +7,14 @@ namespace RandomIsleser
         [SerializeField] private CycloneJarModel _model;
         [SerializeField] private ParticleSystem _blowParticles;
         [SerializeField] private ParticleSystem _suckParticles;
+        [SerializeField] private ParticleSystem _heldItemParticles;
+        [SerializeField] private ParticleSystem _fireItemParticles;
         [SerializeField] private MeshCaster _suckCollider;
+        [SerializeField] private Transform _holdPoint;
 
-        private bool _isSucking = false;
-        private bool _isBlowing = false;
-
-        private float _suckStrength = 0;
-        private float _blowStrength = 0;
+        private bool _isItemHeld = false;
+        private CycloneMoveableController _heldItem;
+        private float _timeLastFiredItem;
 
         public override int ItemIndex => _model.ItemIndex;
         public float MovementSpeedMultiplier => _model.MovementSpeedMultiplier;
@@ -21,10 +22,7 @@ namespace RandomIsleser
 
 
         protected override void Initialise()
-        {
-            _isSucking = false;
-            _isBlowing = false;
-        }
+        { }
 
         public override void UpdateEquippable()
         {
@@ -32,13 +30,11 @@ namespace RandomIsleser
 
             if (PlayerController.Instance.BlowHeld)
             {
-                _blowParticles.Play();
                 inUse = true;
                 Cyclone(false);
             }
             else if (PlayerController.Instance.SuctionHeld)
             {
-                _suckParticles.Play();
                 inUse = true;
                 Cyclone(true);
             }
@@ -49,26 +45,73 @@ namespace RandomIsleser
 
         private void Cyclone(bool isSucking)
         {
+            if (Time.time - _timeLastFiredItem < _model.FireCooldown
+                || (isSucking && _isItemHeld))
+                return;
+
+            if (_isItemHeld)
+            {
+                _heldItem.FireItem(transform.forward * _model.FiringForce);
+                _heldItemParticles.Stop();
+                _fireItemParticles.Play();
+                _isItemHeld = false;
+                _heldItem = null;
+                _timeLastFiredItem = Time.time;
+                return;
+            }
+            else
+            {
+                var particles = isSucking ? _suckParticles : _blowParticles;
+                particles.Play();
+            }
+            
             _suckCollider.gameObject.SetActive(true);
             var colliders = _suckCollider.GetColliders();
 
             foreach (var coll in colliders)
             {
-                if (coll.TryGetComponent(out WindMoveableController windController))
+                if (coll.TryGetComponent(out CycloneMoveableController cycloneMoveableController))
                 {
-                    Vector3 force = windController.transform.position - transform.position;
+                    Vector3 force = cycloneMoveableController.transform.position - transform.position;
                     float sqrMag = force.sqrMagnitude;
                     force /= isSucking ? -sqrMag : sqrMag;
                     
-                    windController.ApplyWindForce(force * _model.SuctionForce);
+                    cycloneMoveableController.ApplyWindForce(force * _model.SuctionForce);
+
+                    if (isSucking && sqrMag < _model.SuckDistance * _model.SuckDistance)
+                    {
+                        if (cycloneMoveableController.CanBeSuckedUp)
+                        {
+                            //TODO - Add some kind of "absorbed effect" enum to CycloneMoveableController, apply effect here
+                            cycloneMoveableController.AbsorbItem(_holdPoint);
+                        }
+                        else if (cycloneMoveableController.CanBeHeld)
+                        {
+                            cycloneMoveableController.BeginHold(_holdPoint);
+                            _heldItem = cycloneMoveableController;
+                            _isItemHeld = true;
+                            _heldItemParticles.Play();
+                            break;
+                        }
+                    }
                 }
             }
+        }
+
+        private void FireItem(Vector3 force)
+        {
+            _heldItem.FireItem(force);
+            _isItemHeld = false;
+            _heldItem = null;
         }
 
         public override void OnUnequip()
         {
             PlayerController.Instance.SetState(PlayerStates.DefaultMove);
             PlayerController.Instance.CycloneCamera.SetActive(false);
+
+            if (_isItemHeld)
+                FireItem(Vector3.zero);
         }
 
         public override void OnEquip()
