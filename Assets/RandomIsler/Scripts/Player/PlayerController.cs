@@ -15,10 +15,13 @@ namespace RandomIsleser
         //Variables
         private Vector3 _movementInput;
         private Vector2 _cameraInput;
+        private Vector3 _cycloneCameraInput = new Vector3();
 
         private Vector3 _movement;
 
         private bool _targetHeld;
+
+
 
         private bool _canMove = true;
         private bool _canRotate = true;
@@ -30,7 +33,9 @@ namespace RandomIsleser
         private float _stateRotationMultiplier = 1;
 
         private Vector3 _grapplePoint;
-        
+
+        public bool SuctionHeld { get; private set; }
+        public bool BlowHeld { get; private set; }
         public Vector3 LastMoveDirection { get; private set; }
         
         //Properties
@@ -57,7 +62,7 @@ namespace RandomIsleser
         private readonly RodGrappleMovementState _rodGrappleMovementState = new RodGrappleMovementState();
         private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
 
-        private readonly CycloneSuctionCombatState _cycloneSuctionCombatState = new CycloneSuctionCombatState();
+        private readonly CycloneCombatState _cycloneCombatState = new CycloneCombatState();
         
         
         //Weapons
@@ -66,18 +71,23 @@ namespace RandomIsleser
         
         [SerializeField] private EquippableController _mainWeapon;
         [SerializeField] private FishingRodController _fishingRodController;
+        [SerializeField] private CycloneJarController _cycloneJarController;
 
         public EquippableController MainWeapon => _mainWeapon;
-        public FishingRodController FishingRodController => _fishingRodController;
         
         //Cameras
         [Header("Cameras")]
         [SerializeField] private CinemachineFreeLook _mainCamera;
         [SerializeField] private GameObject _aimCamera;
+        [SerializeField] private GameObject _cycloneCamera;
+        
+        public GameObject CycloneCamera => _cycloneCamera;
         
         //Cached components
         [Header("Cached Components")]
         [SerializeField] private Transform _cameraTransform;
+
+        public Transform MainCameraTransform => _cameraTransform;
         
         private CharacterController _characterController;
         private Animator _animator;
@@ -117,8 +127,19 @@ namespace RandomIsleser
 
         public void EquipItem(EquippableController equippable)
         {
+            if (CurrentlyEquippedItem == equippable)
+                return;
+            
+            if (CurrentlyEquippedItem != null)
+                CurrentlyEquippedItem.OnUnequip();
             CurrentlyEquippedItem = equippable;
-            _animator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
+            if (CurrentlyEquippedItem != null)
+            {
+                CurrentlyEquippedItem.OnEquip();
+                _animator.SetBool(Animations.WeaponEquippedHash, true);
+                _animator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
+            }
+            else _animator.SetBool(Animations.WeaponEquippedHash, false);
         }
 
         public void SetGrapplePoint(Vector3 grapplePoint)
@@ -149,8 +170,8 @@ namespace RandomIsleser
                     return _castRodMovementState;
                 case PlayerStates.RodGrappleMovement:
                     return _rodGrappleMovementState;
-                case PlayerStates.CycloneSuctionCombat:
-                    return _cycloneSuctionCombatState;
+                case PlayerStates.CycloneCombat:
+                    return _cycloneCombatState;
             }
 
             return null;
@@ -185,6 +206,8 @@ namespace RandomIsleser
             InputManager.HammerAttackInput += HammerAttackPressed;
             InputManager.ItemSlot1Input += ItemSlot1Pressed;
             InputManager.BackInput += SetBackInput;
+            InputManager.SuctionInput += SetSuctionInput;
+            InputManager.BlowInput += SetBlowInput;
 
             CurrentState = new DefaultMovementState();
         }
@@ -198,6 +221,8 @@ namespace RandomIsleser
             InputManager.HammerAttackInput -= HammerAttackPressed;
             InputManager.ItemSlot1Input -= ItemSlot1Pressed;
             InputManager.BackInput -= SetBackInput;
+            InputManager.SuctionInput -= SetSuctionInput;
+            InputManager.BlowInput -= SetBlowInput;
         }
         
         #endregion
@@ -310,7 +335,6 @@ namespace RandomIsleser
             _aimCamera.transform.localRotation = Quaternion.identity;
             _aimCamera.SetActive(true);
             _animator.SetBool(Animations.IsAimingHash, true);
-            //TODO - Activate aim UI
         }
         
         public void EndAim()
@@ -325,7 +349,6 @@ namespace RandomIsleser
             {
                 SetCanRotate(true);
             });
-            //TODO - Disable aim UI
         }
 
         public void Aim()
@@ -345,6 +368,12 @@ namespace RandomIsleser
         {
             if (CanRotate)
                 RotateTowards(RotateVectorToCamera(_movementInput));
+        }
+        
+        public void CycloneRotatePlayer()
+        {
+            if (CanRotate)
+                RotateTowards(RotateVectorToCamera(_cycloneCameraInput));
         }
 
         public void SnapToInputDirection(Vector3 direction)
@@ -389,6 +418,8 @@ namespace RandomIsleser
         private void SetCameraInput(Vector2 input)
         {
             _cameraInput = input;
+            _cycloneCameraInput.x = input.x;
+            _cycloneCameraInput.z = input.y;
         }
 
         private void SetRollInput()
@@ -398,7 +429,17 @@ namespace RandomIsleser
 
         private void SetTargetInput(bool isHeld)
         {
-            _targetHeld = isHeld;
+            //_targetHeld = isHeld;
+        }
+
+        private void SetSuctionInput(bool isHeld)
+        {
+            SuctionHeld = isHeld;
+        }
+        
+        private void SetBlowInput(bool isHeld)
+        {
+            BlowHeld = isHeld;
         }
 
         private void HammerAttackPressed()

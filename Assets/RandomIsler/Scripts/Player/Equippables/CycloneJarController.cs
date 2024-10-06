@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -7,97 +6,76 @@ namespace RandomIsleser
     {
         [SerializeField] private CycloneJarModel _model;
         [SerializeField] private ParticleSystem _blowParticles;
+        [SerializeField] private ParticleSystem _suckParticles;
         [SerializeField] private MeshCaster _suckCollider;
 
-        private float _chargeRatio = 0;
+        private bool _isSucking = false;
+        private bool _isBlowing = false;
 
-        private float _emissionRate;
-        
-        private bool _isFull = false;
-        private bool _isCharging = false;
-        private bool _hasFired = false;
+        private float _suckStrength = 0;
+        private float _blowStrength = 0;
+
         public override int ItemIndex => _model.ItemIndex;
         public float MovementSpeedMultiplier => _model.MovementSpeedMultiplier;
         public float RotationSpeedMultiplier => _model.RotationSpeedMultiplier;
 
-        private void Awake()
-        {
-            _emissionRate = _blowParticles.emission.rateOverTime.constant;
-        }
 
         protected override void Initialise()
         {
-            _isCharging = true;
-            _hasFired = false;
-            _chargeRatio = 0;
+            _isSucking = false;
+            _isBlowing = false;
         }
 
         public override void UpdateEquippable()
         {
-            if (_hasFired)
-                return;
+            bool inUse = false;
 
-            if (_chargeRatio < 1)
-                _chargeRatio += Time.deltaTime * _model.ChargeSpeed;
-            else
-                _chargeRatio = 1;
-
-            if (!_isCharging)
+            if (PlayerController.Instance.BlowHeld)
             {
-                Blow();
-                return;
+                _blowParticles.Play();
+                inUse = true;
+                Cyclone(false);
+            }
+            else if (PlayerController.Instance.SuctionHeld)
+            {
+                _suckParticles.Play();
+                inUse = true;
+                Cyclone(true);
             }
 
-            Suck();
-        }
-        
-        public override void UseItem()
-        {
-            _isCharging = true;
-            _chargeRatio = 0;
-            _hasFired = false;
-            BeginSuction();
+            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, inUse);
+            _suckCollider.gameObject.SetActive(inUse);
         }
 
-        public override void ReleaseItem()
+        private void Cyclone(bool isSucking)
         {
-            _isCharging = false;
-            Blow();
-        }
-
-        private void Suck()
-        {
+            _suckCollider.gameObject.SetActive(true);
             var colliders = _suckCollider.GetColliders();
 
             foreach (var coll in colliders)
             {
                 if (coll.TryGetComponent(out WindMoveableController windController))
-                    windController.ApplyWindForce(transform.position, transform.forward * - _model.SuctionForce);
+                {
+                    Vector3 force = windController.transform.position - transform.position;
+                    float sqrMag = force.sqrMagnitude;
+                    force /= isSucking ? -sqrMag : sqrMag;
+                    
+                    windController.ApplyWindForce(force * _model.SuctionForce);
+                }
             }
         }
 
-        private void Blow()
+        public override void OnUnequip()
         {
-            var player = PlayerController.Instance;
-            player.SetStateRotationMultiplier(0);
-            player.Animator.SetBool(Animations.CycloneJarChargingHash, false);
-            _hasFired = true;
-            
-            var em = _blowParticles.emission;
-            em.rateOverTime = _emissionRate * _chargeRatio;
-            _blowParticles.Play();
-            
-            var seq = DOTween.Sequence();
-            seq.AppendInterval(_model.CooldownTime);
-            seq.OnComplete(() =>
-            {
-                player.SetState(PlayerStates.DefaultMove);
-            });
+            PlayerController.Instance.SetState(PlayerStates.DefaultMove);
+            PlayerController.Instance.CycloneCamera.SetActive(false);
         }
 
-        private void BeginSuction()
+        public override void OnEquip()
         {
-            PlayerController.Instance.SetState(PlayerStates.CycloneSuctionCombat);
+            PlayerController.Instance.SetState(PlayerStates.CycloneCombat);
+            CycloneCameraTarget.Instance.SetRotation();
+            PlayerController.Instance.CycloneCamera.SetActive(true);
         }
     }
 }

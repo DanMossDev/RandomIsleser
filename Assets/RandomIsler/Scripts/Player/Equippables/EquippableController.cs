@@ -28,5 +28,11 @@ namespace RandomIsleser
         
         public virtual void ReleaseItem()
         { }
+
+        public virtual void OnUnequip()
+        { }
+        
+        public virtual void OnEquip()
+        { }
     }
 }

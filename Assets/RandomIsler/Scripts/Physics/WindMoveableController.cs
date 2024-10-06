@@ -12,9 +12,8 @@ namespace RandomIsleser
             _rigidbody = GetComponent<Rigidbody>();
         }
         
-        public void ApplyWindForce(Vector3 origin, Vector3 force)
+        public void ApplyWindForce(Vector3 force)
         {
-            force /= Vector3.SqrMagnitude(transform.position - origin);
             _rigidbody.AddForce(force, ForceMode.Force); //TODO - fix this
         }
 

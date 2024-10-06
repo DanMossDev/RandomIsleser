@@ -82,10 +82,11 @@ MonoBehaviour:
   Slot1Item: {fileID: 2402280708145629384}
   _mainWeapon: {fileID: 1379317629688075089}
   _fishingRodController: {fileID: 8772213194094920121}
+  _cycloneJarController: {fileID: 2402280708145629384}
   _mainCamera: {fileID: 0}
   _aimCamera: {fileID: 5013485157140722283}
+  _cycloneCamera: {fileID: 0}
   _cameraTransform: {fileID: 0}
-  _blowParticles: {fileID: 4368230946614577696}
 --- !u!95 &4028954805849305131
 Animator:
   serializedVersion: 7
@@ -1076,10 +1077,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8353471399624227619}
     m_Modifications:
+    - target: {fileID: 3389599444100166463, guid: 1c4ae214880c45042874938c425ef48f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.375
+      objectReference: {fileID: 0}
     - target: {fileID: 4934811893081251156, guid: 1c4ae214880c45042874938c425ef48f,
         type: 3}
       propertyPath: m_Name
       value: CycloneJar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934811893081251156, guid: 1c4ae214880c45042874938c425ef48f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8726546967162420546, guid: 1c4ae214880c45042874938c425ef48f,
         type: 3}
@@ -1154,12 +1165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a55ab6499e72cd0499fe1c85c3e709f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &4368230946614577696 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6415390893791870711, guid: 1c4ae214880c45042874938c425ef48f,
-    type: 3}
-  m_PrefabInstance: {fileID: 7320353675231753431}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9205341467585646483
 PrefabInstance:
   m_ObjectHideFlags: 0

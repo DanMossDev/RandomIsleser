@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CycloneJarEquippableModel
   m_EditorClassIdentifier: 
   ItemIndex: 2
-  MovementSpeedMultiplier: 0
+  MovementSpeedMultiplier: 0.5
   RotationSpeedMultiplier: 0.25
   ChargeSpeed: 1
   CooldownTime: 0.5
-  SuctionForce: 5000
+  SuctionForce: 75
