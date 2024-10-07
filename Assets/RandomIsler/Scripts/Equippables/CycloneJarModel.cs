@@ -13,5 +13,8 @@ namespace RandomIsleser
         public float FireCooldown = 1f;
         public float FiringForce = 10f;
         public float SuckDistance = 10f;
+
+        public float JumpChargeRate = 1f;
+        public float JumpHeight = 4f;
     }
 }

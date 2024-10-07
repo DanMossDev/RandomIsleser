@@ -14,7 +14,15 @@ namespace RandomIsleser
             Initialise();
         }
         
+        private void OnDisable()
+        {
+            Cleanup();
+        }
+        
         protected virtual void Initialise()
+        { }
+        
+        protected virtual void Cleanup()
         { }
         
         public virtual void UpdateEquippable()

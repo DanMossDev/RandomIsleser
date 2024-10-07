@@ -17,6 +17,9 @@ MonoBehaviour:
   RotationSpeedMultiplier: 0.25
   ChargeSpeed: 1
   CooldownTime: 0.5
-  SuctionForce: 75
-  FiringForce: 10
-  SuckDistance: 2
+  SuctionForce: 25
+  FireCooldown: 1
+  FiringForce: 15
+  SuckDistance: 1
+  JumpChargeRate: 1
+  JumpHeight: 4

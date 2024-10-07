@@ -10,6 +10,7 @@ namespace RandomIsleser
         [SerializeField] private float _movementSpeed = 10;
         [SerializeField] private float _rotationSpeed = 10;
         [SerializeField] private float _attackingRotationMultiplier = 0.2f;
+        [SerializeField] private float _gravityMultiplier = 5;
         
         [Space, Header("Rolling")]
         [SerializeField] private float _rollSpeed = 10;
@@ -32,5 +33,6 @@ namespace RandomIsleser
         public float SwimSpeed => _swimSpeed;
         public float BuoyancyForce => _buoyancyForce;
         public float AimSpeed => _aimSpeed; //TODO get this from settings instead
+        public float GravityMultiplier => _gravityMultiplier;
     }
 }

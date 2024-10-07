@@ -21,8 +21,6 @@ namespace RandomIsleser
 
         private bool _targetHeld;
 
-
-
         private bool _canMove = true;
         private bool _canRotate = true;
 
@@ -259,18 +257,20 @@ namespace RandomIsleser
         public void Move()
         {
             if (!_isGrounded)
-                _movement.y += Physics.gravity.y * Time.deltaTime;
-            else
+                _movement.y += Physics.gravity.y * _model.GravityMultiplier * Time.deltaTime;
+            else if (_movement.y < 0)
                 _movement.y = -1;
             
             var movement = Vector3.zero;
             if (CanMove) 
                 movement = RotateVectorToCamera(_movementInput);
+
+            movement *= _model.MovementSpeed * _stateSpeedMultiplier;
             
             _movement.x = movement.x;
             _movement.z = movement.z;
             
-            _characterController.Move(_model.MovementSpeed * _stateSpeedMultiplier * Time.deltaTime * _movement);
+            _characterController.Move(Time.deltaTime * _movement);
             _isGrounded = _characterController.isGrounded;
         }
         
@@ -292,16 +292,18 @@ namespace RandomIsleser
             else if (_movement.y > 0) 
                 _movement.y = 0;
             
-            _movement.y += Physics.gravity.y * Time.deltaTime;
+            _movement.y += Physics.gravity.y * _model.GravityMultiplier * Time.deltaTime;
             
             var movement = Vector3.zero;
             if (_canMove)
                 movement = RotateVectorToCamera(_movementInput);
+
+            movement *= _model.SwimSpeed;
             
             _movement.x = movement.x;
             _movement.z = movement.z;
             
-            _characterController.Move(Time.deltaTime * _model.SwimSpeed * _movement);
+            _characterController.Move(Time.deltaTime * _movement);
             _isGrounded = _characterController.isGrounded;
             GetHeightRelativeToWater();
 
@@ -309,6 +311,11 @@ namespace RandomIsleser
             {
                 SetState(PlayerStates.DefaultMove);
             }
+        }
+
+        public void JumpSetHeight(float height)
+        {
+            _movement.y = Mathf.Sqrt(height * 2 * -(Physics.gravity.y * _model.GravityMultiplier));
         }
 
         public void Grapple()

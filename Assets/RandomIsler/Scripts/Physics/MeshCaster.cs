@@ -8,6 +8,11 @@ namespace RandomIsleser
     public class MeshCaster : MonoBehaviour
     {
         private Dictionary<int, Collider> _colliders = new Dictionary<int, Collider>();
+
+        private void OnDisable()
+        {
+            _colliders.Clear();
+        }
         
         private void OnTriggerEnter(Collider other)
         {

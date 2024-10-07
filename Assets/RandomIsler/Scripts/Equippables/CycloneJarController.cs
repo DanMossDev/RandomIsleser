@@ -16,17 +16,59 @@ namespace RandomIsleser
         private CycloneMoveableController _heldItem;
         private float _timeLastFiredItem;
 
+        private bool _itemEquipped = false;
+        private bool _chargingJump = false;
+        private float _jumpChargeRatio = 0;
+        
         public override int ItemIndex => _model.ItemIndex;
         public float MovementSpeedMultiplier => _model.MovementSpeedMultiplier;
         public float RotationSpeedMultiplier => _model.RotationSpeedMultiplier;
 
 
         protected override void Initialise()
-        { }
+        {
+            _itemEquipped = true;
+        }
+
+        protected override void Cleanup()
+        {
+            _itemEquipped = false;
+            _chargingJump = false;
+            _jumpChargeRatio = 0;
+        }
+
+        public override void UseItem()
+        {
+            if (!_itemEquipped)
+                return;
+
+            _chargingJump = true;
+            _jumpChargeRatio = 0;
+            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, false);
+            //PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, true);
+        }
+        
+        public override void ReleaseItem()
+        {
+            if (!_chargingJump)
+                return;
+            if (_jumpChargeRatio > 1)
+                _jumpChargeRatio = 1;
+            //PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpHash, true);
+            PlayerController.Instance.JumpSetHeight(_model.JumpHeight * _jumpChargeRatio);
+            _chargingJump = false;
+        }
 
         public override void UpdateEquippable()
         {
             bool inUse = false;
+
+            if (_chargingJump)
+            {
+                _jumpChargeRatio += Time.deltaTime * _model.JumpChargeRate;
+
+                return;
+            }
 
             if (PlayerController.Instance.BlowHeld)
             {
@@ -37,6 +79,11 @@ namespace RandomIsleser
             {
                 inUse = true;
                 Cyclone(true);
+            }
+
+            if (_isItemHeld && !inUse)
+            {
+                FireItem(Vector3.zero, false);
             }
 
             PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, inUse);
@@ -51,12 +98,7 @@ namespace RandomIsleser
 
             if (_isItemHeld)
             {
-                _heldItem.FireItem(transform.forward * _model.FiringForce);
-                _heldItemParticles.Stop();
-                _fireItemParticles.Play();
-                _isItemHeld = false;
-                _heldItem = null;
-                _timeLastFiredItem = Time.time;
+                FireItem(transform.forward * _model.FiringForce);
                 return;
             }
             else
@@ -72,13 +114,12 @@ namespace RandomIsleser
             {
                 if (coll.TryGetComponent(out CycloneMoveableController cycloneMoveableController))
                 {
-                    Vector3 force = cycloneMoveableController.transform.position - transform.position;
-                    float sqrMag = force.sqrMagnitude;
-                    force /= isSucking ? -sqrMag : sqrMag;
+                    Vector3 force = cycloneMoveableController.transform.position - _holdPoint.position;
+                    force *= isSucking ? -1 : 1;
                     
-                    cycloneMoveableController.ApplyWindForce(force * _model.SuctionForce);
+                    cycloneMoveableController.ApplyWindForce(force.normalized * _model.SuctionForce);
 
-                    if (isSucking && sqrMag < _model.SuckDistance * _model.SuckDistance)
+                    if (isSucking && force.sqrMagnitude < _model.SuckDistance * _model.SuckDistance)
                     {
                         if (cycloneMoveableController.CanBeSuckedUp)
                         {
@@ -98,11 +139,15 @@ namespace RandomIsleser
             }
         }
 
-        private void FireItem(Vector3 force)
+        private void FireItem(Vector3 force, bool playFireEffect = true)
         {
             _heldItem.FireItem(force);
+            _heldItemParticles.Stop();
+            if (playFireEffect)
+                _fireItemParticles.Play();
             _isItemHeld = false;
             _heldItem = null;
+            _timeLastFiredItem = Time.time;
         }
 
         public override void OnUnequip()
@@ -111,7 +156,7 @@ namespace RandomIsleser
             PlayerController.Instance.CycloneCamera.SetActive(false);
 
             if (_isItemHeld)
-                FireItem(Vector3.zero);
+                FireItem(Vector3.zero, false);
         }
 
         public override void OnEquip()
