@@ -9,6 +9,7 @@ namespace RandomIsleser
         [SerializeField] private ParticleSystem _suckParticles;
         [SerializeField] private ParticleSystem _heldItemParticles;
         [SerializeField] private ParticleSystem _fireItemParticles;
+        [SerializeField] private ParticleSystem _cycloneJumpParticles;
         [SerializeField] private MeshCaster _suckCollider;
         [SerializeField] private Transform _holdPoint;
 
@@ -42,10 +43,11 @@ namespace RandomIsleser
             if (!_itemEquipped || !PlayerController.Instance.IsGrounded)
                 return;
 
+            _heldItemParticles.Play();
             _chargingJump = true;
             _jumpChargeRatio = 0;
             PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, false);
-            //PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, true);
+            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, true);
         }
         
         public override void ReleaseItem()
@@ -54,7 +56,10 @@ namespace RandomIsleser
                 return;
             if (_jumpChargeRatio > 1)
                 _jumpChargeRatio = 1;
-            //PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpHash, true);
+
+            _heldItemParticles.Stop();
+            _cycloneJumpParticles.Play();
+            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, false);
             PlayerController.Instance.JumpSetHeight(_model.JumpHeight * _jumpChargeRatio);
             _chargingJump = false;
         }

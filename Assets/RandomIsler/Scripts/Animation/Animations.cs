@@ -15,6 +15,5 @@ namespace RandomIsleser
         public static int WeaponEquippedHash = Animator.StringToHash("WeaponEquipped");
         public static int CycloneJarChargingHash = Animator.StringToHash("CycloneJarCharging");
         public static int CycloneJarJumpChargeHash = Animator.StringToHash("CycloneJarJumpCharge");
-        public static int CycloneJarJumpHash = Animator.StringToHash("CycloneJarJump");
     }
 }
