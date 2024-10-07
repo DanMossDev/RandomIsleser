@@ -14,9 +14,11 @@ namespace RandomIsleser
         public static event Action<bool> TargetInput;
         public static event Action HammerAttackInput;
         public static event Action<bool> ItemSlot1Input;
-        public static event Action BackInput;
         public static event Action<bool> SuctionInput;
         public static event Action<bool> BlowInput;
+        
+        public static event Action PauseInput;
+        public static event Action BackInput;
 
         
         //Input cache
@@ -73,6 +75,8 @@ namespace RandomIsleser
             _inputActions["ItemSlot1"].canceled += OnItemSlot1Released;
 
             _inputActions["Back"].performed += OnBack;
+            
+            _inputActions["Pause"].performed += OnPause;
         }
 
         private void Unsubscribe()
@@ -102,6 +106,8 @@ namespace RandomIsleser
             _inputActions["ItemSlot1"].canceled -= OnItemSlot1Released;
             
             _inputActions["Back"].performed -= OnBack;
+            
+            _inputActions["Pause"].performed -= OnPause;
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -145,11 +151,6 @@ namespace RandomIsleser
         {
             ItemSlot1Input?.Invoke(false);
         }
-
-        private void OnBack(InputAction.CallbackContext context)
-        {
-            BackInput?.Invoke();
-        }
         
         private void OnSuctionStart(InputAction.CallbackContext context)
         {
@@ -169,6 +170,17 @@ namespace RandomIsleser
         private void OnBlowEnd(InputAction.CallbackContext context)
         {
             BlowInput?.Invoke(false);
+        }
+        
+        //UI
+        private void OnBack(InputAction.CallbackContext context)
+        {
+            BackInput?.Invoke();
+        }
+        
+        private void OnPause(InputAction.CallbackContext context)
+        {
+            PauseInput?.Invoke();
         }
     }
 }

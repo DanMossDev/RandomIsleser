@@ -13,18 +13,19 @@ namespace RandomIsleser
         public PlayerModel PlayerModel => _model;
         
         //Variables
+        //Cached Input
         private Vector3 _movementInput;
         private Vector2 _cameraInput;
         private Vector3 _cycloneCameraInput = new Vector3();
-
-        private Vector3 _movement;
-
         private bool _targetHeld;
 
+        //Movement
+        private Vector3 _movement;
+        
         private bool _canMove = true;
         private bool _canRotate = true;
-
         private bool _isGrounded = false;
+        
         private float _heightRelativeToWater;
 
         private float _stateSpeedMultiplier = 1;
@@ -32,6 +33,7 @@ namespace RandomIsleser
 
         private Vector3 _grapplePoint;
 
+        public bool IsGrounded => _isGrounded;
         public bool SuctionHeld { get; private set; }
         public bool BlowHeld { get; private set; }
         public Vector3 LastMoveDirection { get; private set; }
@@ -197,6 +199,18 @@ namespace RandomIsleser
             _characterController = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
             
+            SubscribeControls();
+
+            CurrentState = new DefaultMovementState();
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeControls();
+        }
+
+        public void SubscribeControls()
+        {
             InputManager.MoveInput += SetMoveInput;
             InputManager.RollInput += SetRollInput;
             InputManager.CameraInput += SetCameraInput;
@@ -206,11 +220,9 @@ namespace RandomIsleser
             InputManager.BackInput += SetBackInput;
             InputManager.SuctionInput += SetSuctionInput;
             InputManager.BlowInput += SetBlowInput;
-
-            CurrentState = new DefaultMovementState();
         }
 
-        private void OnDestroy()
+        public void UnsubscribeControls()
         {
             InputManager.MoveInput -= SetMoveInput;
             InputManager.RollInput -= SetRollInput;
@@ -221,6 +233,16 @@ namespace RandomIsleser
             InputManager.BackInput -= SetBackInput;
             InputManager.SuctionInput -= SetSuctionInput;
             InputManager.BlowInput -= SetBlowInput;
+
+            ClearInputCache();
+        }
+
+        private void ClearInputCache()
+        {
+            _movementInput = Vector3.zero;
+            _cameraInput = Vector3.zero;
+            _cycloneCameraInput = Vector3.zero;
+            _targetHeld = false;
         }
         
         #endregion

@@ -39,7 +39,7 @@ namespace RandomIsleser
 
         public override void UseItem()
         {
-            if (!_itemEquipped)
+            if (!_itemEquipped || !PlayerController.Instance.IsGrounded)
                 return;
 
             _chargingJump = true;
