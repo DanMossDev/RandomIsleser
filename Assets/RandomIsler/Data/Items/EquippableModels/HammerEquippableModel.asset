@@ -12,10 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980023bbda9e356459b7b6b096f30ef8, type: 3}
   m_Name: HammerEquippableModel
   m_EditorClassIdentifier: 
+  Name:
+    m_TableReference:
+      m_TableCollectionName: GUID:88a590d5390cd9f4083e7405b9dcb2de
+    m_TableEntryReference:
+      m_KeyId: 73126998016
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   ItemIndex: 0
-  HitLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  InteractLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  Slottable: 0
+  Unlocked: 1
+  Sprite: {fileID: 21300000, guid: e6d1c20c7e7b1084e814b8690f632f14, type: 3}
+  references:
+    version: 2
+    RefIds: []

@@ -8,5 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RandomIsler/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 3a5c43d7e941fd34e89c4caec59ec7da,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: cd5de3bfa165a6146b3bad1b2eec10dc,
+      type: 2}
   m_UseUCBPForAssetBundles: 0

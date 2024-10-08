@@ -40,6 +40,7 @@ namespace RandomIsleser
             PlayerController.Instance.SubscribeControls();
             Time.timeScale = 1;
             _isPaused = false;
+            Services.Instance.UIManager.SetPause(false);
         }
 
         private void Pause()
@@ -47,6 +48,7 @@ namespace RandomIsleser
             PlayerController.Instance.UnsubscribeControls();
             Time.timeScale = 0;
             _isPaused = true;
+            Services.Instance.UIManager.SetPause(true);
         }
     }
 }

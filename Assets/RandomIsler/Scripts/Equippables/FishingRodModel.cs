@@ -5,6 +5,7 @@ namespace RandomIsleser
     [CreateAssetMenu(fileName = "FishingRodModel", menuName = "RandomIsler/Models/Equippables/FishingRodModel")]
     public class FishingRodModel : EquippableModel
     {
+        [Space, Header("Fishing Rod")]
         public float Range = 30;
         public float AimTolerance = 1;
 

@@ -5,5 +5,6 @@ namespace RandomIsleser
     [CreateAssetMenu(fileName = "HammerEquippableModel", menuName = "RandomIsler/Models/Equippables/HammerEquippableModel")]
     public class HammerModel : EquippableModel
     {
+        //[Space, Header("Hammer")]
     }
 }

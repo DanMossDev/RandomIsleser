@@ -73,6 +73,8 @@ namespace RandomIsleser
         [SerializeField] private FishingRodController _fishingRodController;
         [SerializeField] private CycloneJarController _cycloneJarController;
 
+        private Dictionary<Equippables, EquippableController> _equippableLookup;
+
         public EquippableController MainWeapon => _mainWeapon;
         
         //Cameras
@@ -202,6 +204,12 @@ namespace RandomIsleser
             SubscribeControls();
 
             CurrentState = new DefaultMovementState();
+            
+            _equippableLookup = new Dictionary<Equippables, EquippableController>()
+            {
+                {Equippables.FishingRod, _fishingRodController},
+                { Equippables.CycloneJar, _cycloneJarController}
+            };
         }
 
         private void OnDestroy()
@@ -478,6 +486,9 @@ namespace RandomIsleser
 
         private void ItemSlot1Pressed(bool held)
         {
+            if (CurrentState != _defaultMovementState)
+                return;
+            
             EquipItem(Slot1Item);
             
             if (Slot1Item.IsAimable) //TODO - handle what happens if z targetting
@@ -496,6 +507,17 @@ namespace RandomIsleser
             CurrentState.Back(this);
         }
         
+        #endregion
+        
+        #region EquipmentSlots
+
+        public void EquipItemInSlot1(Equippables item)
+        {
+            if (_equippableLookup.TryGetValue(item, out var controller))
+            {
+                Slot1Item = controller;
+            }
+        }
         #endregion
     }
 }

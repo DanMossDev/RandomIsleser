@@ -12,15 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de122e1b9b8d2d4dad84190515a41d6, type: 3}
   m_Name: FishingRodEquippableModel
   m_EditorClassIdentifier: 
+  Name:
+    m_TableReference:
+      m_TableCollectionName: GUID:88a590d5390cd9f4083e7405b9dcb2de
+    m_TableEntryReference:
+      m_KeyId: 11625918464
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   ItemIndex: 1
+  EquippableType: 1
+  Slottable: 1
+  Unlocked: 1
+  Sprite: {fileID: 21300000, guid: e6d1c20c7e7b1084e814b8690f632f14, type: 3}
+  Range: 30
+  AimTolerance: 0.1
+  WindUpTime: 0.5
+  CastTime: 0.5
+  GrappleSpeed: 45
   HitLayers:
     serializedVersion: 2
     m_Bits: 129
   InteractLayer:
     serializedVersion: 2
     m_Bits: 128
-  Range: 30
-  AimTolerance: 0.1
-  WindUpTime: 0.5
-  CastTime: 0.5
-  GrappleSpeed: 45
+  references:
+    version: 2
+    RefIds: []
