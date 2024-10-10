@@ -1,3 +1,4 @@
+using MossUtils;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -7,11 +8,12 @@ namespace RandomIsleser
     {
         [Header("Equippable Settings")] 
         public LocalizedString Name;
-        public int ItemIndex;
+        public int ItemIndex; //TODO consider cha
         public Equippables EquippableType;
+        public Unlockables UnlockableType;
 
         public bool Slottable = true;
-        public bool Unlocked = true;//TODO - make this point to save data
+        public bool Unlocked => Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.ItemUnlocked(UnlockableType);
         public Sprite Sprite;
     }
 }

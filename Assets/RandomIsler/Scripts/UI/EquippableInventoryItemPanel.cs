@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace RandomIsleser
 {
-    public class EquippableInventoryItem : MonoBehaviour
+    public class EquippableInventoryItemPanel : MonoBehaviour
     {
         public EquippableModel Item;
 

@@ -23,8 +23,8 @@ MonoBehaviour:
     m_LocalVariables: []
   ItemIndex: 1
   EquippableType: 1
+  UnlockableType: 4
   Slottable: 1
-  Unlocked: 1
   Sprite: {fileID: 21300000, guid: e6d1c20c7e7b1084e814b8690f632f14, type: 3}
   Range: 30
   AimTolerance: 0.1

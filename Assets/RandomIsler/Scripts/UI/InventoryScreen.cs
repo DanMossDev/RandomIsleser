@@ -23,9 +23,10 @@ namespace RandomIsleser
             if (!isPress)
                 return;
 
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out EquippableInventoryItem equippableInventoryItem))
+            if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out EquippableInventoryItemPanel equippableInventoryItem))
             {
-                PlayerController.Instance.EquipItemInSlot1(equippableInventoryItem.Item.EquippableType);
+                if (equippableInventoryItem.Item.Unlocked)
+                    PlayerController.Instance.EquipItemInSlot1(equippableInventoryItem.Item.EquippableType);
             }
         }
     }

@@ -7,8 +7,6 @@ namespace RandomIsleser
     {
         [SerializeField] private Transform[] _buoyancyPoints;
         
-        [SerializeField] private float _waterHeight = 0f;
-        
         [SerializeField] private float _underwaterDrag = 3;
         [SerializeField] private float _underwaterAngularDrag = 1;
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace MossUtils
@@ -7,7 +6,7 @@ namespace MossUtils
 	[Serializable]
 	public class SaveData
 	{
-		public int ExampleData;
+		public InventoryData InventoryData;
 		public SaveDataFlags ExampleFlagData;
         
 		#region Properties
@@ -17,6 +16,7 @@ namespace MossUtils
 		public void InitialiseSaveData()
 		{
 			ExampleFlagData = SaveDataFlags.None;
+			InventoryData = new InventoryData();
 		}
 
 		public void SetFlags(SaveDataFlags flag, bool value)
