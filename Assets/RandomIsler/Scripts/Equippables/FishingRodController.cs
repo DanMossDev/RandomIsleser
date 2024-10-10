@@ -86,7 +86,7 @@ namespace RandomIsleser
         {
             if (!_grappleHit)
             {
-                PlayerController.Instance.Animator.SetTrigger(Animations.FishingRodReturnHash);
+                PlayerController.Instance.EquipmentAnimator.SetTrigger(Animations.FishingRodReturnHash);
                 return;
             }
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);

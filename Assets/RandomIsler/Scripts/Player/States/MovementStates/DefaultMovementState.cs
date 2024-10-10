@@ -8,6 +8,11 @@ namespace RandomIsleser
             context.RotatePlayer();
         }
 
+        public override void OnExitState(PlayerController context, BasePlayerState nextState)
+        {
+            context.LocomotionAnimator.SetFloat(Animations.MovementSpeedHash, 0);
+        }
+
         public override void Roll(PlayerController context)
         {
             context.SetState(PlayerStates.RollMove);

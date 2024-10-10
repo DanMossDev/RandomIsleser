@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace RandomIsleser
 {
@@ -92,9 +93,20 @@ namespace RandomIsleser
         public Transform MainCameraTransform => _cameraTransform;
         
         private CharacterController _characterController;
-        private Animator _animator;
+        
+        
+        //IK and Animations
+        [SerializeField] private Animator _equipmentAnimator;
+        [SerializeField] private Animator _locomotionAnimator;
 
-        public Animator Animator => _animator;
+        [SerializeField] private TwoBoneIKConstraint _leftHand;
+        [SerializeField] private TwoBoneIKConstraint _rightHand;
+
+        [SerializeField] private IKTargetFollow _leftHandFollowIK;
+        [SerializeField] private IKTargetFollow _rightHandFollowIK;
+
+        public Animator EquipmentAnimator => _equipmentAnimator;
+        public Animator LocomotionAnimator => _locomotionAnimator;
         
         
         public static PlayerController Instance { get; private set; }
@@ -138,15 +150,42 @@ namespace RandomIsleser
             if (CurrentlyEquippedItem != null)
             {
                 CurrentlyEquippedItem.OnEquip();
-                _animator.SetBool(Animations.WeaponEquippedHash, true);
-                _animator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
+                _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, true);
+                _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, true);
+                _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
             }
-            else _animator.SetBool(Animations.WeaponEquippedHash, false);
+            else
+            {
+                _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, false);
+                _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, false);
+            }
         }
 
         public void SetGrapplePoint(Vector3 grapplePoint)
         {
             _grapplePoint = grapplePoint;
+        }
+
+        public void SetLeftHandIK(bool enable, Transform target = null)
+        {
+            _leftHandFollowIK.SetTarget(target);
+            if (!enable)
+            {
+                _leftHand.weight = 0;
+                return;
+            }
+            _leftHand.weight = 1;
+        }
+        
+        public void SetRightHandIK(bool enable, Transform target = null)
+        {
+            _rightHandFollowIK.SetTarget(target);
+            if (!enable)
+            {
+                _rightHand.weight = 0;
+                return;
+            }
+            _rightHand.weight = 1;
         }
         
         #endregion
@@ -199,7 +238,6 @@ namespace RandomIsleser
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
-            _animator = GetComponent<Animator>();
             
             SubscribeControls();
 
@@ -267,7 +305,7 @@ namespace RandomIsleser
         
         private void OnAnimatorMove()
         {
-            transform.rotation = _animator.rootRotation;
+            transform.rotation = _equipmentAnimator.rootRotation;
         }
         
         //UTILS
@@ -296,6 +334,7 @@ namespace RandomIsleser
                 movement = RotateVectorToCamera(_movementInput);
 
             movement *= _model.MovementSpeed * _stateSpeedMultiplier;
+            _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, movement.magnitude / _model.MovementSpeed);
             
             _movement.x = movement.x;
             _movement.z = movement.z;
@@ -329,6 +368,7 @@ namespace RandomIsleser
                 movement = RotateVectorToCamera(_movementInput);
 
             movement *= _model.SwimSpeed;
+            _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, movement.magnitude / _model.SwimSpeed);
             
             _movement.x = movement.x;
             _movement.z = movement.z;
@@ -374,14 +414,14 @@ namespace RandomIsleser
             _followCamera.m_YAxisRecentering.m_enabled = true;
             _aimCamera.transform.localRotation = Quaternion.identity;
             _aimCamera.SetActive(true);
-            _animator.SetBool(Animations.IsAimingHash, true);
+            _equipmentAnimator.SetBool(Animations.IsAimingHash, true);
         }
         
         public void EndAim()
         {
             _followCamera.m_YAxisRecentering.m_enabled = false;
             _aimCamera.SetActive(false);
-            _animator.SetBool(Animations.IsAimingHash, false);
+            _equipmentAnimator.SetBool(Animations.IsAimingHash, false);
             SetCanRotate(false);
             var seq = DOTween.Sequence();
             seq.AppendInterval(0.5f);
@@ -443,9 +483,9 @@ namespace RandomIsleser
 
         public void Attack()
         {
-            _animator.SetInteger(Animations.WeaponIndexHash, 0);
-            _animator.ResetTrigger(Animations.HammerAttackHash);
-            _animator.SetTrigger(Animations.HammerAttackHash);
+            _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, 0);
+            _equipmentAnimator.ResetTrigger(Animations.HammerAttackHash);
+            _equipmentAnimator.SetTrigger(Animations.HammerAttackHash);
         }
         
         

@@ -11,7 +11,7 @@ namespace RandomIsleser
         {
             _timeStarted = Time.time;
             _rollDirection = context.LastMoveDirection.normalized;
-            context.Animator.SetTrigger(Animations.RollHash);
+            context.EquipmentAnimator.SetTrigger(Animations.RollHash);
         }
         
         public override void OnUpdateState(PlayerController context)
@@ -24,7 +24,7 @@ namespace RandomIsleser
 
         public override void OnExitState(PlayerController context, BasePlayerState nextState)
         {
-            context.Animator.ResetTrigger(Animations.RollHash);
+            context.EquipmentAnimator.ResetTrigger(Animations.RollHash);
         }
     }
 }

@@ -28,11 +28,13 @@ namespace RandomIsleser
 
         protected override void Initialise()
         {
+            base.Initialise();
             _itemEquipped = true;
         }
 
         protected override void Cleanup()
         {
+            base.Cleanup();
             _itemEquipped = false;
             _chargingJump = false;
             _jumpChargeRatio = 0;
@@ -46,12 +48,13 @@ namespace RandomIsleser
             _heldItemParticles.Play();
             _chargingJump = true;
             _jumpChargeRatio = 0;
-            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, false);
-            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, true);
+            PlayerController.Instance.EquipmentAnimator.SetBool(Animations.CycloneJarChargingHash, false);
+            PlayerController.Instance.EquipmentAnimator.SetBool(Animations.CycloneJarJumpChargeHash, true);
         }
         
         public override void ReleaseItem()
         {
+            base.ReleaseItem();
             if (!_chargingJump)
                 return;
             if (_jumpChargeRatio > 1)
@@ -59,7 +62,7 @@ namespace RandomIsleser
 
             _heldItemParticles.Stop();
             _cycloneJumpParticles.Play();
-            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarJumpChargeHash, false);
+            PlayerController.Instance.EquipmentAnimator.SetBool(Animations.CycloneJarJumpChargeHash, false);
             PlayerController.Instance.JumpSetHeight(_model.JumpHeight * _jumpChargeRatio);
             _chargingJump = false;
         }
@@ -91,7 +94,7 @@ namespace RandomIsleser
                 FireItem(Vector3.zero, false);
             }
 
-            PlayerController.Instance.Animator.SetBool(Animations.CycloneJarChargingHash, inUse);
+            PlayerController.Instance.EquipmentAnimator.SetBool(Animations.CycloneJarChargingHash, inUse);
             _suckCollider.gameObject.SetActive(inUse);
         }
 
@@ -157,6 +160,7 @@ namespace RandomIsleser
 
         public override void OnUnequip()
         {
+            base.OnUnequip();
             PlayerController.Instance.SetState(PlayerStates.DefaultMove);
             PlayerController.Instance.CycloneCamera.SetActive(false);
 
@@ -166,6 +170,7 @@ namespace RandomIsleser
 
         public override void OnEquip()
         {
+            base.OnEquip();
             PlayerController.Instance.SetState(PlayerStates.CycloneCombat);
             CycloneCameraTarget.Instance.SetRotation();
             PlayerController.Instance.CycloneCamera.SetActive(true);
