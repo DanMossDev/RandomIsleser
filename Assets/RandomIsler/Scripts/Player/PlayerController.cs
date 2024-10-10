@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RandomIsleser
 {
@@ -46,6 +44,7 @@ namespace RandomIsleser
         public bool CanRotate => !_targetHeld && _canRotate;
         public bool CanAim => _isGrounded && CanAttack;
         public bool IsAttacking => CurrentState is AttackCombatState;
+        public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState;
 
         public Vector3 AimDirection => _aimCamera.transform.forward;
         
@@ -79,7 +78,8 @@ namespace RandomIsleser
         
         //Cameras
         [Header("Cameras")]
-        [SerializeField] private CinemachineFreeLook _mainCamera;
+        [SerializeField] private Camera _mainCamera;
+        [SerializeField] private CinemachineFreeLook _followCamera;
         [SerializeField] private GameObject _aimCamera;
         [SerializeField] private GameObject _cycloneCamera;
         
@@ -262,7 +262,7 @@ namespace RandomIsleser
             
             CurrentState.OnUpdateState(this);
             
-            _mainCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
+            _followCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
         }
         
         private void OnAnimatorMove()
@@ -368,7 +368,10 @@ namespace RandomIsleser
 
         public void BeginAim()
         {
-            _mainCamera.m_YAxisRecentering.m_enabled = true;
+            var camForward = _mainCamera.transform.forward;
+            camForward.y = 0;
+            SnapToInputDirection(camForward);
+            _followCamera.m_YAxisRecentering.m_enabled = true;
             _aimCamera.transform.localRotation = Quaternion.identity;
             _aimCamera.SetActive(true);
             _animator.SetBool(Animations.IsAimingHash, true);
@@ -376,7 +379,7 @@ namespace RandomIsleser
         
         public void EndAim()
         {
-            _mainCamera.m_YAxisRecentering.m_enabled = false;
+            _followCamera.m_YAxisRecentering.m_enabled = false;
             _aimCamera.SetActive(false);
             _animator.SetBool(Animations.IsAimingHash, false);
             SetCanRotate(false);
@@ -392,6 +395,13 @@ namespace RandomIsleser
         {
             var camEulerAngles = _aimCamera.transform.eulerAngles;
             camEulerAngles.x -= _cameraInput.y * _model.AimSpeed * Time.deltaTime;
+            
+            var camEulerX = camEulerAngles.x;
+            if (camEulerX > 180) camEulerX -= 360;
+
+            if (Mathf.Abs(camEulerX) > 85)
+                camEulerAngles.x = Mathf.Clamp(camEulerX, -85, 85);
+            
             _aimCamera.transform.eulerAngles = camEulerAngles;
 
             var transEulerAngles = transform.eulerAngles;
@@ -486,7 +496,7 @@ namespace RandomIsleser
 
         private void ItemSlot1Pressed(bool held)
         {
-            if (CurrentState != _defaultMovementState)
+            if (!CanUseItem)
                 return;
             
             EquipItem(Slot1Item);
