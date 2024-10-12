@@ -42,6 +42,7 @@ namespace RandomIsleser
 			if (loadedSaveData != null)
 			{
 				_localSaveData = loadedSaveData;
+				Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
 				return true;
 			}
 

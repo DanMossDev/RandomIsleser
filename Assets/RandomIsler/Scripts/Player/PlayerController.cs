@@ -488,7 +488,6 @@ namespace RandomIsleser
             _equipmentAnimator.SetTrigger(Animations.HammerAttackHash);
         }
         
-        
         #region Input
         private void SetMoveInput(Vector2 movement)
         {

@@ -4,9 +4,9 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    public class EquippableModel : ScriptableObject
+    public class EquippableModel : PickupModel
     {
-        [Header("Equippable Settings")] 
+        [Space, Header("Equippable Settings")] 
         public LocalizedString Name;
         public int ItemIndex; //TODO consider cha
         public Equippables EquippableType;
@@ -15,5 +15,10 @@ namespace RandomIsleser
         public bool Slottable = true;
         public bool Unlocked => Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.ItemUnlocked(UnlockableType);
         public Sprite Sprite;
+
+        public override void PickUp()
+        {
+            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.SetItemUnlocked(UnlockableType, true);
+        }
     }
 }

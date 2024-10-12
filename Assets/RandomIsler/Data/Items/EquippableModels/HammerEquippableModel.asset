@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980023bbda9e356459b7b6b096f30ef8, type: 3}
   m_Name: HammerEquippableModel
   m_EditorClassIdentifier: 
+  Type: 3
   Name:
     m_TableReference:
       m_TableCollectionName: GUID:88a590d5390cd9f4083e7405b9dcb2de

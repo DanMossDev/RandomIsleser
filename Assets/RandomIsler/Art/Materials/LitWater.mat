@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LitWater
-  m_Shader: {fileID: -6465566751694194690, guid: dc55bf05dba787f46a77aab6b1d0d808,
+  m_Shader: {fileID: -6465566751694194690, guid: 329282ce85218c44bbb4820156a4c491,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -47,21 +47,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AngleChangeSpeed: 0.05
+    - _AngleOffset: 10
     - _Choppiness: 0.02
-    - _Flow_Speed: 0.005
-    - _Flow_Strength: 0.01
-    - _Foam_Distance: 2
+    - _DarkFoamOffset: 0.5
+    - _Flow_Speed: 0.01
+    - _Flow_Strength: 0.0075
+    - _Foam_Distance: 1.5
+    - _IslandDensity: 0.25
     - _Noise_Scale: 1
     - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Size: 0.1
+    - _Size: 0.25
+    - _Thickness: 0.001
+    - _ThicknessFalloff: 0.1
     - _USE_RANDOM: 0
     - _WaveSpeed: 5
     - _Wave_Amplitude: 1.25
     - _Wave_Frequency: 0.1
-    - _test: 0
     m_Colors:
+    - _DarkFoamOffset: {r: 5, g: 5, b: 0, a: 0}
     - _Dark_Foam_Colour: {r: 0, g: 0.34716967, b: 0.43396226, a: 0}
     - _Light_Foam_Colour: {r: 1, g: 1, b: 1, a: 0}
     - _Water_Colour: {r: 0, g: 0.7988935, b: 1, a: 0}

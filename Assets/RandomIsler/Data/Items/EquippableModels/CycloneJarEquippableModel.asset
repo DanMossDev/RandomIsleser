@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be878bdc19e79cd4099f2f822c6631e0, type: 3}
   m_Name: CycloneJarEquippableModel
   m_EditorClassIdentifier: 
+  Type: 3
   Name:
     m_TableReference:
       m_TableCollectionName: GUID:88a590d5390cd9f4083e7405b9dcb2de

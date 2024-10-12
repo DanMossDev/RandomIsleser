@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de122e1b9b8d2d4dad84190515a41d6, type: 3}
   m_Name: FishingRodEquippableModel
   m_EditorClassIdentifier: 
+  Type: 3
   Name:
     m_TableReference:
       m_TableCollectionName: GUID:88a590d5390cd9f4083e7405b9dcb2de
