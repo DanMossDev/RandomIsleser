@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BigCurrencyPickupModel
   m_EditorClassIdentifier: 
   Type: 1
-  _value: 1
+  _value: 10
