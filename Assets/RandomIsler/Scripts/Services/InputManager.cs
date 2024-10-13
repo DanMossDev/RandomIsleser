@@ -8,6 +8,7 @@ namespace RandomIsleser
     {
         [SerializeField] private InputActionAsset _inputActions;
         
+        public static event Action InteractInput;
         public static event Action<Vector2> MoveInput;
         public static event Action<Vector2> CameraInput;
         public static event Action RollInput;
@@ -50,6 +51,8 @@ namespace RandomIsleser
 
         private void Subscribe()
         {
+            _inputActions["Interact"].performed += OnInteract;
+            
             _inputActions["Move"].started += OnMove;
             _inputActions["Move"].performed += OnMove;
             _inputActions["Move"].canceled += OnMove;
@@ -81,6 +84,8 @@ namespace RandomIsleser
 
         private void Unsubscribe()
         {
+            _inputActions["Interact"].performed -= OnInteract;
+            
             _inputActions["Move"].started -= OnMove;
             _inputActions["Move"].performed -= OnMove;
             _inputActions["Move"].canceled -= OnMove;
@@ -108,6 +113,11 @@ namespace RandomIsleser
             _inputActions["Back"].performed -= OnBack;
             
             _inputActions["Pause"].performed -= OnPause;
+        }
+
+        private void OnInteract(InputAction.CallbackContext context)
+        {
+            InteractInput?.Invoke();
         }
 
         private void OnMove(InputAction.CallbackContext context)

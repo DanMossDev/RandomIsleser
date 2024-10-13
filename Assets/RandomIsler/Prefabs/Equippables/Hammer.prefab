@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ddbdac90720dc4d831765e4d6ffb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isAimable: 1
+  _isAimable: 0
   _leftHandIKTarget: {fileID: 3292192960237246080}
   _rightHandIKTarget: {fileID: 2523815956160161867}
   _model: {fileID: 11400000, guid: c1bd8c1c535bd3846a99771562f42a7d, type: 2}

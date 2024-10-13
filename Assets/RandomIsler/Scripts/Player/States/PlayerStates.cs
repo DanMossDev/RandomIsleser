@@ -6,6 +6,7 @@ namespace RandomIsleser
         
         //Movement
         DefaultMove,
+        OnShipMove,
         RollMove,
         SwimMove,
         GrappleMove,

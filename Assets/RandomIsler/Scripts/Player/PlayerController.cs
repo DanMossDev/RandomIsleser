@@ -12,6 +12,11 @@ namespace RandomIsleser
         public PlayerModel PlayerModel => _model;
         
         //Variables
+        private Interactable _currentInteractable;
+        private bool _hasInteractable;
+        
+        public bool HasInteractable => _hasInteractable;
+        
         //Cached Input
         private Vector3 _movementInput;
         private Vector2 _cameraInput;
@@ -54,7 +59,8 @@ namespace RandomIsleser
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
-        
+        private readonly OnShipMovementState _onShipMovementState = new OnShipMovementState();
+            
         private readonly AimCombatState _aimCombatState = new AimCombatState();
         private readonly AttackCombatState _attackCombatState = new AttackCombatState();
         
@@ -201,6 +207,8 @@ namespace RandomIsleser
                     return _rollMovementState;
                 case PlayerStates.SwimMove:
                     return _swimMovementState;
+                case PlayerStates.OnShipMove:
+                    return _onShipMovementState;
                 case PlayerStates.GrappleMove:
                     return _grappleMovementState;
                 case PlayerStates.AimCombat:
@@ -246,7 +254,7 @@ namespace RandomIsleser
             _equippableLookup = new Dictionary<Equippables, EquippableController>()
             {
                 {Equippables.FishingRod, _fishingRodController},
-                { Equippables.CycloneJar, _cycloneJarController}
+                {Equippables.CycloneJar, _cycloneJarController}
             };
         }
 
@@ -257,6 +265,7 @@ namespace RandomIsleser
 
         public void SubscribeControls()
         {
+            InputManager.InteractInput += SetInteractInput;
             InputManager.MoveInput += SetMoveInput;
             InputManager.RollInput += SetRollInput;
             InputManager.CameraInput += SetCameraInput;
@@ -270,6 +279,7 @@ namespace RandomIsleser
 
         public void UnsubscribeControls()
         {
+            InputManager.InteractInput -= SetInteractInput;
             InputManager.MoveInput -= SetMoveInput;
             InputManager.RollInput -= SetRollInput;
             InputManager.CameraInput -= SetCameraInput;
@@ -322,6 +332,29 @@ namespace RandomIsleser
         }
 
         //MOVEMENT
+        public void SetInteractable(Interactable interactable)
+        {
+            if (_currentInteractable == interactable) 
+                return;
+
+            _hasInteractable = interactable != null;
+            _currentInteractable = interactable;
+        }
+
+        public void UnsetInteractable(Interactable interactable)
+        {
+            if (_currentInteractable != interactable) 
+                return;
+
+            _hasInteractable = false;
+            _currentInteractable = null;
+        }
+        
+        public void Interact()
+        {
+            _currentInteractable.Interact();
+        }
+        
         public void Move()
         {
             if (!_isGrounded)
@@ -493,7 +526,13 @@ namespace RandomIsleser
             _equipmentAnimator.SetTrigger(Animations.HammerAttackHash);
         }
         
-        #region Input
+#region Input
+
+        private void SetInteractInput()
+        {
+            CurrentState.Interact(this);
+        }
+        
         private void SetMoveInput(Vector2 movement)
         {
             _movementInput.x = movement.x;

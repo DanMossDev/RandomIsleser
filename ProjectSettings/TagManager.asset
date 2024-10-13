@@ -13,9 +13,9 @@ TagManager:
   - UI
   - Player
   - GrappleTarget
-  - OnlyColliderWithPlayer
-  - 
-  - 
+  - PlayerOnly
+  - Interactable
+  - InteractableOnly
   - 
   - 
   - 

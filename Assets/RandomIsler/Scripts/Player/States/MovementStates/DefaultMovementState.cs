@@ -13,6 +13,14 @@ namespace RandomIsleser
             context.LocomotionAnimator.SetFloat(Animations.MovementSpeedHash, 0);
         }
 
+        public override void Interact(PlayerController context)
+        {
+            if (!context.HasInteractable)
+                return;
+
+            context.Interact();
+        }
+
         public override void Roll(PlayerController context)
         {
             context.SetState(PlayerStates.RollMove);

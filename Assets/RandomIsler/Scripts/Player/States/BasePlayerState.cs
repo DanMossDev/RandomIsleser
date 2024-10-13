@@ -10,6 +10,8 @@ namespace RandomIsleser
 
         public virtual bool TryAim(PlayerController context) { return false; }
         
+        public virtual void Interact(PlayerController context) { }
+        
         //Combat Methods
         public virtual void HammerAttack(PlayerController context) { }
         
