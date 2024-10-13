@@ -89,6 +89,7 @@ namespace RandomIsleser
         [SerializeField] private CinemachineFreeLook _followCamera;
         [SerializeField] private GameObject _aimCamera;
         [SerializeField] private GameObject _cycloneCamera;
+        [SerializeField] private GameObject _boatCamera;
         
         public GameObject CycloneCamera => _cycloneCamera;
         
@@ -305,7 +306,7 @@ namespace RandomIsleser
 
         private void FixedUpdate()
         {
-            if (CurrentState is not SwimMovementState && GetHeightRelativeToWater() < 0)
+            if (CurrentState is not SwimMovementState and not OnShipMovementState && GetHeightRelativeToWater() < 0)
                 SetState(PlayerStates.SwimMove);
             
             CurrentState.OnUpdateState(this);
@@ -316,6 +317,22 @@ namespace RandomIsleser
         private void OnAnimatorMove()
         {
             transform.rotation = _equipmentAnimator.rootRotation;
+        }
+
+        public void BoardShip()
+        {
+            UnsubscribeControls();
+            BoatController.Instance.SubscribeControls();
+            transform.parent = BoatController.Instance.transform;
+            _boatCamera.SetActive(true);
+        }
+
+        public void DisembarkShip()
+        {
+            SubscribeControls();
+            BoatController.Instance.UnsubscribeControls();
+            transform.parent = null;
+            _boatCamera.SetActive(false);
         }
         
         //UTILS

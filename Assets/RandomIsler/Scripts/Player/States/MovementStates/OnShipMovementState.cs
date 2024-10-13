@@ -4,12 +4,12 @@ namespace RandomIsleser
 	{
 		public override void OnEnterState(PlayerController context, BasePlayerState previousState)
 		{
-			context.UnsubscribeControls();
+			context.BoardShip();
 		}
 		
 		public override void OnExitState(PlayerController context, BasePlayerState previousState)
 		{
-			context.SubscribeControls();
+			context.DisembarkShip();
 		}
 	}
 }
