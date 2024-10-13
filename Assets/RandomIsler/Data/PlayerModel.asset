@@ -15,8 +15,9 @@ MonoBehaviour:
   _movementSpeed: 10
   _rotationSpeed: 20
   _attackingRotationMultiplier: 0.3
+  _gravityMultiplier: 5
   _rollSpeed: 10
   _rollDuration: 0.5
   _swimSpeed: 5
-  _buoyancyForce: 14
+  _buoyancyForce: 100
   _aimSpeed: 90

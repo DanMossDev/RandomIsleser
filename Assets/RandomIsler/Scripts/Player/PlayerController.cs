@@ -334,7 +334,12 @@ namespace RandomIsleser
                 movement = RotateVectorToCamera(_movementInput);
 
             movement *= _model.MovementSpeed * _stateSpeedMultiplier;
+            
             _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, movement.magnitude / _model.MovementSpeed);
+            if (_targetHeld)
+                _locomotionAnimator.SetFloat(Animations.HorizontalMovementSpeedHash, (_movementInput.x + 1) / 2);
+            else
+                _locomotionAnimator.SetFloat(Animations.HorizontalMovementSpeedHash, 0.5f);
             
             _movement.x = movement.x;
             _movement.z = movement.z;
@@ -515,7 +520,7 @@ namespace RandomIsleser
 
         private void SetTargetInput(bool isHeld)
         {
-            //_targetHeld = isHeld;
+            _targetHeld = isHeld;
         }
 
         private void SetSuctionInput(bool isHeld)

@@ -16,5 +16,6 @@ namespace RandomIsleser
         public static int CycloneJarChargingHash = Animator.StringToHash("CycloneJarCharging");
         public static int CycloneJarJumpChargeHash = Animator.StringToHash("CycloneJarJumpCharge");
         public static int MovementSpeedHash = Animator.StringToHash("MovementSpeed");
+        public static int HorizontalMovementSpeedHash = Animator.StringToHash("HorizontalMovementSpeed");
     }
 }
