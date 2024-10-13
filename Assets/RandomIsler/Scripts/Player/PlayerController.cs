@@ -22,6 +22,8 @@ namespace RandomIsleser
         private Vector2 _cameraInput;
         private Vector3 _cycloneCameraInput = new Vector3();
         private bool _targetHeld;
+        
+        public Vector3 MovementInput => _movementInput;
 
         //Movement
         private Vector3 _movement;
@@ -97,11 +99,10 @@ namespace RandomIsleser
         //Cached components
         [Header("Cached Components")]
         [SerializeField] private Transform _cameraTransform;
+        private CharacterController _characterController;
 
         public Transform MainCameraTransform => _cameraTransform;
-        
-        private CharacterController _characterController;
-        
+        public CharacterController CharacterController => _characterController;
         
         //IK and Animations
         [SerializeField] private Animator _equipmentAnimator;
@@ -328,7 +329,7 @@ namespace RandomIsleser
         
         private void OnAnimatorMove()
         {
-            transform.rotation = _equipmentAnimator.rootRotation;
+            //transform.rotation = _equipmentAnimator.rootRotation;
         }
 
         public void BoardShip()
@@ -408,6 +409,11 @@ namespace RandomIsleser
             
             _characterController.Move(Time.deltaTime * _movement);
             _isGrounded = _characterController.isGrounded;
+        }
+
+        public void MoveRaw(Vector3 deltaPos)
+        {
+            _characterController.Move(deltaPos);
         }
         
         public void Roll(Vector3 rollDirection)

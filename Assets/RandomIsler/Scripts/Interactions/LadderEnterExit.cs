@@ -15,14 +15,13 @@ namespace RandomIsleser
         
         private void OnTriggerStay(Collider other)
         {
-            
-            var lastMoveDir = _playerController.LastMoveDirection;
-            if (lastMoveDir.z == 0)
+            var upwardsMovement = _playerController.MovementInput.z;
+            if (upwardsMovement == 0)
                 return;
             
-            if (_isTop && lastMoveDir.z > 0)
+            if (_isTop && upwardsMovement > 0)
                 _playerController.ExitLadder();
-            else if (!_isTop && lastMoveDir.z < 0)
+            else if (!_isTop && upwardsMovement < 0)
                 _playerController.ExitLadder();
         }
     }
