@@ -10,8 +10,9 @@ namespace RandomIsleser
         RollMove,
         SwimMove,
         GrappleMove,
-        CastRodMovement,
-        RodGrappleMovement,
+        CastRodMove,
+        RodGrappleMove,
+        LadderMove,
         
         //Combat
         AimCombat,

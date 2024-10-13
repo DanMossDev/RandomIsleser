@@ -2173,7 +2173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5601a51ba96b0e445ab8eb887b15b697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateToSetOnStart: 9
+  _stateToSetOnStart: 10
   _stateToSetOnEnd: 0
 --- !u!1102 &6659322775531850346
 AnimatorState:

@@ -33,7 +33,7 @@ namespace RandomIsleser
 
         public override void Back(PlayerController context)
         {
-            context.EquipItem(null);
+            context.UnequipItem();
         }
     }
 }

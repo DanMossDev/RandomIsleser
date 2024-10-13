@@ -60,6 +60,7 @@ namespace RandomIsleser
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
         private readonly OnShipMovementState _onShipMovementState = new OnShipMovementState();
+        private readonly LadderMovementState _ladderMovementState = new LadderMovementState();
             
         private readonly AimCombatState _aimCombatState = new AimCombatState();
         private readonly AttackCombatState _attackCombatState = new AttackCombatState();
@@ -154,18 +155,22 @@ namespace RandomIsleser
             if (CurrentlyEquippedItem != null)
                 CurrentlyEquippedItem.OnUnequip();
             CurrentlyEquippedItem = equippable;
-            if (CurrentlyEquippedItem != null)
-            {
-                CurrentlyEquippedItem.OnEquip();
-                _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, true);
-                _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, true);
-                _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
-            }
-            else
-            {
-                _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, false);
-                _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, false);
-            }
+            CurrentlyEquippedItem.OnEquip();
+            _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, true);
+            _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, true);
+            _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
+            
+        }
+
+        public void UnequipItem()
+        {
+            if (CurrentlyEquippedItem == null)
+                return;
+            
+            CurrentlyEquippedItem.OnUnequip();
+            CurrentlyEquippedItem = null;
+            _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, false);
+            _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, false);
         }
 
         public void SetGrapplePoint(Vector3 grapplePoint)
@@ -212,13 +217,15 @@ namespace RandomIsleser
                     return _onShipMovementState;
                 case PlayerStates.GrappleMove:
                     return _grappleMovementState;
+                case PlayerStates.LadderMove:
+                    return _ladderMovementState;
                 case PlayerStates.AimCombat:
                     return _aimCombatState;
                 case PlayerStates.AttackCombat:
                     return _attackCombatState;
-                case PlayerStates.CastRodMovement:
+                case PlayerStates.CastRodMove:
                     return _castRodMovementState;
-                case PlayerStates.RodGrappleMovement:
+                case PlayerStates.RodGrappleMove:
                     return _rodGrappleMovementState;
                 case PlayerStates.CycloneCombat:
                     return _cycloneCombatState;
@@ -436,6 +443,23 @@ namespace RandomIsleser
             {
                 SetState(PlayerStates.DefaultMove);
             }
+        }
+
+        public void LadderMove()
+        {
+            if (Mathf.Abs(_movementInput.z) < 0.3f)
+                return;
+            
+            _locomotionAnimator.SetTrigger(_movementInput.z > 0 ? Animations.AscendLadderHash : Animations.DescendLadderHash);
+        }
+
+        public void LadderRootMovement(bool isAscending)
+        {
+            var ladderSpeed = _model.LadderClimbSpeed * Time.deltaTime;
+            if (!isAscending)
+                ladderSpeed *= -1;
+
+            _characterController.Move(ladderSpeed * Vector3.up);
         }
 
         public void JumpSetHeight(float height)

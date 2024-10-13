@@ -5,6 +5,8 @@ namespace RandomIsleser
 {
     public class BoatController : MonoSingleton<BoatController>, Interactable
     {
+        [SerializeField] private Transform _playerSeatedPosition;
+        
         private Vector3 _movementInput;
         private Vector3 _cameraInput;
 
@@ -12,7 +14,8 @@ namespace RandomIsleser
         
         public float turnSpeed = 10;
         public float moveSpeed = 10;
-       
+
+        private PlayerController _playerController;
         private Rigidbody _rigidbody;
         private BuoyancyController _buoyancyController;
         
@@ -21,6 +24,7 @@ namespace RandomIsleser
         {
             _rigidbody = GetComponent<Rigidbody>();
             _buoyancyController = GetComponent<BuoyancyController>();
+            _playerController = PlayerController.Instance;
         }
 
         public void SubscribeControls()
@@ -99,7 +103,7 @@ namespace RandomIsleser
 
         public void Interact()
         {
-            PlayerController.Instance.SetState(PlayerStates.OnShipMove);
+            _playerController.SetState(PlayerStates.OnShipMove);
         }
     }
 }

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6649203123876495358}
   - component: {fileID: 5684678081235316353}
   - component: {fileID: 1877438292560461757}
+  - component: {fileID: 7745359633866341131}
+  - component: {fileID: 4318010588878241930}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -85,9 +87,10 @@ MonoBehaviour:
   _followCamera: {fileID: 0}
   _aimCamera: {fileID: 5013485157140722283}
   _cycloneCamera: {fileID: 0}
+  _boatCamera: {fileID: 0}
   _cameraTransform: {fileID: 0}
   _equipmentAnimator: {fileID: 3262418683429648459}
-  _locomotionAnimator: {fileID: 1352361387745240122}
+  _locomotionAnimator: {fileID: 7745359633866341131}
   _leftHand: {fileID: 4342225344508735292}
   _rightHand: {fileID: 4530825717716945170}
   _leftHandFollowIK: {fileID: 4292793109261610229}
@@ -119,6 +122,68 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &7745359633866341131
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617277739740089393}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5713cca55ea7bf14eb5228bd09a7d1a1, type: 3}
+  m_Controller: {fileID: 9100000, guid: 17306897033d8234a8f373c49360e595, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4318010588878241930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617277739740089393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 7595129693135894632}
+    m_Active: 1
+  m_Effectors:
+  - m_Transform: {fileID: 4910226862367555136}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 4910226862367555136}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 4910226862367555136}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
 --- !u!1 &2567365166462227988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,31 +1586,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
+        type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 17306897033d8234a8f373c49360e595, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 5866666021909216657, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 5713cca55ea7bf14eb5228bd09a7d1a1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5886481704694310812}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 235887897105020203}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5713cca55ea7bf14eb5228bd09a7d1a1, type: 3}
 --- !u!4 &1219247215767389870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6000407479487422213, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
-    type: 3}
-  m_PrefabInstance: {fileID: 4876862030847596971}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1352361387745240122 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
     type: 3}
   m_PrefabInstance: {fileID: 4876862030847596971}
   m_PrefabAsset: {fileID: 0}
@@ -1573,52 +1639,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4876862030847596971}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5723918979686196474 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
-    type: 3}
-  m_PrefabInstance: {fileID: 4876862030847596971}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &235887897105020203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5723918979686196474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 7595129693135894632}
-    m_Active: 1
-  m_Effectors:
-  - m_Transform: {fileID: 4910226862367555136}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 4910226862367555136}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 4910226862367555136}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
 --- !u!4 &6492982196010821219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 5713cca55ea7bf14eb5228bd09a7d1a1,
