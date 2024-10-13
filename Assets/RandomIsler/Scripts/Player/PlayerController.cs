@@ -199,6 +199,11 @@ namespace RandomIsleser
             }
             _rightHand.weight = 1;
         }
+
+        public void ExitLadder()
+        {
+            _locomotionAnimator.SetTrigger(Animations.ExitLadderHash);
+        }
         
         #endregion
         

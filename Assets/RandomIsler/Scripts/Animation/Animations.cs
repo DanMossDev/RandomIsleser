@@ -20,5 +20,6 @@ namespace RandomIsleser
         public static int OnLadderHash = Animator.StringToHash("OnLadder");
         public static int AscendLadderHash = Animator.StringToHash("AscendLadder");
         public static int DescendLadderHash = Animator.StringToHash("DescendLadder");
+        public static int ExitLadderHash = Animator.StringToHash("ExitLadder");
     }
 }
