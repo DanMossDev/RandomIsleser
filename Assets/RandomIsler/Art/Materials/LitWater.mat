@@ -70,7 +70,7 @@ Material:
     - _DarkFoamOffset: {r: 5, g: 5, b: 0, a: 0}
     - _Dark_Foam_Colour: {r: 0, g: 0.34716967, b: 0.43396226, a: 0}
     - _Light_Foam_Colour: {r: 1, g: 1, b: 1, a: 0}
-    - _Water_Colour: {r: 0, g: 0.7988935, b: 1, a: 0}
+    - _Water_Colour: {r: 0, g: 0.59842587, b: 1, a: 0}
     - _test: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

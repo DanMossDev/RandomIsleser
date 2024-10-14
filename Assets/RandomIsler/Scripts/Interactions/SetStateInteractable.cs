@@ -7,7 +7,7 @@ namespace RandomIsleser
         [SerializeField] private PlayerStates _state;
         public void Interact()
         {
-            PlayerController.Instance.SetState(_state);
+            PlayerController.Instance.SetState(_state, transform);
         }
     }
 }

@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6124939923752234847}
   - component: {fileID: 6572543499455412292}
   - component: {fileID: 3987513019654635452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 5628049455106762768}
   - component: {fileID: 4076431510531818356}
   - component: {fileID: 3651425957002201261}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ Transform:
   m_GameObject: {fileID: 5983559649474572221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1500001, z: 0}
+  m_LocalPosition: {x: 0, y: 1.6500001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 512666064818273288}
   - component: {fileID: 664247239955305844}
   - component: {fileID: 124357119942877607}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ladder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

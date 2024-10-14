@@ -19,8 +19,6 @@ namespace RandomIsleser
         
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            
-            
             if (_disableCollision)
                 _playerTransform.localPosition += animator.deltaPosition;
             else

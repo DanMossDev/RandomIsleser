@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
@@ -55,6 +57,8 @@ namespace RandomIsleser
         public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState;
 
         public Vector3 AimDirection => _aimCamera.transform.forward;
+
+        [NonSerialized] public Transform StateChangeCause;
         
         //States
         public BasePlayerState CurrentState { get; private set; }
@@ -141,6 +145,12 @@ namespace RandomIsleser
             SetState(GetState(newState));
         }
         
+        public void SetState(PlayerStates newState, Transform cause)
+        {
+            StateChangeCause = cause;
+            SetState(GetState(newState));
+        }
+        
         private void SetState(BasePlayerState newState)
         {
             CurrentState.OnExitState(this, newState);
@@ -203,7 +213,8 @@ namespace RandomIsleser
 
         public void ExitLadder()
         {
-            _locomotionAnimator.SetTrigger(Animations.ExitLadderHash);
+            if (CurrentState is LadderMovementState)
+                _locomotionAnimator.SetTrigger(Animations.ExitLadderHash);
         }
         
         #endregion
@@ -329,7 +340,8 @@ namespace RandomIsleser
         
         private void OnAnimatorMove()
         {
-            //transform.rotation = _equipmentAnimator.rootRotation;
+            if (CurrentState is AttackCombatState)
+                transform.rotation = _equipmentAnimator.rootRotation;
         }
 
         public void BoardShip()
@@ -384,7 +396,27 @@ namespace RandomIsleser
         {
             _currentInteractable.Interact();
         }
-        
+
+        public async Task MoveToTargetPosition(Vector3 target, float giveUpTime = -1)
+        {
+            float timeBegan = Time.time;
+            UnsubscribeControls();
+            _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, 0.5f);
+
+            while (Vector3.SqrMagnitude(transform.position - target) > 0.01f)
+            {
+                var direction = target - transform.position;
+                _characterController.Move(direction.normalized * Time.deltaTime);
+                RotatePlayer(direction);
+                await Task.Yield();
+
+                if (giveUpTime > 0 && Time.time - timeBegan > giveUpTime)
+                    break;
+            }
+            _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, 0);
+            SubscribeControls();
+        }
+
         public void Move()
         {
             if (!_isGrounded)
@@ -464,14 +496,7 @@ namespace RandomIsleser
             _locomotionAnimator.SetTrigger(_movementInput.z > 0 ? Animations.AscendLadderHash : Animations.DescendLadderHash);
         }
 
-        public void LadderRootMovement(bool isAscending)
-        {
-            var ladderSpeed = _model.LadderClimbSpeed * Time.deltaTime;
-            if (!isAscending)
-                ladderSpeed *= -1;
-
-            _characterController.Move(ladderSpeed * Vector3.up);
-        }
+        [SerializeField] private LayerMask _ladderLayers;
 
         public void JumpSetHeight(float height)
         {
@@ -546,6 +571,12 @@ namespace RandomIsleser
             if (CanRotate)
                 RotateTowards(RotateVectorToCamera(_movementInput));
         }
+
+        public void RotatePlayer(Vector3 direction)
+        {
+            if (CanRotate)
+                RotateTowards(direction);
+        }
         
         public void CycloneRotatePlayer()
         {
@@ -557,6 +588,11 @@ namespace RandomIsleser
         {
             if (direction != Vector3.zero)
                 transform.forward = direction.normalized;
+        }
+
+        public void ResetUp()
+        {
+            transform.up = Vector3.up;
         }
 
         private void RotateTowards(Vector3 direction)
