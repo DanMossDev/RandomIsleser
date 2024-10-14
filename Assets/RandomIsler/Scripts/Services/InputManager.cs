@@ -21,6 +21,8 @@ namespace RandomIsleser
         public static event Action PauseInput;
         public static event Action BackInput;
 
+        public static event Action<bool> TabInput;
+
         
         //Input cache
         private Vector2 _moveInput;
@@ -80,6 +82,9 @@ namespace RandomIsleser
             _inputActions["Back"].performed += OnBack;
             
             _inputActions["Pause"].performed += OnPause;
+            
+            _inputActions["LeftTab"].performed += OnLeftTab;
+            _inputActions["RightTab"].performed += OnRightTab;
         }
 
         private void Unsubscribe()
@@ -113,6 +118,9 @@ namespace RandomIsleser
             _inputActions["Back"].performed -= OnBack;
             
             _inputActions["Pause"].performed -= OnPause;
+            
+            _inputActions["LeftTab"].performed -= OnLeftTab;
+            _inputActions["RightTab"].performed -= OnRightTab;
         }
 
         private void OnInteract(InputAction.CallbackContext context)
@@ -191,6 +199,16 @@ namespace RandomIsleser
         private void OnPause(InputAction.CallbackContext context)
         {
             PauseInput?.Invoke();
+        }
+
+        private void OnLeftTab(InputAction.CallbackContext context)
+        {
+            TabInput?.Invoke(false);
+        }
+        
+        private void OnRightTab(InputAction.CallbackContext context)
+        {
+            TabInput?.Invoke(true);
         }
     }
 }

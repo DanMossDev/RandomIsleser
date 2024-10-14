@@ -8,7 +8,7 @@ namespace RandomIsleser
             
             var heightAdjustedPos = context.StateChangeCause.position;
             heightAdjustedPos.y = context.transform.position.y;
-            await context.MoveToTargetPosition(heightAdjustedPos + context.StateChangeCause.forward, 2);
+            await context.MoveToTargetPosition(heightAdjustedPos + context.StateChangeCause.forward *  context.PlayerModel.LadderClimbDistance, 2);
             context.SnapToInputDirection(context.StateChangeCause.forward * -1);
             context.LocomotionAnimator.SetBool(Animations.OnLadderHash, true);
         }
