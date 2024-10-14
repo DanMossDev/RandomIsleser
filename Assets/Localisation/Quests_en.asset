@@ -27,6 +27,15 @@ MonoBehaviour:
       special!</color>
     m_Metadata:
       m_Items: []
+  - m_Id: 22233983840256
+    m_Localized: Test Objective
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22254926000128
+    m_Localized: There are no objectives, only subjective reality, did you really
+      think you could discern the truth of the world?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

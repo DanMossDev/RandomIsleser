@@ -7,7 +7,7 @@ namespace MossUtils
 {
 	public class SaveHandlerPersistent : ISaveHandler
 	{
-		private static readonly string kSaveFilePath = $"{Application.persistentDataPath}/saves/save.ppg";
+		public static readonly string kSaveFilePath = $"{Application.persistentDataPath}/saves/save.ppg";
 		public async Task<bool> SaveGame(SaveData dataToSave)
 		{
 			try

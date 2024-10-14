@@ -1,17 +1,18 @@
 using System;
-using UnityEngine.Localization;
+using System.Collections.Generic;
 
 namespace RandomIsleser
 {
     [Serializable]
     public class QuestData
     {
-        public LocalizedString QuestName;
-        public LocalizedString QuestDescription;
+        public int ID;
+        
         public bool IsStarted = false;
         public bool IsComplete = false;
 
-        // public LocalizedString ObjectiveName => CurrentObjective.ObjectiveName;
-        // public LocalizedString ObjectiveDescription => CurrentObjective.ObjectiveDescription;
+        public int ObjectiveIndex = 0;
+
+        public List<ObjectiveData> Objectives;
     }
 }

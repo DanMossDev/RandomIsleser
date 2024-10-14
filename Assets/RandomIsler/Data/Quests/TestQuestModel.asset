@@ -12,27 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f409611ae6ecb6459bede68caf944e5, type: 3}
   m_Name: TestQuestModel
   m_EditorClassIdentifier: 
-  QuestData:
-    QuestName:
-      m_TableReference:
-        m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
-      m_TableEntryReference:
-        m_KeyId: 12552859648
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    QuestDescription:
-      m_TableReference:
-        m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
-      m_TableEntryReference:
-        m_KeyId: 50440007680
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    IsStarted: 0
-    IsComplete: 0
+  ID: 2001492383
+  QuestName:
+    m_TableReference:
+      m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
+    m_TableEntryReference:
+      m_KeyId: 12552859648
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  QuestDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
+    m_TableEntryReference:
+      m_KeyId: 50440007680
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  IsStarted: 0
+  IsComplete: 0
+  Objectives:
+  - {fileID: 11400000, guid: 414a813db414cf146b42509732147ca9, type: 2}
   references:
     version: 2
     RefIds: []

@@ -10,12 +10,12 @@ namespace RandomIsleser
         [SerializeField] private TextMeshProUGUI _objectiveTitle;
         [SerializeField] private TextMeshProUGUI _objectiveDescription;
 
-        public void Populate(QuestData questData)
+        public void Populate(QuestModel data)
         {
-            _questTitle.text = questData.QuestName.GetLocalizedString();
-            _questDescription.text = questData.QuestDescription.GetLocalizedString();
-            //_objectiveTitle.text = questData.ObjectiveName.GetLocalizedString();
-            //_objectiveDescription.text = questData.ObjectiveDescription.GetLocalizedString();
+            _questTitle.text = data.QuestName.GetLocalizedString();
+             _questDescription.text = data.QuestDescription.GetLocalizedString();
+            _objectiveTitle.text = data.CurrentObjectiveName.GetLocalizedString();
+            _objectiveDescription.text = data.CurrentObjectiveDescription.GetLocalizedString();
         }
     }
 }

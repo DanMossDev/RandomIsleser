@@ -23,6 +23,14 @@ MonoBehaviour:
     m_Key: TestQuestDescription
     m_Metadata:
       m_Items: []
+  - m_Id: 22233983840256
+    m_Key: TestObjectiveName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22254926000128
+    m_Key: TestObjectiveDescription
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
