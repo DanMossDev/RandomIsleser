@@ -26,6 +26,7 @@ namespace RandomIsleser
         private bool _targetHeld;
         
         public Vector3 MovementInput => _movementInput;
+        public Vector3 LastInputDirection { get; private set; }
 
         //Movement
         private Vector3 _movement;
@@ -628,9 +629,12 @@ namespace RandomIsleser
 
             _movement.x = _movementInput.x;
             _movement.z = _movementInput.z;
-            
+
             if (_movementInput != Vector3.zero)
+            {
+                LastInputDirection = _movementInput;
                 LastMoveDirection = RotateVectorToCamera(_movementInput);
+            }
         }
 
         private void SetCameraInput(Vector2 input)

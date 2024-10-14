@@ -4,47 +4,46 @@ using UnityEngine;
 namespace MossUtils
 {
     public class ObjectPoolController : MonoBehaviour
-
     {
-    private ObjectPoolModel _model;
-    private Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
+        private ObjectPoolModel _model;
+        private Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
 
-    private void Awake()
-    {
-        _model = Resources.Load<ObjectPoolModel>("Models/ObjectPoolModel");
-        Debug.Assert(_model != null, "Object pool model is null");
-    }
-
-    public GameObject Get(string key)
-    {
-        if (!_pools.ContainsKey(key))
+        private void Awake()
         {
-            var parent = new GameObject($"{key} pool");
-            parent.transform.parent = transform;
-            _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            _model = Resources.Load<ObjectPoolModel>("Models/ObjectPoolModel");
+            Debug.Assert(_model != null, "Object pool model is null");
         }
 
-        return _pools[key].Get();
-    }
-
-    public GameObject Get(string key, Transform owner)
-    {
-        if (!_pools.ContainsKey(key))
+        public GameObject Get(string key)
         {
-            var parent = new GameObject($"{key} pool");
-            parent.transform.parent = transform;
-            _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            if (!_pools.ContainsKey(key))
+            {
+                var parent = new GameObject($"{key} pool");
+                parent.transform.parent = transform;
+                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            }
+
+            return _pools[key].Get();
         }
 
-        var obj = _pools[key].Get();
-        obj.transform.position = owner.position;
+        public GameObject Get(string key, Transform owner)
+        {
+            if (!_pools.ContainsKey(key))
+            {
+                var parent = new GameObject($"{key} pool");
+                parent.transform.parent = transform;
+                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+            }
 
-        return obj;
-    }
+            var obj = _pools[key].Get();
+            obj.transform.position = owner.position;
 
-    public void Return(GameObject returned, string key)
-    {
-        _pools[key].Return(returned);
-    }
+            return obj;
+        }
+
+        public void Return(GameObject returned, string key)
+        {
+            _pools[key].Return(returned);
+        }
     }
 }

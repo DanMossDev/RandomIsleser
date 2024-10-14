@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
@@ -9,12 +8,19 @@ namespace RandomIsleser
     {
         public QuestData QuestData;
         
-        public static event Action<LocalizedString> OnQuestComplete;
+        public static event Action<QuestData> OnQuestStarted;
+        public static event Action<QuestData> OnQuestComplete;
 
+        public void BeginQuest()
+        {
+            QuestData.IsStarted = true;
+            OnQuestStarted?.Invoke(QuestData);
+        }
+        
         public void CompleteQuest()
         {
             QuestData.IsComplete = true;
-            OnQuestComplete?.Invoke(QuestData.QuestName);
+            OnQuestComplete?.Invoke(QuestData);
         }
     }
 }

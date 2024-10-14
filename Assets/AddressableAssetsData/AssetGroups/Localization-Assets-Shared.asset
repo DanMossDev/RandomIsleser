@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc0ca8abd0d7c0b49b9c9e3b194e2c5f
+    m_Address: Assets/Localisation/Quests Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: fd38089e6198e8e44b513cb808176f72, type: 2}
   m_SchemaSet:

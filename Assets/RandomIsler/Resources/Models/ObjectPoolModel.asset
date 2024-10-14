@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea308ff6afea1149b86593ad5063dbe, type: 3}
   m_Name: ObjectPoolModel
   m_EditorClassIdentifier: 
-  PrefabNames: []
-  Prefabs: []
+  PrefabNames:
+  - QuestLog
+  Prefabs:
+  - {fileID: 6898893655763033803, guid: b769dbfdf8d90f74e8290135c38f5a26, type: 3}

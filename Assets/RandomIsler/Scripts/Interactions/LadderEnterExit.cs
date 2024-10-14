@@ -15,7 +15,10 @@ namespace RandomIsleser
         
         private void OnTriggerStay(Collider other)
         {
-            _playerController.ExitLadder();
+            float lastInputY = PlayerController.Instance.LastInputDirection.z;
+            bool shouldExit = (!_isTop && lastInputY < 0) || (_isTop && lastInputY > 0);
+            if (shouldExit)
+                _playerController.ExitLadder();
         }
     }
 }

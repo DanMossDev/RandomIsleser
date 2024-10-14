@@ -8,6 +8,10 @@ namespace RandomIsleser
     {
         public LocalizedString QuestName;
         public LocalizedString QuestDescription;
+        public bool IsStarted = false;
         public bool IsComplete = false;
+
+        // public LocalizedString ObjectiveName => CurrentObjective.ObjectiveName;
+        // public LocalizedString ObjectiveDescription => CurrentObjective.ObjectiveDescription;
     }
 }

@@ -39,6 +39,7 @@ namespace MossUtils
 
         public void Return(GameObject returned)
         {
+            returned.transform.parent = _parent;
             returned.gameObject.SetActive(false);
         }
     }
