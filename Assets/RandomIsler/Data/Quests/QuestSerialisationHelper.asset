@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
   AllObjectives:
   - {fileID: 11400000, guid: 414a813db414cf146b42509732147ca9, type: 2}
+  AllDialogueNodes: []

@@ -6,10 +6,8 @@ using UnityEngine.Localization;
 namespace RandomIsleser
 {
     [CreateAssetMenu(fileName = "QuestModel", menuName = "RandomIsler/Quests/QuestModel")]
-    public class QuestModel : ScriptableObject
+    public class QuestModel : SaveableObject
     {
-        public int ID;
-        
         public LocalizedString QuestName;
         public LocalizedString QuestDescription;
 
@@ -21,7 +19,11 @@ namespace RandomIsleser
 
         public int ObjectiveIndex = 0;
 
+        [SerializeField] private QuestModel _prerequisiteQuest;
+
         public List<ObjectiveModel> Objectives;
+        
+        public bool CanBeStarted => _prerequisiteQuest == null || _prerequisiteQuest.IsComplete;
 
         public static event Action<QuestModel> OnQuestStarted;
         public static event Action<QuestModel> OnQuestComplete;
@@ -58,23 +60,31 @@ namespace RandomIsleser
                 BeginQuest();
         }
         
-        private void OnValidate()
+        protected override void OnValidate()
         {
-            if (ID == 0)
-                ID = Guid.NewGuid().GetHashCode();
+            base.OnValidate();
 
             IsStarted = false;
             IsComplete = false;
             ObjectiveIndex = 0;
+            foreach (var obj in Objectives)
+                obj.Owner = this;
+            
+            if (!SaveableObjectHelper.instance.AllQuests.Contains(this))
+                SaveableObjectHelper.instance.AllQuests.Add(this);
         }
 
-        public void Load(QuestData data)
+        public override void Load(SOData data)
         {
-            IsStarted = data.IsStarted;
-            IsComplete = data.IsComplete;
+            var questData = data as QuestData;
+            if (questData == null)
+                return;
+            
+            IsStarted = questData.IsStarted;
+            IsComplete = questData.IsComplete;
         }
 
-        public QuestData GetData()
+        public override SOData GetData()
         {
             var data = new QuestData()
             {
@@ -87,7 +97,7 @@ namespace RandomIsleser
             
             foreach (var objective in Objectives)
             {
-                data.Objectives.Add(objective.GetData());
+                data.Objectives.Add(objective.GetData() as ObjectiveData);
             }
 
             return data;

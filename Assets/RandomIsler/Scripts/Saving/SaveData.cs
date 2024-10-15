@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using RandomIsleser;
 
@@ -10,6 +11,8 @@ namespace MossUtils
 		public QuestLogSaveData QuestSaveData;
 		public InventoryData InventoryData;
 		public SaveDataFlags ExampleFlagData;
+		
+		public List<DialogueData> DialogueData;
         
 		#region Properties
 		[JsonIgnore] public bool ExampleCheckBool => ExampleFlagData.HasFlag(SaveDataFlags.ExampleOne);
@@ -20,6 +23,7 @@ namespace MossUtils
 			ExampleFlagData = SaveDataFlags.None;
 			InventoryData = new InventoryData();
 			QuestSaveData = new QuestLogSaveData();
+			DialogueData = new List<DialogueData>();
 			
 			InventoryData.Initialise();
 			QuestSaveData.Initialise();

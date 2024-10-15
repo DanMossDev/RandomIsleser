@@ -5,8 +5,6 @@ namespace RandomIsleser
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] private QuestSerialisationHelper _serialisationHelper;
-
         private Dictionary<int, QuestModel> _quests = new Dictionary<int, QuestModel>();
         private Dictionary<int, ObjectiveModel> _objectives = new Dictionary<int, ObjectiveModel>();
         
@@ -15,9 +13,9 @@ namespace RandomIsleser
             QuestModel.OnQuestStarted += QuestStarted;
             QuestModel.OnQuestComplete += QuestCompleted;
 
-            foreach (var quest in _serialisationHelper.AllQuests)
+            foreach (var quest in SaveableObjectHelper.instance.AllQuests)
                 _quests.Add(quest.ID, quest);
-            foreach (var objective in _serialisationHelper.AllObjectives)
+            foreach (var objective in SaveableObjectHelper.instance.AllObjectives)
                 _objectives.Add(objective.ID, objective);
         }
         

@@ -34,6 +34,7 @@ MonoBehaviour:
   IsStarted: 0
   IsComplete: 0
   ObjectiveIndex: 0
+  _prerequisiteQuest: {fileID: 0}
   Objectives:
   - {fileID: 11400000, guid: 414a813db414cf146b42509732147ca9, type: 2}
   references:

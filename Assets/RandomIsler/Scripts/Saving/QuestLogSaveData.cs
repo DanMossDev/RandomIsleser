@@ -23,7 +23,7 @@ namespace RandomIsleser
         {
             StartedQuestModels.Add(quest);
             
-            QuestStarted(quest.GetData());
+            QuestStarted(quest.GetData() as QuestData);
         }
 
         public void QuestUpdated(QuestModel quest)
@@ -34,7 +34,7 @@ namespace RandomIsleser
                 StartedQuestModels.Insert(0, quest);
             }
             
-            QuestUpdated(quest.GetData());
+            QuestUpdated(quest.GetData() as QuestData);
         }
 
         public void QuestCompleted(QuestModel quest)
@@ -45,7 +45,7 @@ namespace RandomIsleser
             if (!CompletedQuestModels.Contains(quest))
                 CompletedQuestModels.Insert(0, quest);
             
-            QuestCompleted(quest.GetData());
+            QuestCompleted(quest.GetData() as QuestData);
         }
 
         private void QuestStarted(QuestData quest)

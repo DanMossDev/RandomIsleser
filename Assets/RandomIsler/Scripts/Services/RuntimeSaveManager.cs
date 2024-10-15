@@ -43,8 +43,11 @@ namespace RandomIsleser
 			{
 				_localSaveData = loadedSaveData;
 				Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
+				
+				//Load Scriptable Objects
 				Services.Instance.QuestManager.LoadQuestData(_localSaveData.QuestSaveData.StartedQuests);
 				Services.Instance.QuestManager.LoadQuestData(_localSaveData.QuestSaveData.CompletedQuests);
+				Services.Instance.DialogueManager.LoadDialogueData(_localSaveData.DialogueData);
 				return true;
 			}
 

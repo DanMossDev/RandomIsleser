@@ -10,6 +10,7 @@ namespace RandomIsleser
 		private ObjectPoolController _objectPoolController;
 		private UIManager _uiManager;
 		private QuestManager _questManager;
+		private DialogueManager _dialogueManager;
         
 		public GameManager GameManager => _gameManager;
 		public RuntimeSaveManager RuntimeSaveManager => _runtimeSaveManager;
@@ -17,6 +18,7 @@ namespace RandomIsleser
 		public ObjectPoolController ObjectPoolController => _objectPoolController;
 		public UIManager UIManager => _uiManager;
 		public QuestManager QuestManager => _questManager;
+		public DialogueManager DialogueManager => _dialogueManager;
 
 		private void Awake()
 		{
@@ -26,6 +28,7 @@ namespace RandomIsleser
 			_objectPoolController = GetComponentInChildren<ObjectPoolController>();
 			_uiManager = GetComponentInChildren<UIManager>();
 			_questManager = GetComponentInChildren<QuestManager>();
+			_dialogueManager = GetComponentInChildren<DialogueManager>();
 		}
 	}
 }

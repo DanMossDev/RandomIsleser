@@ -1,10 +1,8 @@
 namespace RandomIsleser
 {
     [System.Serializable]
-    public class ObjectiveData
+    public class ObjectiveData : SOData
     {
-        public int ID;
-        
         public bool IsStarted = false;
         public bool IsComplete = false;
     }

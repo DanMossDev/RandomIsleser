@@ -5,9 +5,9 @@ using UnityEngine.Localization;
 namespace RandomIsleser
 {
     [CreateAssetMenu(fileName = "ObjectiveModel", menuName = "RandomIsler/Quests/ObjectiveModel")]
-    public class ObjectiveModel : ScriptableObject
+    public class ObjectiveModel : SaveableObject
     {
-        public int ID;
+        public QuestModel Owner;
 
         public bool IsStarted;
         public bool IsComplete;
@@ -15,12 +15,16 @@ namespace RandomIsleser
         public LocalizedString ObjectiveName;
         public LocalizedString ObjectiveDescription;
 
-        [SerializeField] private QuestModel _owner;
+        [SerializeField] private ObjectiveModel _prerequisiteObjective;
+        
+        public bool CanBeStarted => (Owner.IsStarted || Owner.CanBeStarted) && (_prerequisiteObjective == null || _prerequisiteObjective.IsComplete);
 
         public void StartObjective()
         {
             if (IsStarted)
                 return;
+            if (!Owner.IsStarted)
+                Owner.BeginQuest();
             
             IsStarted = true;
         }
@@ -31,25 +35,30 @@ namespace RandomIsleser
                 return;
             
             IsComplete = true;
-            _owner.ObjectiveCompleted(this);
+            Owner.ObjectiveCompleted(this);
         }
         
-        private void OnValidate()
+        protected override void OnValidate()
         {
-            if (ID == 0)
-                ID = Guid.NewGuid().GetHashCode();
+            base.OnValidate();
 
             IsStarted = false;
             IsComplete = false;
+            
+            if (!SaveableObjectHelper.instance.AllObjectives.Contains(this))
+                SaveableObjectHelper.instance.AllObjectives.Add(this);
         }
         
-        public void Load(ObjectiveData data)
+        public override void Load(SOData data)
         {
-            IsStarted = data.IsStarted;
-            IsComplete = data.IsComplete;
+            var objData = data as ObjectiveData;
+            if (objData == null)
+                return;
+            IsStarted = objData.IsStarted;
+            IsComplete = objData.IsComplete;
         }
 
-        public ObjectiveData GetData()
+        public override SOData GetData()
         {
             return new ObjectiveData()
             {
