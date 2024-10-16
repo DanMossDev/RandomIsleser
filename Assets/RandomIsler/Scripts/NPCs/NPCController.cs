@@ -19,7 +19,10 @@ namespace RandomIsleser
 
             foreach (var obj in _model.CompleteObjectives)
             {
-                if (obj.IsStarted)
+                if (obj.IsComplete)
+                    continue;
+                
+                if (obj.IsStarted || obj.CanBeStarted)
                 {
                     obj.CompleteObjective();
                     return;
@@ -28,6 +31,9 @@ namespace RandomIsleser
 
             foreach (var obj in _model.StartObjectives)
             {
+                if (obj.IsStarted)
+                    continue;
+                
                 if (obj.CanBeStarted)
                 {
                     obj.StartObjective();

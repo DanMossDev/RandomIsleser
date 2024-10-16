@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "DialogueNode", menuName = "RandomIsleser/Models/Dialogue Node")]
+    [CreateAssetMenu(fileName = "DialogueNode", menuName = "RandomIsler/Models/Dialogue Node")]
     public class DialogueNode : SaveableObject
     {
         public LocalizedString Dialogue;
@@ -12,9 +12,9 @@ namespace RandomIsleser
 
         public bool CanDialogueBePlayed => UnlockCriteria.IsUnlocked();
 
-        protected override void OnValidate()
+        protected override void Cleanup()
         {
-            base.OnValidate();
+            base.Cleanup();
             
             HasBeenSeen = false;
         }
@@ -27,8 +27,8 @@ namespace RandomIsleser
             
             HasBeenSeen = dialogueData.HasBeenSeen;
 
-            if (!SaveableObjectHelper.instance.AllDialogueNodes.Contains(this))
-                SaveableObjectHelper.instance.AllDialogueNodes.Add(this);
+            if (!SaveableObjectHelper.Instance.AllDialogueNodes.Contains(this))
+                SaveableObjectHelper.Instance.AllDialogueNodes.Add(this);
         }
 
         public override SOData GetData()

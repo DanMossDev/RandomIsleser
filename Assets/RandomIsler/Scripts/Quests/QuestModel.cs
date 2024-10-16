@@ -56,13 +56,14 @@ namespace RandomIsleser
                 return;
             }
             
+            Objectives[ObjectiveIndex].StartObjective();
             if (!IsStarted)
                 BeginQuest();
         }
         
-        protected override void OnValidate()
+        protected override void Cleanup()
         {
-            base.OnValidate();
+            base.Cleanup();
 
             IsStarted = false;
             IsComplete = false;
@@ -70,8 +71,8 @@ namespace RandomIsleser
             foreach (var obj in Objectives)
                 obj.Owner = this;
             
-            if (!SaveableObjectHelper.instance.AllQuests.Contains(this))
-                SaveableObjectHelper.instance.AllQuests.Add(this);
+            if (!SaveableObjectHelper.Instance.AllQuests.Contains(this))
+                SaveableObjectHelper.Instance.AllQuests.Add(this);
         }
 
         public override void Load(SOData data)

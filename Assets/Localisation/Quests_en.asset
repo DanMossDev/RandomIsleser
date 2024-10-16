@@ -28,12 +28,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22233983840256
-    m_Localized: Test Objective
+    m_Localized: Test Objective 1
     m_Metadata:
       m_Items: []
   - m_Id: 22254926000128
     m_Localized: There are no objectives, only subjective reality, did you really
-      think you could discern the truth of the world?
+      think you could discern the truth of the world?... Ask the person!?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819504841322496
+    m_Localized: Test Objective 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819530892144640
+    m_Localized: Test Objective 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819525548601344
+    m_Localized: Objection! Or something, I dunno... anyway, this is the second objective,
+      talk to the capsule thing I guess
+    m_Metadata:
+      m_Items: []
+  - m_Id: 822685809864704
+    m_Localized: Talk to da last boi!
     m_Metadata:
       m_Items: []
   references:

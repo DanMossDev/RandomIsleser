@@ -10,7 +10,7 @@ namespace RandomIsleser
         
         private void Awake()
         {
-            foreach (var dialogueNode in SaveableObjectHelper.instance.AllDialogueNodes)
+            foreach (var dialogueNode in SaveableObjectHelper.Instance.AllDialogueNodes)
                 _dialogueNodes.Add(dialogueNode.ID, dialogueNode);
         }
         

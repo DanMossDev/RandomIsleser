@@ -38,15 +38,15 @@ namespace RandomIsleser
             Owner.ObjectiveCompleted(this);
         }
         
-        protected override void OnValidate()
+        protected override void Cleanup()
         {
-            base.OnValidate();
+            base.Cleanup();
 
             IsStarted = false;
             IsComplete = false;
             
-            if (!SaveableObjectHelper.instance.AllObjectives.Contains(this))
-                SaveableObjectHelper.instance.AllObjectives.Add(this);
+            if (!SaveableObjectHelper.Instance.AllObjectives.Contains(this))
+                SaveableObjectHelper.Instance.AllObjectives.Add(this);
         }
         
         public override void Load(SOData data)

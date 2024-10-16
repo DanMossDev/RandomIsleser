@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using MossUtils;
 using UnityEditor;
@@ -12,6 +13,12 @@ namespace RandomIsleser.Editor
         private static void ClearSaveData()
         {
             File.Delete(SaveHandlerPersistent.kSaveFilePath);
+        }
+        
+        [MenuItem("MossUtils/Clear Saveable Objects")]
+        private static void ClearSaveableObjects()
+        {
+            SaveableObjectHelper.Instance.ClearAll();
         }
     }
 }

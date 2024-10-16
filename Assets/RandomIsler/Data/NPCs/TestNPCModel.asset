@@ -21,8 +21,11 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  CharacterDialogueModel: {fileID: 0}
   StartObjectives: []
-  CompleteObjectives: []
+  CompleteObjectives:
+  - {fileID: 11400000, guid: 84890ca73b302eb47b4e51116379ea4d, type: 2}
+  - {fileID: 11400000, guid: f5c1d3e5909ab7a4e8d919a7f77334b3, type: 2}
   references:
     version: 2
     RefIds: []

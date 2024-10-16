@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634bc3626446f124694fcf377c922486, type: 3}
+  m_Name: TestObjectiveModel 2
+  m_EditorClassIdentifier: 
+  ID: 245123613
+  Owner: {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
+  IsStarted: 0
+  IsComplete: 0
+  ObjectiveName:
+    m_TableReference:
+      m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
+    m_TableEntryReference:
+      m_KeyId: 819504841322496
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  ObjectiveDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
+    m_TableEntryReference:
+      m_KeyId: 819525548601344
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _prerequisiteObjective: {fileID: 11400000, guid: 84890ca73b302eb47b4e51116379ea4d,
+    type: 2}
+  references:
+    version: 2
+    RefIds: []

@@ -16,19 +16,35 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: dc0ca8abd0d7c0b49b9c9e3b194e2c5f
   m_Entries:
   - m_Id: 12552859648
-    m_Key: TestQuestName
+    m_Key: TestQuestName1
     m_Metadata:
       m_Items: []
   - m_Id: 50440007680
-    m_Key: TestQuestDescription
+    m_Key: TestQuestDescription1
     m_Metadata:
       m_Items: []
   - m_Id: 22233983840256
-    m_Key: TestObjectiveName
+    m_Key: TestObjectiveName1
     m_Metadata:
       m_Items: []
   - m_Id: 22254926000128
-    m_Key: TestObjectiveDescription
+    m_Key: TestObjectiveDescription1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819504841322496
+    m_Key: TestObjectiveName2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819525548601344
+    m_Key: TestObjectiveDescription2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 819530892144640
+    m_Key: TestObjectiveName3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 822685809864704
+    m_Key: TestObjectiveDescription3
     m_Metadata:
       m_Items: []
   m_Metadata:

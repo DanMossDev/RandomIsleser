@@ -13,9 +13,9 @@ namespace RandomIsleser
             QuestModel.OnQuestStarted += QuestStarted;
             QuestModel.OnQuestComplete += QuestCompleted;
 
-            foreach (var quest in SaveableObjectHelper.instance.AllQuests)
+            foreach (var quest in SaveableObjectHelper.Instance.AllQuests)
                 _quests.Add(quest.ID, quest);
-            foreach (var objective in SaveableObjectHelper.instance.AllObjectives)
+            foreach (var objective in SaveableObjectHelper.Instance.AllObjectives)
                 _objectives.Add(objective.ID, objective);
         }
         
