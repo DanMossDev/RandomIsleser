@@ -8,7 +8,7 @@ namespace RandomIsleser
     public class NPCModel : ScriptableObject
     {
         [Header("NPC Model")] [Space, Header("Character Details")] 
-        [SerializeField] private LocalizedString Name;
+        public LocalizedString Name;
 
         public CharacterDialogueModel CharacterDialogueModel;
 

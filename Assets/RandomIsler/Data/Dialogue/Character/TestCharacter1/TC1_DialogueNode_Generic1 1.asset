@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbbe742369b1494cb1973f6960c86f8, type: 3}
   m_Name: TC1_DialogueNode_Generic1 1
   m_EditorClassIdentifier: 
+  _npcModel: {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}
   _dialogue:
     m_TableReference:
       m_TableCollectionName: GUID:63a579d20055fec40ac1941cc27ae5b5

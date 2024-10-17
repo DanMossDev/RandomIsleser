@@ -19,6 +19,7 @@ namespace RandomIsleser
         public static event Action<bool> BlowInput;
         
         public static event Action PauseInput;
+        public static event Action AcceptInput;
         public static event Action BackInput;
 
         public static event Action<bool> TabInput;
@@ -78,6 +79,8 @@ namespace RandomIsleser
 
             _inputActions["ItemSlot1"].started += OnItemSlot1Pressed;
             _inputActions["ItemSlot1"].canceled += OnItemSlot1Released;
+            
+            _inputActions["Accept"].performed += OnAccept;
 
             _inputActions["Back"].performed += OnBack;
             
@@ -114,6 +117,8 @@ namespace RandomIsleser
             
             _inputActions["ItemSlot1"].started -= OnItemSlot1Pressed;
             _inputActions["ItemSlot1"].canceled -= OnItemSlot1Released;
+
+            _inputActions["Accept"].performed -= OnAccept;
             
             _inputActions["Back"].performed -= OnBack;
             
@@ -191,6 +196,11 @@ namespace RandomIsleser
         }
         
         //UI
+        private void OnAccept(InputAction.CallbackContext context)
+        {
+            AcceptInput?.Invoke();
+        }
+        
         private void OnBack(InputAction.CallbackContext context)
         {
             BackInput?.Invoke();

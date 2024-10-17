@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:08e2925d77832e1409e713568ea29f82
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 5342851072
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
