@@ -16,7 +16,31 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: 63a579d20055fec40ac1941cc27ae5b5
   m_Entries:
   - m_Id: 4860506112
-    m_Key: Dialogue_Test
+    m_Key: TC1_Generic_1_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695784088891392
+    m_Key: TC1_Generic_1_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695835280371712
+    m_Key: TC1_Generic_2_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695901101584384
+    m_Key: TC1_Generic_2_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 696106425348096
+    m_Key: TC1_ObjectiveComplete1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 711793533349888
+    m_Key: TC1_ObjectiveComplete3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 713922645946368
+    m_Key: TC1_ObjectiveInProgress2
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -1,4 +1,5 @@
 using System;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -16,6 +17,14 @@ namespace RandomIsleser
         public LocalizedString ObjectiveDescription;
 
         [SerializeField] private ObjectiveModel _prerequisiteObjective;
+        public DialogueTree OnStartDialogue;
+        public DialogueTree OnCompleteDialogue;
+        
+        [SerializedDictionary] public SerializedDictionary<NPCModel, DialogueTree> InProgressDialogue = new SerializedDictionary<NPCModel, DialogueTree>();
+
+        [HideInInspector] public bool HasStartDialogue;
+        [HideInInspector] public bool HasProgressDialogue;
+        [HideInInspector] public bool HasCompleteDialogue;
         
         public bool CanBeStarted => (Owner.IsStarted || Owner.CanBeStarted) && (_prerequisiteObjective == null || _prerequisiteObjective.IsComplete);
 
@@ -44,6 +53,10 @@ namespace RandomIsleser
 
             IsStarted = false;
             IsComplete = false;
+            
+            HasStartDialogue = OnStartDialogue != null;
+            HasCompleteDialogue = OnCompleteDialogue != null;
+            HasProgressDialogue = InProgressDialogue.Count > 0;
             
             if (!SaveableObjectHelper.Instance.AllObjectives.Contains(this))
                 SaveableObjectHelper.Instance.AllObjectives.Add(this);

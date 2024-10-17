@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cda13fa952a554fac672cef15ad022, type: 3}
   m_Name: TC1_CharacterDialogueModel
   m_EditorClassIdentifier: 
-  _dialogueNodes: []
+  _genericDialogueTrees:
+  - {fileID: 11400000, guid: 190902f12c9277e4289b31d549e3b7ca, type: 2}
+  - {fileID: 11400000, guid: e9d6f8aac7129cb4180ec99fc5206c40, type: 2}

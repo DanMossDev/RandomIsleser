@@ -3,41 +3,22 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "DialogueNode", menuName = "RandomIsler/Models/Dialogue Node")]
-    public class DialogueNode : SaveableObject
+    [CreateAssetMenu(fileName = "DialogueNode", menuName = "RandomIsler/Dialogue/DialogueNode")]
+    public class DialogueNode : ScriptableObject
     {
-        public LocalizedString Dialogue;
-        public UnlockCriteria UnlockCriteria;
-        public bool HasBeenSeen = false;
+        [SerializeField] private LocalizedString _dialogue;
+        [SerializeField] private DialogueNode _nextDialogue;
 
-        public bool CanDialogueBePlayed => UnlockCriteria.IsUnlocked();
+        public bool IsEnd => _nextDialogue == null;
 
-        protected override void Cleanup()
+        public string GetDialogue()
         {
-            base.Cleanup();
-            
-            HasBeenSeen = false;
+            return _dialogue.GetLocalizedString();
         }
 
-        public override void Load(SOData data)
+        public DialogueNode GetNextDialogue()
         {
-            var dialogueData = data as DialogueData;
-            if (dialogueData == null)
-                return;
-            
-            HasBeenSeen = dialogueData.HasBeenSeen;
-
-            if (!SaveableObjectHelper.Instance.AllDialogueNodes.Contains(this))
-                SaveableObjectHelper.Instance.AllDialogueNodes.Add(this);
-        }
-
-        public override SOData GetData()
-        {
-            return new DialogueData()
-            {
-                ID = ID,
-                HasBeenSeen = HasBeenSeen
-            };
+            return _nextDialogue;
         }
     }
 }

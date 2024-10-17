@@ -22,6 +22,34 @@ MonoBehaviour:
     m_Localized: This is some test dialogue. Hello there!
     m_Metadata:
       m_Items: []
+  - m_Id: 695784088891392
+    m_Localized: More test dialogue, but this time on a new page.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695835280371712
+    m_Localized: Hey there my name is _insert name here_. Pretty weird name I know,
+      apparently it's Greek or something.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695901101584384
+    m_Localized: Anyway, nice seeing you! Lorem ipsum dolor sit... Sorry what? Oh,
+      no that's not Greek, that's latin.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 696106425348096
+    m_Localized: You have done well to seek me out, that was your first objective.
+      Now, you must go and speak the <color=red>the capsule over there</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 711793533349888
+    m_Localized: Damn son you just completed your first quest! Ahhhhh yeeeee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 713922645946368
+    m_Localized: 'Didn''t you listen to me? Go to the <color=red>capsule over there</color>,
+      you can''t miss him! Uh... It? '
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

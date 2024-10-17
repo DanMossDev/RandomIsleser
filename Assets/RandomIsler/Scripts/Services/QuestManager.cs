@@ -7,6 +7,8 @@ namespace RandomIsleser
     {
         private Dictionary<int, QuestModel> _quests = new Dictionary<int, QuestModel>();
         private Dictionary<int, ObjectiveModel> _objectives = new Dictionary<int, ObjectiveModel>();
+
+        public List<QuestModel> InProgressQuests => Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.InProgressQuestModels;
         
         private void Awake()
         {
@@ -50,7 +52,7 @@ namespace RandomIsleser
                 if (quest.IsComplete)
                     data.CompletedQuestModels.Add(_quests[quest.ID]);
                 else
-                    data.StartedQuestModels.Add(_quests[quest.ID]);
+                    data.InProgressQuestModels.Add(_quests[quest.ID]);
             
                 foreach (var objective in quest.Objectives)
                 {

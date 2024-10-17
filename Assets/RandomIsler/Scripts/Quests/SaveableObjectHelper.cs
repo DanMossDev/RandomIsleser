@@ -8,7 +8,7 @@ namespace RandomIsleser
     {
         public List<QuestModel> AllQuests;
         public List<ObjectiveModel> AllObjectives;
-        public List<DialogueNode> AllDialogueNodes;
+        public List<DialogueTree> AllDialogueTrees;
         
         
         
@@ -31,7 +31,7 @@ namespace RandomIsleser
         {
             AllQuests.Clear();
             AllObjectives.Clear();
-            AllDialogueNodes.Clear();
+            AllDialogueTrees.Clear();
         }
     }
 }

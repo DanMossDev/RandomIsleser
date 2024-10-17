@@ -9,24 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52b042782240e81468fcdfbd20c6b46d, type: 3}
-  m_Name: TestNPCModel
+  m_Script: {fileID: 11500000, guid: 9dbbe742369b1494cb1973f6960c86f8, type: 3}
+  m_Name: TC1_DialogueNode_Generic2 1
   m_EditorClassIdentifier: 
-  Name:
+  _dialogue:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:63a579d20055fec40ac1941cc27ae5b5
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 695835280371712
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  CharacterDialogueModel: {fileID: 11400000, guid: 5933f5326f6e7ae4682c7eb26ef67289,
-    type: 2}
-  StartObjectives: []
-  CompleteObjectives:
-  - {fileID: 11400000, guid: 84890ca73b302eb47b4e51116379ea4d, type: 2}
-  - {fileID: 11400000, guid: f5c1d3e5909ab7a4e8d919a7f77334b3, type: 2}
+  _nextDialogue: {fileID: 11400000, guid: 7e3e6ec45e63737409acc4770772e741, type: 2}
   references:
     version: 2
     RefIds: []

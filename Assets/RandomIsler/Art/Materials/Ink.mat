@@ -13,7 +13,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _USE_OUTLINE
+  - _USE_COLOUR
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -51,8 +51,8 @@ Material:
     - _OVERLAY: 0
     - _StepThreshold: 0.5
     - _Threshold: 0.15
-    - _USE_COLOUR: 0
-    - _USE_OUTLINE: 1
+    - _USE_COLOUR: 1
+    - _USE_OUTLINE: 0
     m_Colors:
     - _Outline_Colour: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

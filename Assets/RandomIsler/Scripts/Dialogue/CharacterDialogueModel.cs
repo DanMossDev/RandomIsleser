@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "CharacterDialogueModel", menuName = "RandomIsler/Models/CharacterDialogueModel")]
+    [CreateAssetMenu(fileName = "CharacterDialogueModel", menuName = "RandomIsler/Dialogue/CharacterDialogueModel")]
     public class CharacterDialogueModel : ScriptableObject
     {
-        [SerializeField] private List<DialogueNode> _dialogueNodes;
+        [SerializeField] private List<DialogueTree> _genericDialogueTrees;
 
-        public DialogueNode GetRandomDialogueNode()
+        public DialogueTree GetRandomDialogueTree()
         {
-            foreach (var node in _dialogueNodes)
+            foreach (var tree in _genericDialogueTrees)
             {
-                if (!node.HasBeenSeen)
-                    return node;
+                if (!tree.HasBeenSeen)
+                    return tree;
             }
             
-            return _dialogueNodes[Random.Range(0, _dialogueNodes.Count)];
+            return _genericDialogueTrees[Random.Range(0, _genericDialogueTrees.Count)];
         }
     }
 }

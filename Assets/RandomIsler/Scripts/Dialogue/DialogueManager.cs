@@ -6,20 +6,31 @@ namespace RandomIsleser
 {
     public class DialogueManager : MonoBehaviour
     {
-        private Dictionary<int, DialogueNode> _dialogueNodes = new Dictionary<int, DialogueNode>();
+        private Dictionary<int, DialogueTree> _dialogueTrees = new Dictionary<int, DialogueTree>();
         
         private void Awake()
         {
-            foreach (var dialogueNode in SaveableObjectHelper.Instance.AllDialogueNodes)
-                _dialogueNodes.Add(dialogueNode.ID, dialogueNode);
+            foreach (var dialogueTree in SaveableObjectHelper.Instance.AllDialogueTrees)
+                _dialogueTrees.Add(dialogueTree.ID, dialogueTree);
         }
         
         public void LoadDialogueData(List<DialogueData> dialogue)
         {
-            foreach (var node in dialogue)
+            foreach (var tree in dialogue)
             {
-                _dialogueNodes[node.ID].Load(node);
+                _dialogueTrees[tree.ID].Load(tree);
             }
+        }
+
+        public void BeginDialogueTree(DialogueTree dialogueTree)
+        {
+            //probably should stop player controls
+            //Listen for dialogue controls
+            //move to the dialogue camera
+            //show dialogue UI
+            //play first dialogue instance
+            
+            Debug.Log(dialogueTree.GetFirstDialogueNode().GetDialogue());
         }
     }
 }

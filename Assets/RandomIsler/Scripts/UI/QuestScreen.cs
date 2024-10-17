@@ -37,7 +37,7 @@ namespace RandomIsleser
         {
             var data = Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData;
 
-            foreach (var quest in data.StartedQuestModels)
+            foreach (var quest in data.InProgressQuestModels)
             {
                 var questContent = Services.Instance.ObjectPoolController.Get("QuestLog");
                 if (questContent.TryGetComponent(out QuestLog questLog))

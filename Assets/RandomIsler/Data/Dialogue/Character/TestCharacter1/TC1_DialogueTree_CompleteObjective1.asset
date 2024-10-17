@@ -10,22 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee7656867f73c33479c29cdd0538d635, type: 3}
-  m_Name: TC1_DialogueNode_CompleteObjective1
+  m_Name: TC1_DialogueTree_CompleteObjective1
   m_EditorClassIdentifier: 
-  ID: 0
-  Dialogue:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
+  ID: -1958171234
+  _firstDialogueNode: {fileID: 11400000, guid: 3aeda02b4223a5c498c8ca57a092177c, type: 2}
   UnlockCriteria:
     _unlockingQuests: []
     _unlockingObjectives: []
   HasBeenSeen: 0
-  references:
-    version: 2
-    RefIds: []

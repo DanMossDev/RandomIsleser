@@ -11,12 +11,6 @@ namespace RandomIsleser
 
         public void Interact()
         {
-            if (_model.StartObjectives.Count == 0 && _model.CompleteObjectives.Count == 0)
-            {
-                PlayRandomDialogue();
-                return;
-            }
-
             foreach (var obj in _model.CompleteObjectives)
             {
                 if (obj.IsComplete)
@@ -25,6 +19,9 @@ namespace RandomIsleser
                 if (obj.IsStarted || obj.CanBeStarted)
                 {
                     obj.CompleteObjective();
+                    
+                    if (obj.HasCompleteDialogue)
+                        PlayDialogue(obj.OnCompleteDialogue);
                     return;
                 }
             }
@@ -32,23 +29,34 @@ namespace RandomIsleser
             foreach (var obj in _model.StartObjectives)
             {
                 if (obj.IsStarted)
+                {
                     continue;
+                }
                 
                 if (obj.CanBeStarted)
                 {
                     obj.StartObjective();
+
+                    
+                    if (obj.HasStartDialogue)
+                        PlayDialogue(obj.OnStartDialogue);
                     return;
                 }
             }
             
-            
-            PlayRandomDialogue();
+            var backupDialogue = _model.CharacterDialogueModel.GetRandomDialogueTree();
+            foreach (var quest in Services.Instance.QuestManager.InProgressQuests)
+            {
+                if (quest.CurrentObjective.InProgressDialogue.TryGetValue(_model, out backupDialogue))
+                    break;
+            }
+                
+            PlayDialogue(backupDialogue);
         }
 
-        private void PlayRandomDialogue()
+        private void PlayDialogue(DialogueTree dialogueTree)
         {
-            var node = _model.CharacterDialogueModel.GetRandomDialogueNode();
-            //TODO - Add a "PlayDialogue" method to dialogue manager, pass this in
+            Services.Instance.DialogueManager.BeginDialogueTree(dialogueTree);
         }
     }
 }

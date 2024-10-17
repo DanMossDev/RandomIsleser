@@ -35,6 +35,12 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   _prerequisiteObjective: {fileID: 0}
+  OnStartDialogue: {fileID: 0}
+  InProgressDialogue: {fileID: 0}
+  OnCompleteDialogue: {fileID: 11400000, guid: f58e905d551ffef4f910f270e8b4033a, type: 2}
+  HasStartDialogue: 0
+  HasProgressDialogue: 0
+  HasCompleteDialogue: 1
   references:
     version: 2
     RefIds: []
