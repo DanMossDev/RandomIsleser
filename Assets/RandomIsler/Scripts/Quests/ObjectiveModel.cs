@@ -19,12 +19,15 @@ namespace RandomIsleser
         [SerializeField] private ObjectiveModel _prerequisiteObjective;
         public DialogueTree OnStartDialogue;
         public DialogueTree OnCompleteDialogue;
+
+        public RewardModel OnCompleteReward;
         
         [SerializedDictionary] public SerializedDictionary<NPCModel, DialogueTree> InProgressDialogue = new SerializedDictionary<NPCModel, DialogueTree>();
 
         [HideInInspector] public bool HasStartDialogue;
         [HideInInspector] public bool HasProgressDialogue;
         [HideInInspector] public bool HasCompleteDialogue;
+        [HideInInspector] public bool HasReward;
         
         public bool CanBeStarted => (Owner.IsStarted || Owner.CanBeStarted) && (_prerequisiteObjective == null || _prerequisiteObjective.IsComplete);
 
@@ -33,7 +36,7 @@ namespace RandomIsleser
             if (IsStarted)
                 return;
             if (!Owner.IsStarted)
-                Owner.BeginQuest();
+                Owner.BeginQuest(false);
             
             IsStarted = true;
         }
@@ -44,6 +47,8 @@ namespace RandomIsleser
                 return;
             
             IsComplete = true;
+            if (HasReward)
+                OnCompleteReward.UnlockReward();
             Owner.ObjectiveCompleted(this);
         }
         
@@ -57,6 +62,7 @@ namespace RandomIsleser
             HasStartDialogue = OnStartDialogue != null;
             HasCompleteDialogue = OnCompleteDialogue != null;
             HasProgressDialogue = InProgressDialogue.Count > 0;
+            HasReward = OnCompleteReward != null;
             
             if (!SaveableObjectHelper.Instance.AllObjectives.Contains(this))
                 SaveableObjectHelper.Instance.AllObjectives.Add(this);

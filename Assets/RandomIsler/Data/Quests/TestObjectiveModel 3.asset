@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 2078066383
   Owner: {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
-  IsStarted: 0
-  IsComplete: 0
+  IsStarted: 1
+  IsComplete: 1
   ObjectiveName:
     m_TableReference:
       m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
@@ -37,11 +37,14 @@ MonoBehaviour:
   _prerequisiteObjective: {fileID: 11400000, guid: fe72a918e30c2b646b50bf467f8e8179,
     type: 2}
   OnStartDialogue: {fileID: 0}
-  InProgressDialogue: {fileID: 0}
   OnCompleteDialogue: {fileID: 11400000, guid: 028ee2f0b181b174695d15267417abb2, type: 2}
+  OnCompleteReward: {fileID: 11400000, guid: 9206dea03a06f2044bd49d8cd2283f04, type: 2}
+  InProgressDialogue:
+    _serializedList: []
   HasStartDialogue: 0
   HasProgressDialogue: 0
   HasCompleteDialogue: 1
+  HasReward: 1
   references:
     version: 2
     RefIds: []

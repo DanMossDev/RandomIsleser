@@ -22,6 +22,7 @@ namespace RandomIsleser
         [SerializeField] private QuestModel _prerequisiteQuest;
 
         public List<ObjectiveModel> Objectives;
+        public ObjectiveModel LastCompletedObjective => Objectives[ObjectiveIndex - 1];
         public ObjectiveModel CurrentObjective => Objectives[ObjectiveIndex];
         
         public bool CanBeStarted => _prerequisiteQuest == null || _prerequisiteQuest.IsComplete;
@@ -30,13 +31,15 @@ namespace RandomIsleser
         public static event Action<QuestModel> OnQuestUpdated;
         public static event Action<QuestModel> OnQuestComplete;
 
-        public void BeginQuest()
+        public void BeginQuest(bool beginFirstObjective = true)
         {
             if (IsStarted)
                 return;
             
             IsStarted = true;
-            Objectives[0].StartObjective();
+            if (beginFirstObjective)
+                Objectives[0].StartObjective();
+            
             OnQuestStarted?.Invoke(this);
         }
         
@@ -44,7 +47,7 @@ namespace RandomIsleser
         {
             if (IsComplete)
                 return;
-            Debug.Log("Quest complete!");
+            
             IsComplete = true;
             OnQuestComplete?.Invoke(this);
         }
@@ -60,10 +63,7 @@ namespace RandomIsleser
 
             Objectives[ObjectiveIndex].StartObjective();
             if (!IsStarted)
-            {
-                IsStarted = true;
-                OnQuestStarted?.Invoke(this);
-            }
+                BeginQuest(false);
             else
                 OnQuestUpdated?.Invoke(this);
         }

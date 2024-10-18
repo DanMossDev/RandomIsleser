@@ -159,6 +159,17 @@ namespace RandomIsleser
             CurrentState = newState;
         }
 
+        public void AddCurrency(int value)
+        {
+            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.AddCurrency(value);
+            Services.Instance.UIManager.UpdateCurrency(value);
+        }
+
+        public void UnlockItem(Unlockables unlockable)
+        {
+            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.SetItemUnlocked(unlockable, true);
+        }
+
         public void EquipItem(EquippableController equippable)
         {
             if (CurrentlyEquippedItem == equippable)
@@ -171,7 +182,6 @@ namespace RandomIsleser
             _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, true);
             _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, true);
             _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
-            
         }
 
         public void UnequipItem()

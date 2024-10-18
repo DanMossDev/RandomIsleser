@@ -18,7 +18,7 @@ namespace RandomIsleser
 
         public override void PickUp()
         {
-            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.SetItemUnlocked(UnlockableType, true);
+            PlayerController.Instance.UnlockItem(UnlockableType);
         }
     }
 }

@@ -9,8 +9,7 @@ namespace RandomIsleser
         
         public override void PickUp()
         {
-            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.AddCurrency(_value);
-            Services.Instance.UIManager.UpdateCurrency(_value);
+            PlayerController.Instance.AddCurrency(_value);
         }
     }
 }
