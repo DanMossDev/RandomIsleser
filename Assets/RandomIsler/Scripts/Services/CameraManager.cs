@@ -7,7 +7,6 @@ namespace RandomIsleser
 {
     public class CameraManager : MonoBehaviour
     {
-        //Cameras
         [Header("Cameras")]
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private CinemachineFreeLook _followCamera;
@@ -16,6 +15,9 @@ namespace RandomIsleser
         [SerializeField] private GameObject _boatCamera;
         [SerializeField] private GameObject _dialogueCamera;
         [SerializeField] private CinemachineTargetGroup _dialogueGroup;
+
+        [Space, Header("Extensions")] 
+        [SerializeField] private CinemachineConfiner _followCamConfiner;
         
         public GameObject AimCamera => _aimCamera;
 
@@ -31,6 +33,11 @@ namespace RandomIsleser
         public void SetDefaultCamera()
         {
             DisableAll();
+        }
+
+        public void SetBounds(Collider bounds)
+        {
+            _followCamConfiner.m_BoundingVolume = bounds;
         }
 
         public void SetAimCamera()

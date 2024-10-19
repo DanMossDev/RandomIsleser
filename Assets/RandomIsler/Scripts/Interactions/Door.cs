@@ -1,0 +1,31 @@
+using UnityEngine;
+
+namespace RandomIsleser
+{
+    public class Door : MonoBehaviour, Interactable
+    {
+        [SerializeField] private Transform[] _entryPoint;
+        [SerializeField] private RoomCameraController[] _roomCameraControllers;
+
+        [SerializeField] private Animator _doorAnimator;
+        
+        public void Interact()
+        {
+            _doorAnimator.SetTrigger(Animations.OpenDoorHash);
+            var playerPos = PlayerController.Instance.transform.position;
+            var point0Dist = Vector3.SqrMagnitude(playerPos - _entryPoint[0].position);
+            var point1Dist = Vector3.SqrMagnitude(playerPos - _entryPoint[1].position);
+
+            var currentIndex = point0Dist < point1Dist ? 0 : 1;
+            var targetIndex = point0Dist < point1Dist ? 1 : 0;
+
+            PlayerController.Instance.MoveToTargetPosition(_entryPoint[targetIndex].position, 3, 5);
+            
+            if (_roomCameraControllers[currentIndex] != null)
+                _roomCameraControllers[currentIndex].OnRoomExit();
+            if (_roomCameraControllers[targetIndex] != null)
+                _roomCameraControllers[targetIndex].OnRoomEnter();
+
+        }
+    }
+}

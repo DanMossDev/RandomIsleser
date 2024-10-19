@@ -10,6 +10,7 @@ namespace RandomIsleser
             heightAdjustedPos.y = context.transform.position.y;
             await context.MoveToTargetPosition(heightAdjustedPos + context.StateChangeCause.forward *  context.PlayerModel.LadderClimbDistance, 2);
             context.SnapToInputDirection(context.StateChangeCause.forward * -1);
+            context.transform.parent = context.StateChangeCause.transform;
             context.LocomotionAnimator.SetBool(Animations.OnLadderHash, true);
         }
         
@@ -28,6 +29,7 @@ namespace RandomIsleser
         
         public override void OnExitState(PlayerController context, BasePlayerState previousState)
         {
+            context.transform.parent = null;
             context.LocomotionAnimator.ResetTrigger(Animations.ExitLadderHash);
             context.LocomotionAnimator.SetBool(Animations.OnLadderHash, false);
             context.StateChangeCause = null;

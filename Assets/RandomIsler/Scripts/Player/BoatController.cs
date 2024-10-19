@@ -88,7 +88,7 @@ namespace RandomIsleser
         
         private void SetBackInput()
         {
-            //Back();
+            StopDriving();
         }
 #endregion
 
@@ -104,6 +104,11 @@ namespace RandomIsleser
         public void Interact()
         {
             _playerController.SetState(PlayerStates.OnShipMove);
+        }
+
+        private void StopDriving()
+        {
+            _playerController.SetState(PlayerStates.DefaultMove);
         }
     }
 }

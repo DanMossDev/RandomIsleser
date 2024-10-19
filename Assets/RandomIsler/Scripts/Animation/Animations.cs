@@ -6,6 +6,7 @@ namespace RandomIsleser
 {
     public class Animations
     {
+        //Humanoid
         public static int RollHash = Animator.StringToHash("OnRoll");
         public static int HammerAttackHash = Animator.StringToHash("OnHammerAttack");
         public static int IsAimingHash = Animator.StringToHash("IsAiming");
@@ -21,5 +22,8 @@ namespace RandomIsleser
         public static int AscendLadderHash = Animator.StringToHash("AscendLadder");
         public static int DescendLadderHash = Animator.StringToHash("DescendLadder");
         public static int ExitLadderHash = Animator.StringToHash("ExitLadder");
+        
+        //Environment
+        public static int OpenDoorHash = Animator.StringToHash("OpenDoor");
     }
 }

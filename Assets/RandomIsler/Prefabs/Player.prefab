@@ -85,9 +85,6 @@ MonoBehaviour:
   _cycloneJarController: {fileID: 2402280708145629384}
   _mainCamera: {fileID: 0}
   _followCamera: {fileID: 0}
-  _aimCamera: {fileID: 5013485157140722283}
-  _cycloneCamera: {fileID: 0}
-  _boatCamera: {fileID: 0}
   _cameraTransform: {fileID: 0}
   _equipmentAnimator: {fileID: 3262418683429648459}
   _locomotionAnimator: {fileID: 7745359633866341131}

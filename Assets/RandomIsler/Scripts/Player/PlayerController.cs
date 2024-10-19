@@ -339,7 +339,7 @@ namespace RandomIsleser
 
         private void FixedUpdate()
         {
-            if (CurrentState is not SwimMovementState and not OnShipMovementState && GetHeightRelativeToWater() < 0)
+            if (CurrentState is not SwimMovementState and not OnShipMovementState and not LadderMovementState && GetHeightRelativeToWater() < 0)
                 SetState(PlayerStates.SwimMove);
             
             CurrentState.OnUpdateState(this);
@@ -406,7 +406,7 @@ namespace RandomIsleser
             _currentInteractable.Interact();
         }
 
-        public async Task MoveToTargetPosition(Vector3 target, float giveUpTime = -1)
+        public async Task MoveToTargetPosition(Vector3 target, float giveUpTime = 10, float speedMultiplier = 1)
         {
             float timeBegan = Time.time;
             UnsubscribeControls();
@@ -415,7 +415,7 @@ namespace RandomIsleser
             while (Vector3.SqrMagnitude(transform.position - target) > 0.01f)
             {
                 var direction = target - transform.position;
-                _characterController.Move(direction.normalized * Time.deltaTime);
+                _characterController.Move(Time.deltaTime * speedMultiplier * direction.normalized);
                 RotatePlayer(direction);
                 await Task.Yield();
 
