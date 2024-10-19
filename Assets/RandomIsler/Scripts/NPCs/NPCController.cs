@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace RandomIsleser
 {
     public class NPCController : Entity, Interactable
     {
-        [SerializeField] private NPCModel _model;
+        [SerializeField] protected NPCModel _model;
         public NPCModel NPCModel => _model;
 
         private void Awake()
@@ -19,8 +20,9 @@ namespace RandomIsleser
             _model.Controller = null;
         }
 
-        public void Interact()
+        public virtual void Interact()
         {
+            transform.DOLookAt(PlayerController.Instance.transform.position, 0.5f, AxisConstraint.Y);
             foreach (var obj in _model.CompleteObjectives)
             {
                 if (obj.IsComplete)
@@ -64,7 +66,7 @@ namespace RandomIsleser
             PlayDialogue(backupDialogue);
         }
 
-        private void PlayDialogue(DialogueTree dialogueTree)
+        protected void PlayDialogue(DialogueTree dialogueTree)
         {
             Services.Instance.DialogueManager.BeginDialogueTree(dialogueTree);
         }
