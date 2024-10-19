@@ -77,6 +77,8 @@ namespace RandomIsleser
         private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
 
         private readonly CycloneCombatState _cycloneCombatState = new CycloneCombatState();
+
+        private readonly NullState _nullState = new NullState();
         
         
         //Weapons
@@ -253,6 +255,8 @@ namespace RandomIsleser
                     return _rodGrappleMovementState;
                 case PlayerStates.CycloneCombat:
                     return _cycloneCombatState;
+                case PlayerStates.NullState:
+                    return _nullState;
             }
 
             return null;
@@ -358,7 +362,7 @@ namespace RandomIsleser
             UnsubscribeControls();
             BoatController.Instance.SubscribeControls();
             transform.parent = BoatController.Instance.transform;
-            Services.Instance.CameraManager.SetBoatCamera();
+            Services.Instance.CameraManager.SetBoatCamera(true);
         }
 
         public void DisembarkShip()
@@ -366,7 +370,7 @@ namespace RandomIsleser
             SubscribeControls();
             BoatController.Instance.UnsubscribeControls();
             transform.parent = null;
-            Services.Instance.CameraManager.SetDefaultCamera();
+            Services.Instance.CameraManager.SetBoatCamera(false);
         }
         
         //UTILS
@@ -404,6 +408,18 @@ namespace RandomIsleser
         public void Interact()
         {
             _currentInteractable.Interact();
+        }
+
+        public Collider IncomingCameraBounds;
+
+        public async void MoveThroughDoorToTargetPosition(Vector3 target)
+        {
+            SetState(PlayerStates.NullState);
+            Services.Instance.CameraManager.SetDoorCamera(true);
+            await MoveToTargetPosition(target, 5, 2.5f);
+            Services.Instance.CameraManager.SetBounds(IncomingCameraBounds);
+            Services.Instance.CameraManager.SetDoorCamera(false);
+            SetState(PlayerStates.DefaultMove);
         }
 
         public async Task MoveToTargetPosition(Vector3 target, float giveUpTime = 10, float speedMultiplier = 1)
@@ -537,14 +553,14 @@ namespace RandomIsleser
             SnapToInputDirection(camForward);
             _followCamera.m_YAxisRecentering.m_enabled = true;
             _aimCamera.transform.localRotation = Quaternion.identity;
-            Services.Instance.CameraManager.SetAimCamera();
+            Services.Instance.CameraManager.SetAimCamera(true);
             _equipmentAnimator.SetBool(Animations.IsAimingHash, true);
         }
         
         public void EndAim()
         {
             _followCamera.m_YAxisRecentering.m_enabled = false;
-            Services.Instance.CameraManager.SetDefaultCamera();
+            Services.Instance.CameraManager.SetAimCamera(false);
             _equipmentAnimator.SetBool(Animations.IsAimingHash, false);
             SetCanRotate(false);
             var seq = DOTween.Sequence();

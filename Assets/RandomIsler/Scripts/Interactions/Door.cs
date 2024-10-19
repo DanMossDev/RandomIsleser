@@ -19,13 +19,12 @@ namespace RandomIsleser
             var currentIndex = point0Dist < point1Dist ? 0 : 1;
             var targetIndex = point0Dist < point1Dist ? 1 : 0;
 
-            PlayerController.Instance.MoveToTargetPosition(_entryPoint[targetIndex].position, 3, 5);
+            PlayerController.Instance.MoveThroughDoorToTargetPosition(_entryPoint[targetIndex].position);
             
             if (_roomCameraControllers[currentIndex] != null)
                 _roomCameraControllers[currentIndex].OnRoomExit();
             if (_roomCameraControllers[targetIndex] != null)
                 _roomCameraControllers[targetIndex].OnRoomEnter();
-
         }
     }
 }

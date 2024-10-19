@@ -17,6 +17,8 @@ namespace RandomIsleser
         //Combat
         AimCombat,
         AttackCombat,
-        CycloneCombat
+        CycloneCombat,
+        
+        NullState
     }
 }

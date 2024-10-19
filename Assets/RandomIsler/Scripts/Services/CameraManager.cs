@@ -14,9 +14,10 @@ namespace RandomIsleser
         [SerializeField] private GameObject _cycloneCamera;
         [SerializeField] private GameObject _boatCamera;
         [SerializeField] private GameObject _dialogueCamera;
-        [SerializeField] private CinemachineTargetGroup _dialogueGroup;
+        [SerializeField] private GameObject _doorCamera;
 
         [Space, Header("Extensions")] 
+        [SerializeField] private CinemachineTargetGroup _dialogueGroup;
         [SerializeField] private CinemachineConfiner _followCamConfiner;
         
         public GameObject AimCamera => _aimCamera;
@@ -40,29 +41,30 @@ namespace RandomIsleser
             _followCamConfiner.m_BoundingVolume = bounds;
         }
 
-        public void SetAimCamera()
+        public void SetAimCamera(bool value)
         {
-            DisableAll();
-            _aimCamera.SetActive(true);
+            _aimCamera.SetActive(value);
         }
 
-        public void SetCycloneCamera()
+        public void SetCycloneCamera(bool value)
         {
-            DisableAll();
-            _cycloneCamera.SetActive(true);
+            _cycloneCamera.SetActive(value);
         }
 
-        public void SetBoatCamera()
+        public void SetBoatCamera(bool value)
         {
-            DisableAll();
-            _boatCamera.SetActive(true);
+            _boatCamera.SetActive(value);
         }
 
-        public void SetDialogueCamera()
+        public void SetDialogueCamera(bool value)
         {
-            DisableAll();
             _dialogueGroup.transform.forward = _mainCamera.transform.forward;
-            _dialogueCamera.SetActive(true);
+            _dialogueCamera.SetActive(value);
+        }
+
+        public void SetDoorCamera(bool value)
+        {
+            _doorCamera.SetActive(value);
         }
 
         public void SetParticipants(List<NPCModel> participants)

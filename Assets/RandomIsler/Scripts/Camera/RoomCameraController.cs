@@ -15,9 +15,12 @@ namespace RandomIsleser
         public void OnRoomEnter()
         {
             if (_useRoomCamera)
+            {
                 _roomCamera.gameObject.SetActive(true);
+                PlayerController.Instance.IncomingCameraBounds = null;
+            }
             else
-                Services.Instance.CameraManager.SetBounds(_cameraBounds);
+                PlayerController.Instance.IncomingCameraBounds = _cameraBounds;
         }
 
         public void OnRoomExit()
