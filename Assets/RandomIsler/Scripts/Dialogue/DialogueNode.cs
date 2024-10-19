@@ -12,9 +12,11 @@ namespace RandomIsleser
 
         public bool IsEnd => _nextDialogue == null;
 
-        public string GetSpeaker()
+        [HideInInspector] public DialogueTree Owner;
+
+        public NPCModel GetSpeaker()
         {
-            return _npcModel.Name.GetLocalizedString();
+            return _npcModel;
         }
         
         public string GetDialogue()
@@ -25,6 +27,16 @@ namespace RandomIsleser
         public DialogueNode GetNextDialogue()
         {
             return _nextDialogue;
+        }
+
+        private void OnValidate()
+        {
+            if (!IsEnd)
+                _nextDialogue.Owner = Owner;
+            
+            if (Owner != null)
+                if (!Owner.Participants.Contains(_npcModel))
+                    Owner.Participants.Add(_npcModel);
         }
     }
 }

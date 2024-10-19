@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -6,10 +7,12 @@ namespace RandomIsleser
     public class DialogueTree : SaveableObject
     {
         [SerializeField] private DialogueNode _firstDialogueNode;
+
         
         public UnlockCriteria UnlockCriteria;
         public bool HasBeenSeen = false;
 
+        [HideInInspector] public List<NPCModel> Participants;
         public bool CanDialogueBePlayed => UnlockCriteria.IsUnlocked();
 
         public DialogueNode GetFirstDialogueNode()
@@ -23,6 +26,8 @@ namespace RandomIsleser
             base.Cleanup();
             
             HasBeenSeen = false;
+
+            _firstDialogueNode.Owner = this;
         }
 
         public override void Load(SOData data)

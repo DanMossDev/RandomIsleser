@@ -14,5 +14,7 @@ namespace RandomIsleser
 
         public List<ObjectiveModel> StartObjectives;
         public List<ObjectiveModel> CompleteObjectives;
+
+        public NPCController Controller;
     }
 }

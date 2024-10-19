@@ -9,6 +9,16 @@ namespace RandomIsleser
         [SerializeField] private NPCModel _model;
         public NPCModel NPCModel => _model;
 
+        private void Awake()
+        {
+            _model.Controller = this;
+        }
+
+        private void OnDestroy()
+        {
+            _model.Controller = null;
+        }
+
         public void Interact()
         {
             foreach (var obj in _model.CompleteObjectives)

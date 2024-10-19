@@ -21,7 +21,10 @@ namespace RandomIsleser
             CurrentNode = node;
             _skipText = false;
             IsFinishedDisplaying = false;
-            _characterName.text = node.GetSpeaker();
+            var speaker = node.GetSpeaker();
+            _characterName.text = speaker.Name.GetLocalizedString();
+            
+            Services.Instance.CameraManager.SetCurrentSpeaker(speaker.Controller);
             
             AnimateDialogue(node.GetDialogue());
         }
@@ -32,7 +35,17 @@ namespace RandomIsleser
 
             while (showText.Length < text.Length && !_skipText)
             {
-                showText += text[showText.Length];
+                bool foundRichText = text[showText.Length] == '<';
+
+                while (foundRichText)
+                {
+                    showText += text[showText.Length];
+                    if (showText[^1] == '>')
+                        foundRichText = false;
+                }
+                if (showText.Length < text.Length)
+                    showText += text[showText.Length];
+                
                 _dialogue.text = showText;
                 await Task.Delay(_textAnimationRate, destroyCancellationToken);
             }

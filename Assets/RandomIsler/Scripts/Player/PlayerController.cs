@@ -57,7 +57,7 @@ namespace RandomIsleser
         public bool IsAttacking => CurrentState is AttackCombatState;
         public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState;
 
-        public Vector3 AimDirection => _aimCamera.transform.forward;
+        public Vector3 AimDirection => _aimCamera.forward;
 
         [NonSerialized] public Transform StateChangeCause;
         
@@ -95,11 +95,7 @@ namespace RandomIsleser
         [Header("Cameras")]
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private CinemachineFreeLook _followCamera;
-        [SerializeField] private GameObject _aimCamera;
-        [SerializeField] private GameObject _cycloneCamera;
-        [SerializeField] private GameObject _boatCamera;
-        
-        public GameObject CycloneCamera => _cycloneCamera;
+        private Transform _aimCamera;
         
         //Cached components
         [Header("Cached Components")]
@@ -285,6 +281,8 @@ namespace RandomIsleser
             
             SubscribeControls();
 
+            _aimCamera = Services.Instance.CameraManager.AimCamera.transform;
+
             CurrentState = new DefaultMovementState();
             
             _equippableLookup = new Dictionary<Equippables, EquippableController>()
@@ -360,7 +358,7 @@ namespace RandomIsleser
             UnsubscribeControls();
             BoatController.Instance.SubscribeControls();
             transform.parent = BoatController.Instance.transform;
-            _boatCamera.SetActive(true);
+            Services.Instance.CameraManager.SetBoatCamera();
         }
 
         public void DisembarkShip()
@@ -368,7 +366,7 @@ namespace RandomIsleser
             SubscribeControls();
             BoatController.Instance.UnsubscribeControls();
             transform.parent = null;
-            _boatCamera.SetActive(false);
+            Services.Instance.CameraManager.SetDefaultCamera();
         }
         
         //UTILS
@@ -539,14 +537,14 @@ namespace RandomIsleser
             SnapToInputDirection(camForward);
             _followCamera.m_YAxisRecentering.m_enabled = true;
             _aimCamera.transform.localRotation = Quaternion.identity;
-            _aimCamera.SetActive(true);
+            Services.Instance.CameraManager.SetAimCamera();
             _equipmentAnimator.SetBool(Animations.IsAimingHash, true);
         }
         
         public void EndAim()
         {
             _followCamera.m_YAxisRecentering.m_enabled = false;
-            _aimCamera.SetActive(false);
+            Services.Instance.CameraManager.SetDefaultCamera();
             _equipmentAnimator.SetBool(Animations.IsAimingHash, false);
             SetCanRotate(false);
             var seq = DOTween.Sequence();

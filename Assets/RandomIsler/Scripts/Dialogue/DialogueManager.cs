@@ -51,9 +51,9 @@ namespace RandomIsleser
         {
             _currentDialogueTree = dialogueTree;
             PlayerController.Instance.UnsubscribeControls();
-            //move to the dialogue camera
+            Services.Instance.CameraManager.SetParticipants(dialogueTree.Participants);
+            Services.Instance.CameraManager.SetDialogueCamera();
             _uiManager.BeginDialogue(dialogueTree.GetFirstDialogueNode());
-            //play first dialogue instance
             
             SubscribeDialogueControls();
         }
@@ -61,6 +61,8 @@ namespace RandomIsleser
         private void EndDialogue()
         {
             _uiManager.EndDialogue();
+            Services.Instance.CameraManager.SetDefaultCamera();
+            Services.Instance.CameraManager.RemoveParticipants(_currentDialogueTree.Participants);
             _currentDialogueTree = null;
             UnsubscribeDialogueControls();
             PlayerController.Instance.SubscribeControls();
