@@ -129,6 +129,9 @@ namespace RandomIsleser
         {
             GUI.Label(new Rect(10, 10, 500, 20), $"Current State: {CurrentState}");
             GUI.Label(new Rect(10, 50, 500, 20), $"Current Speed: {_movement.y}");
+            
+            if (GUI.Button(new Rect(10, 100, 200, 25), "Load Test Chunk"))
+                SceneTransitionManager.LoadChunks(new List<string> {"TestChunk"});
         }
         #endregion
         
@@ -412,12 +415,13 @@ namespace RandomIsleser
 
         public Collider IncomingCameraBounds;
 
-        public async void MoveThroughDoorToTargetPosition(Vector3 target)
+        public async Task MoveThroughDoorToTargetPosition(Vector3 target)
         {
             SetState(PlayerStates.NullState);
             Services.Instance.CameraManager.SetDoorCamera(true);
             await MoveToTargetPosition(target, 5, 2.5f);
             Services.Instance.CameraManager.SetBounds(IncomingCameraBounds);
+            IncomingCameraBounds = null;
             Services.Instance.CameraManager.SetDoorCamera(false);
             SetState(PlayerStates.DefaultMove);
         }

@@ -13,16 +13,16 @@ namespace RandomIsleser
 
         [SerializeField] private Material _oceanMaterial;
 
-        private void Update()
-        {
-            var model = new OceanModel()
-            {
-                WaveAmplitude = _waveAmplitude,
-                WaveFrequency = _waveFrequency,
-                WaveSpeed = _waveSpeed
-            };
-            SetOceanValues(model);
-        }
+        // private void Update()
+        // {
+        //     var model = new OceanModel()
+        //     {
+        //         WaveAmplitude = _waveAmplitude,
+        //         WaveFrequency = _waveFrequency,
+        //         WaveSpeed = _waveSpeed
+        //     };
+        //     SetOceanValues(model);
+        // }
 
         public void SetOceanValues(OceanModel model)
         {

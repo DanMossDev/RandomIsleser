@@ -4,12 +4,12 @@ namespace RandomIsleser
 {
     public class Door : MonoBehaviour, Interactable
     {
-        [SerializeField] private Transform[] _entryPoint;
+        [SerializeField] protected Transform[] _entryPoint;
         [SerializeField] private RoomCameraController[] _roomCameraControllers;
 
-        [SerializeField] private Animator _doorAnimator;
+        [SerializeField] protected Animator _doorAnimator;
         
-        public void Interact()
+        public virtual void Interact()
         {
             _doorAnimator.SetTrigger(Animations.OpenDoorHash);
             var playerPos = PlayerController.Instance.transform.position;
