@@ -10,7 +10,7 @@ namespace RandomIsleser
         public override void OnEnterState(PlayerController context, BasePlayerState previousState)
         {
             _timeStarted = Time.time;
-            _rollDirection = context.LastMoveDirection.normalized;
+            _rollDirection = context.RotateVectorToCamera(context.LastInputDirection.normalized);
             context.SnapToInputDirection(_rollDirection);
             context.EquipmentAnimator.SetTrigger(Animations.RollHash);
             context.LocomotionAnimator.SetTrigger(Animations.RollHash);

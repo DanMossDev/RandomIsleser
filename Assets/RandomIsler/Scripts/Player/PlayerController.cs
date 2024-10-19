@@ -370,7 +370,7 @@ namespace RandomIsleser
         }
         
         //UTILS
-        private Vector3 RotateVectorToCamera(Vector3 input)
+        public Vector3 RotateVectorToCamera(Vector3 input)
         {
             return Quaternion.AngleAxis(_cameraTransform.rotation.eulerAngles.y, Vector3.up) * input;
         }
