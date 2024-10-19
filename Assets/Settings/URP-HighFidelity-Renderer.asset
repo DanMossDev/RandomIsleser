@@ -16,6 +16,37 @@ MonoBehaviour:
   settings:
     renderPassEvent: 1000
     screenHeight: 144
+--- !u!114 &-3997018058540020724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ad2263c8a972644af7e7ab9e902bc7, type: 3}
+  m_Name: KuwaharaEffect
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  Settings:
+    ShowInEditor: 0
+    AnisotropicKuwaharaFilterSettings:
+      filterKernelSectors: 8
+      filterKernelSmoothness: 0.33
+      filterRadius: 4
+      filterSharpness: 8
+      eccentricity: 1
+      iterations: 1
+    EdgeFlowSettings:
+      noiseTexture: {fileID: 0}
+      streamLineLength: 10
+      streamKernelStrength: 0.5
+    CompositorSettings:
+      edgeContribution: 1
+      flowContribution: 1
+      bumpPower: 0.8
+      bumpIntensity: 0.4
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,7 +116,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: 1585142552382642399}
-  m_RendererFeatureMap: adc0de57c6d2eee5df981fc1c08eff15
+  - {fileID: -3997018058540020724}
+  m_RendererFeatureMap: adc0de57c6d2eee5df981fc1c08eff150c8ce6bb40bd87c8
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

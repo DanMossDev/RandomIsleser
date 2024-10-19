@@ -26,8 +26,8 @@ namespace RandomIsleser
 
         public void SetOceanValues(OceanModel model)
         {
-            _oceanMaterial.SetFloat("_Wave_Amplitude", model.WaveAmplitude);
-            _oceanMaterial.SetFloat("_Wave_Frequency", model.WaveFrequency);
+            _oceanMaterial.SetFloat("_WaveAmplitude", model.WaveAmplitude);
+            _oceanMaterial.SetFloat("_WaveFrequency", model.WaveFrequency);
             _oceanMaterial.SetFloat("_WaveSpeed", model.WaveSpeed);
         }
 
