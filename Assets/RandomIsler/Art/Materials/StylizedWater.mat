@@ -54,10 +54,10 @@ Material:
     m_Floats:
     - _DepthFadeDistance: 0.25
     - _FoamScale: 100
-    - _FoamSpeed: 0.01
+    - _FoamSpeed: 0.03
     - _FoamStrength: 0.1
     - _HorizonDistance: 30
-    - _PosterizeSteps: 20
+    - _PosterizeSteps: 50
     - _QueueControl: 1
     - _QueueOffset: 0
     - _RefractionScale: 0.1
