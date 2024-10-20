@@ -6,6 +6,8 @@ namespace RandomIsleser
     public class DungeonController : MonoSingleton<DungeonController>
     {
         [SerializeField] private DungeonModel _dungeonModel;
+        
+        public DungeonModel DungeonModel => _dungeonModel;
 
         public void AddKey(KeyRewardTypes type)
         {

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf827dec193ae5419554117410c07d5, type: 3}
+  m_Name: TestBoolLockedDoorModel
+  m_EditorClassIdentifier: 
+  ID: -727163599
+  IsLocked: 1
+  IsBossDoor: 0
+  _unlockCondition: {fileID: 11400000, guid: 70cf95bbf794f3f438dd731aabe1d413, type: 2}
+  _beginsLocked: 1
+  Controller: {fileID: 0}

@@ -9,6 +9,7 @@ namespace RandomIsleser
 	    public const string Root = "RandomIsler/";
 	    public const string Models = Root + "Models/";
 	    public const string Settings = Root + "Settings/";
+	    public const string SaveableData = Root + "SaveableData/";
 	    public const string Quests = Root + "Quests/";
 	    public const string Dialogue = Root + "Dialogue/";
 	    public const string Dungeons = Root + "Dungeons/";

@@ -1,8 +1,9 @@
 using MossUtils;
+using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class Services : MonoSingleton<Services>
+    public class Services : MonoBehaviour
     {
 	    private GameManager _gameManager;
 	    private RuntimeSaveManager _runtimeSaveManager;
@@ -19,18 +20,48 @@ namespace RandomIsleser
 		public UIManager UIManager => _uiManager;
 		public QuestManager QuestManager => _questManager;
 		public DialogueManager DialogueManager => _dialogueManager;
+		
+		public static Services Instance { get; private set; }
 
 		private void Awake()
 		{
-			_gameManager = GetComponentInChildren<GameManager>();
-			_runtimeSaveManager = GetComponentInChildren<RuntimeSaveManager>();
-			_inputManager = GetComponentInChildren<InputManager>();
-			_objectPoolController = GetComponentInChildren<ObjectPoolController>();
-			_uiManager = GetComponentInChildren<UIManager>();
-			_questManager = GetComponentInChildren<QuestManager>();
-			_dialogueManager = GetComponentInChildren<DialogueManager>();
+			if (Instance != null && Instance != this)
+			{
+				Destroy(gameObject);
+				return;
+			}
 			
-			DontDestroyOnLoad(this);
+			_gameManager = GetComponentInChildren<GameManager>(true);
+			_gameManager.gameObject.SetActive(true);
+			_runtimeSaveManager = GetComponentInChildren<RuntimeSaveManager>(true);
+			_runtimeSaveManager.gameObject.SetActive(true);
+			_inputManager = GetComponentInChildren<InputManager>(true);
+			_inputManager.gameObject.SetActive(true);
+			_objectPoolController = GetComponentInChildren<ObjectPoolController>(true);
+			_objectPoolController.gameObject.SetActive(true);
+			_uiManager = GetComponentInChildren<UIManager>(true);
+			_uiManager.gameObject.SetActive(true);
+			_questManager = GetComponentInChildren<QuestManager>(true);
+			_questManager.gameObject.SetActive(true);
+			_dialogueManager = GetComponentInChildren<DialogueManager>(true);
+			_dialogueManager.gameObject.SetActive(true);
+		}
+
+		private void OnEnable()
+		{
+			if (Instance == null)
+			{
+				Instance = this;
+				DontDestroyOnLoad(this);
+			}
+			else
+				Destroy(gameObject);
+		}
+
+		private void OnDisable()
+		{
+			if (Instance == this)
+				Instance = null;
 		}
 	}
 }
