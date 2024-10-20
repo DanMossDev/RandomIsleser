@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a9f16ebead88740ba8b75fb00c6013, type: 3}
-  m_Name: TestDungeonModel
+  m_Script: {fileID: 11500000, guid: 8f3ef949da2c85c4884d2aa65ec38e77, type: 3}
+  m_Name: TestChestRewardModel
   m_EditorClassIdentifier: 
-  ID: -1585425515
-  SmallKeys: 1
-  HasBossKey: 0
-  IsComplete: 0
-  _sceneName: TestDungeon
+  UnlockableReward: 0
+  CurrencyReward: 0
+  KeyRewardType: 1

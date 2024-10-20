@@ -7,18 +7,10 @@ namespace RandomIsleser
 {
     public class DialogueManager : MonoBehaviour
     {
-        private Dictionary<int, DialogueTree> _dialogueTrees = new Dictionary<int, DialogueTree>();
-        
         private DialogueTree _currentDialogueTree;
         
         private DialogueUI _dialogueUI;
         private UIManager _uiManager;
-        
-        private void Awake()
-        {
-            foreach (var dialogueTree in SaveableObjectHelper.Instance.AllDialogueTrees)
-                _dialogueTrees.Add(dialogueTree.ID, dialogueTree);
-        }
 
         private void Start()
         {
@@ -41,9 +33,10 @@ namespace RandomIsleser
         
         public void LoadDialogueData(List<DialogueData> dialogue)
         {
+            var questLookup = SaveableObjectHelper.Instance.AllSaveableObjects;
             foreach (var tree in dialogue)
             {
-                _dialogueTrees[tree.ID].Load(tree);
+                questLookup[tree.ID].Load(tree);
             }
         }
 

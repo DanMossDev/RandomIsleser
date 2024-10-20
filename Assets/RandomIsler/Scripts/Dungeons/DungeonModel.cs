@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace RandomIsleser
 {
@@ -24,6 +23,8 @@ namespace RandomIsleser
                 return;
             
             SmallKeys = dungeonData.SmallKeys;
+            HasBossKey = dungeonData.HasBossKey;
+            IsComplete = dungeonData.IsComplete;
         }
 
         public override SOData GetData()
@@ -35,6 +36,15 @@ namespace RandomIsleser
                 IsComplete = IsComplete,
                 HasBossKey = HasBossKey
             };
+        }
+
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+
+            SmallKeys = 0;
+            IsComplete = false;
+            HasBossKey = false;
         }
     }
     

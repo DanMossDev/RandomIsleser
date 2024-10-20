@@ -136,6 +136,9 @@ namespace RandomIsleser
             
             if (GUI.Button(new Rect(10, 100, 200, 25), "Load Test Chunk"))
                 SceneTransitionManager.LoadChunks(new List<string> {"TestChunk"});
+            
+            if (GUI.Button(new Rect(10, 150, 200, 25), "Save Game"))
+                Services.Instance.RuntimeSaveManager.SaveGame();
         }
         #endregion
         
@@ -442,6 +445,7 @@ namespace RandomIsleser
 	        //Play chest music
 	        //Play chest animation
 	        model.Reward.UnlockReward();
+            model.HasBeenOpened = true;
         }
         
         public void BoardShip()

@@ -77,9 +77,6 @@ namespace RandomIsleser
             ObjectiveIndex = 0;
             foreach (var obj in Objectives)
                 obj.Owner = this;
-            
-            if (!SaveableObjectHelper.Instance.AllQuests.Contains(this))
-                SaveableObjectHelper.Instance.AllQuests.Add(this);
         }
 
         public override void Load(SOData data)
@@ -90,6 +87,12 @@ namespace RandomIsleser
             
             IsStarted = questData.IsStarted;
             IsComplete = questData.IsComplete;
+            ObjectiveIndex = questData.ObjectiveIndex;
+            
+            if (IsComplete)
+                Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.CompletedQuestModels.Add(this);
+            else if (IsStarted)
+                Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.InProgressQuestModels.Add(this);
         }
 
         public override SOData GetData()

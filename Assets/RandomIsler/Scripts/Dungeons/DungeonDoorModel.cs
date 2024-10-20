@@ -5,9 +5,10 @@ namespace RandomIsleser
     public class DungeonDoorModel : SaveableObject
     {
         public bool IsLocked;
+        
         public bool IsBossDoor;
-
         [SerializeField] private DungeonModel _owner;
+        [SerializeField] private bool _beginsLocked;
 
         public bool CanBeOpened()
         {
@@ -28,9 +29,15 @@ namespace RandomIsleser
             return new DungeonDoorData()
             {
                 ID = ID,
-                IsLocked = IsLocked,
-                IsBossDoor = IsBossDoor
+                IsLocked = IsLocked
             };
+        }
+
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+
+            IsLocked = _beginsLocked;
         }
     }
     

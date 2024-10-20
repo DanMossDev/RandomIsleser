@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MossUtils;
 using Newtonsoft.Json;
 
 namespace RandomIsleser
@@ -55,19 +56,32 @@ namespace RandomIsleser
 
         private void QuestUpdated(QuestData quest)
         {
-            if (StartedQuests.Contains(quest))
+            for (int i = 0; i < StartedQuests.Count; i++)
             {
-                StartedQuests.Remove(quest);
-                StartedQuests.Insert(0, quest);
+                if (StartedQuests[i].ID == quest.ID)
+                {
+                    StartedQuests.RemoveAt(i);
+                    StartedQuests.Insert(0, quest);
+                }
             }
         }
 
         private void QuestCompleted(QuestData quest)
         {
-            if (StartedQuests.Contains(quest))
-                StartedQuests.Remove(quest);
+            for (int i = 0; i < StartedQuests.Count; i++)
+            {
+                if (StartedQuests[i].ID == quest.ID)
+                    StartedQuests.RemoveAt(i);
+            }
+
+            bool add = true;
+            for (int i = 0; i < CompletedQuests.Count; i++)
+            {
+                if (CompletedQuests[i].ID == quest.ID)
+                    add = false;
+            }
             
-            if (!CompletedQuests.Contains(quest))
+            if (add)
                 CompletedQuests.Insert(0, quest);
         }
     }

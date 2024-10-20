@@ -38,9 +38,6 @@ namespace RandomIsleser
                 return;
             
             HasBeenSeen = dialogueData.HasBeenSeen;
-
-            if (!SaveableObjectHelper.Instance.AllDialogueTrees.Contains(this))
-                SaveableObjectHelper.Instance.AllDialogueTrees.Add(this);
         }
 
         public override SOData GetData()

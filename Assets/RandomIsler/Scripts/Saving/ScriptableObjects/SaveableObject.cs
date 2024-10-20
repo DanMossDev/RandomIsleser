@@ -22,6 +22,9 @@ namespace RandomIsleser
         {
             if (ID == 0)
                 ID = Guid.NewGuid().GetHashCode();
+            
+            if (!SaveableObjectHelper.Instance.AllSaveableObjects.Contains(this))
+                SaveableObjectHelper.Instance.AllSaveableObjects.Add(this);
         }
     }
     

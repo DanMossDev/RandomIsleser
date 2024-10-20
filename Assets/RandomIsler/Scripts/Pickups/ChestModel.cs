@@ -28,6 +28,13 @@ namespace RandomIsleser
 			    HasBeenOpened = HasBeenOpened
 		    };
 	    }
+
+	    protected override void Cleanup()
+	    {
+		    base.Cleanup();
+		    
+		    HasBeenOpened = false;
+	    }
     }
 
     public class ChestData : SOData

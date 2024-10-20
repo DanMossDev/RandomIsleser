@@ -39,6 +39,7 @@ namespace RandomIsleser
                 Owner.BeginQuest(false);
             
             IsStarted = true;
+            Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.QuestUpdated(Owner);
         }
 
         public void CompleteObjective()
@@ -50,6 +51,8 @@ namespace RandomIsleser
             if (HasReward)
                 OnCompleteReward.UnlockReward();
             Owner.ObjectiveCompleted(this);
+            
+            Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.QuestUpdated(Owner);
         }
         
         protected override void Cleanup()
@@ -63,9 +66,6 @@ namespace RandomIsleser
             HasCompleteDialogue = OnCompleteDialogue != null;
             HasProgressDialogue = InProgressDialogue.Count > 0;
             HasReward = OnCompleteReward != null;
-            
-            if (!SaveableObjectHelper.Instance.AllObjectives.Contains(this))
-                SaveableObjectHelper.Instance.AllObjectives.Add(this);
         }
         
         public override void Load(SOData data)

@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e10bab33057bfd4f8db7b39dcb6a61e, type: 3}
   m_Name: SaveableObjectHelper
   m_EditorClassIdentifier: 
-  AllQuests:
+  AllSaveableObjects:
+  - {fileID: 11400000, guid: c5b54813d5ac086439554873cbac0582, type: 2}
+  - {fileID: 11400000, guid: f58e905d551ffef4f910f270e8b4033a, type: 2}
   - {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
-  AllObjectives:
-  - {fileID: 11400000, guid: fe72a918e30c2b646b50bf467f8e8179, type: 2}
+  - {fileID: 11400000, guid: 38ac6cdaf703077479d6441562761390, type: 2}
   - {fileID: 11400000, guid: 84890ca73b302eb47b4e51116379ea4d, type: 2}
+  - {fileID: 11400000, guid: fe72a918e30c2b646b50bf467f8e8179, type: 2}
+  - {fileID: 11400000, guid: 190902f12c9277e4289b31d549e3b7ca, type: 2}
+  - {fileID: 11400000, guid: d97eda8f6acdbb84daed0628eecc9a82, type: 2}
+  - {fileID: 11400000, guid: 028ee2f0b181b174695d15267417abb2, type: 2}
+  - {fileID: 11400000, guid: e9d6f8aac7129cb4180ec99fc5206c40, type: 2}
   - {fileID: 11400000, guid: f5c1d3e5909ab7a4e8d919a7f77334b3, type: 2}
-  AllDialogueNodes: []
