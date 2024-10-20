@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1965864401443333721}
   - component: {fileID: 4099161072411222868}
+  - component: {fileID: 3736722526297568776}
   m_Layer: 0
   m_Name: GoThroughDoorCamera
   m_TagString: Untagged
@@ -72,6 +73,20 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1495334364415511521}
+--- !u!114 &3736722526297568776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120116716933720708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6f178995761bc49ab6a189f594eaa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _setLookAt: 1
+  _setFollow: 1
 --- !u!1 &3748793689748059208
 GameObject:
   m_ObjectHideFlags: 0

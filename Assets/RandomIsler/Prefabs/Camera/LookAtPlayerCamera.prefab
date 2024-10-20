@@ -157,3 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6f178995761bc49ab6a189f594eaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _setLookAt: 1
+  _setFollow: 0
+  _isOrbitalCam: 0

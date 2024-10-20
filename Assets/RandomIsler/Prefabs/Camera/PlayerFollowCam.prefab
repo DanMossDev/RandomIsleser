@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 8195961104154648606}
   - component: {fileID: 8319766290251582220}
   - component: {fileID: 5753871771560491138}
+  - component: {fileID: 3526824874486096825}
   m_Layer: 0
   m_Name: PlayerFollowCam
   m_TagString: Untagged
@@ -254,6 +255,21 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 0}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &3526824874486096825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868418504283589999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6f178995761bc49ab6a189f594eaa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _setLookAt: 1
+  _setFollow: 1
+  _isOrbitalCam: 1
 --- !u!1 &2170819562162527510
 GameObject:
   m_ObjectHideFlags: 0

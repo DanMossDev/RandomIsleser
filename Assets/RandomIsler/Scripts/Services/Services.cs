@@ -11,7 +11,6 @@ namespace RandomIsleser
 		private UIManager _uiManager;
 		private QuestManager _questManager;
 		private DialogueManager _dialogueManager;
-		private CameraManager _cameraManager;
         
 		public GameManager GameManager => _gameManager;
 		public RuntimeSaveManager RuntimeSaveManager => _runtimeSaveManager;
@@ -20,7 +19,6 @@ namespace RandomIsleser
 		public UIManager UIManager => _uiManager;
 		public QuestManager QuestManager => _questManager;
 		public DialogueManager DialogueManager => _dialogueManager;
-		public CameraManager CameraManager => _cameraManager;
 
 		private void Awake()
 		{
@@ -31,7 +29,8 @@ namespace RandomIsleser
 			_uiManager = GetComponentInChildren<UIManager>();
 			_questManager = GetComponentInChildren<QuestManager>();
 			_dialogueManager = GetComponentInChildren<DialogueManager>();
-			_cameraManager = GetComponentInChildren<CameraManager>();
+			
+			DontDestroyOnLoad(this);
 		}
 	}
 }

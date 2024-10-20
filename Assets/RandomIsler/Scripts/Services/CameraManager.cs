@@ -1,11 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using MossUtils;
 using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraManager : MonoSingleton<CameraManager>
     {
         [Header("Cameras")]
         [SerializeField] private Camera _mainCamera;
@@ -20,6 +20,8 @@ namespace RandomIsleser
         [SerializeField] private CinemachineTargetGroup _dialogueGroup;
         [SerializeField] private CinemachineConfiner _followCamConfiner;
         
+        public Camera MainCamera => _mainCamera;
+        public CinemachineFreeLook FollowCamera => _followCamera;
         public GameObject AimCamera => _aimCamera;
 
         private void DisableAll()

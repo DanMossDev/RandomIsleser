@@ -162,7 +162,7 @@ namespace RandomIsleser
         {
             base.OnUnequip();
             PlayerController.Instance.SetState(PlayerStates.DefaultMove);
-            Services.Instance.CameraManager.SetCycloneCamera(false);
+            CameraManager.Instance.SetCycloneCamera(false);
 
             if (_isItemHeld)
                 FireItem(Vector3.zero, false);
@@ -173,7 +173,7 @@ namespace RandomIsleser
             base.OnEquip();
             PlayerController.Instance.SetState(PlayerStates.CycloneCombat);
             CycloneCameraTarget.Instance.SetRotation();
-            Services.Instance.CameraManager.SetCycloneCamera(true);
+            CameraManager.Instance.SetCycloneCamera(true);
         }
     }
 }

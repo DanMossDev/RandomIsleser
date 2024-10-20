@@ -95,17 +95,20 @@ namespace RandomIsleser
         
         //Cameras
         [Header("Cameras")]
-        [SerializeField] private Camera _mainCamera;
-        [SerializeField] private CinemachineFreeLook _followCamera;
+        private Camera _mainCamera;
+        private CinemachineFreeLook _followCamera;
         private Transform _aimCamera;
         
         //Cached components
         [Header("Cached Components")]
-        [SerializeField] private Transform _cameraTransform;
+        private Transform _cameraTransform;
         private CharacterController _characterController;
 
         public Transform MainCameraTransform => _cameraTransform;
         public CharacterController CharacterController => _characterController;
+
+        [SerializeField] private Transform _cameraFollowTarget;
+        public Transform CameraFollowTarget => _cameraFollowTarget;
         
         //IK and Animations
         [SerializeField] private Animator _equipmentAnimator;
@@ -288,7 +291,10 @@ namespace RandomIsleser
             
             SubscribeControls();
 
-            _aimCamera = Services.Instance.CameraManager.AimCamera.transform;
+            _mainCamera = CameraManager.Instance.MainCamera;
+            _followCamera = CameraManager.Instance.FollowCamera;
+            _cameraTransform = CameraManager.Instance.MainCamera.transform;
+            _aimCamera = CameraManager.Instance.AimCamera.transform;
 
             CurrentState = new DefaultMovementState();
             
@@ -365,7 +371,7 @@ namespace RandomIsleser
             UnsubscribeControls();
             BoatController.Instance.SubscribeControls();
             transform.parent = BoatController.Instance.transform;
-            Services.Instance.CameraManager.SetBoatCamera(true);
+            CameraManager.Instance.SetBoatCamera(true);
         }
 
         public void DisembarkShip()
@@ -373,7 +379,7 @@ namespace RandomIsleser
             SubscribeControls();
             BoatController.Instance.UnsubscribeControls();
             transform.parent = null;
-            Services.Instance.CameraManager.SetBoatCamera(false);
+            CameraManager.Instance.SetBoatCamera(false);
         }
         
         //UTILS
@@ -418,11 +424,11 @@ namespace RandomIsleser
         public async Task MoveThroughDoorToTargetPosition(Vector3 target)
         {
             SetState(PlayerStates.NullState);
-            Services.Instance.CameraManager.SetDoorCamera(true);
+            CameraManager.Instance.SetDoorCamera(true);
             await MoveToTargetPosition(target, 5, 2.5f);
-            Services.Instance.CameraManager.SetBounds(IncomingCameraBounds);
+            CameraManager.Instance.SetBounds(IncomingCameraBounds);
             IncomingCameraBounds = null;
-            Services.Instance.CameraManager.SetDoorCamera(false);
+            CameraManager.Instance.SetDoorCamera(false);
             SetState(PlayerStates.DefaultMove);
         }
 
@@ -557,14 +563,14 @@ namespace RandomIsleser
             SnapToInputDirection(camForward);
             _followCamera.m_YAxisRecentering.m_enabled = true;
             _aimCamera.transform.localRotation = Quaternion.identity;
-            Services.Instance.CameraManager.SetAimCamera(true);
+            CameraManager.Instance.SetAimCamera(true);
             _equipmentAnimator.SetBool(Animations.IsAimingHash, true);
         }
         
         public void EndAim()
         {
             _followCamera.m_YAxisRecentering.m_enabled = false;
-            Services.Instance.CameraManager.SetAimCamera(false);
+            CameraManager.Instance.SetAimCamera(false);
             _equipmentAnimator.SetBool(Animations.IsAimingHash, false);
             SetCanRotate(false);
             var seq = DOTween.Sequence();

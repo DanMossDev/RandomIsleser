@@ -86,12 +86,14 @@ MonoBehaviour:
   _mainCamera: {fileID: 0}
   _followCamera: {fileID: 0}
   _cameraTransform: {fileID: 0}
+  _cameraFollowTarget: {fileID: 6352030419008540264}
   _equipmentAnimator: {fileID: 3262418683429648459}
   _locomotionAnimator: {fileID: 7745359633866341131}
   _leftHand: {fileID: 4342225344508735292}
   _rightHand: {fileID: 4530825717716945170}
   _leftHandFollowIK: {fileID: 4292793109261610229}
   _rightHandFollowIK: {fileID: 348618491699207617}
+  IncomingCameraBounds: {fileID: 0}
   _ladderLayers:
     serializedVersion: 2
     m_Bits: 0

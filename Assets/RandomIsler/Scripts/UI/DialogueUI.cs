@@ -24,7 +24,7 @@ namespace RandomIsleser
             var speaker = node.GetSpeaker();
             _characterName.text = speaker.Name.GetLocalizedString();
             
-            Services.Instance.CameraManager.SetCurrentSpeaker(speaker.Controller);
+            CameraManager.Instance.SetCurrentSpeaker(speaker.Controller);
             
             AnimateDialogue(node.GetDialogue());
         }
