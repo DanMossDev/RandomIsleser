@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "FishingRodModel", menuName = "RandomIsler/Models/Equippables/FishingRodModel")]
+    [CreateAssetMenu(fileName = "FishingRodModel", menuName = AssetMenuNames.EquippableModels + "FishingRodModel")]
     public class FishingRodModel : EquippableModel
     {
         [Space, Header("Fishing Rod")]

@@ -5,7 +5,7 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "QuestModel", menuName = "RandomIsler/Quests/QuestModel")]
+    [CreateAssetMenu(fileName = "QuestModel", menuName = AssetMenuNames.Quests + "QuestModel")]
     public class QuestModel : SaveableObject
     {
         public LocalizedString QuestName;
@@ -110,5 +110,16 @@ namespace RandomIsleser
 
             return data;
         }
+    }
+    
+    [Serializable]
+    public class QuestData : SOData
+    {
+	    public bool IsStarted = false;
+	    public bool IsComplete = false;
+
+	    public int ObjectiveIndex = 0;
+
+	    public List<ObjectiveData> Objectives;
     }
 }

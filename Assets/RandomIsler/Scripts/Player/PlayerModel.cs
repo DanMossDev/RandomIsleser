@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "PlayerModel", menuName = "RandomIsler/Models/Player")]
+    [CreateAssetMenu(fileName = "PlayerModel", menuName = AssetMenuNames.Models + "Player")]
     public class PlayerModel : ScriptableObject
     {
         [Header("Player Model")]

@@ -17,6 +17,7 @@ namespace RandomIsleser
         private Interactable _currentInteractable;
         private bool _hasInteractable;
         
+        public Collider IncomingCameraBounds;
         public bool HasInteractable => _hasInteractable;
         
         //Cached Input
@@ -365,24 +366,8 @@ namespace RandomIsleser
             if (CurrentState is AttackCombatState)
                 transform.rotation = _equipmentAnimator.rootRotation;
         }
-
-        public void BoardShip()
-        {
-            UnsubscribeControls();
-            BoatController.Instance.SubscribeControls();
-            transform.parent = BoatController.Instance.transform;
-            CameraManager.Instance.SetBoatCamera(true);
-        }
-
-        public void DisembarkShip()
-        {
-            SubscribeControls();
-            BoatController.Instance.UnsubscribeControls();
-            transform.parent = null;
-            CameraManager.Instance.SetBoatCamera(false);
-        }
         
-        //UTILS
+        #region Utils
         public Vector3 RotateVectorToCamera(Vector3 input)
         {
             return Quaternion.AngleAxis(_cameraTransform.rotation.eulerAngles.y, Vector3.up) * input;
@@ -394,8 +379,9 @@ namespace RandomIsleser
 
             return _heightRelativeToWater;
         }
+        #endregion
 
-        //MOVEMENT
+        #region Interactions
         public void SetInteractable(Interactable interactable)
         {
             if (_currentInteractable == interactable) 
@@ -418,20 +404,7 @@ namespace RandomIsleser
         {
             _currentInteractable.Interact();
         }
-
-        public Collider IncomingCameraBounds;
-
-        public async Task MoveThroughDoorToTargetPosition(Vector3 target)
-        {
-            SetState(PlayerStates.NullState);
-            CameraManager.Instance.SetDoorCamera(true);
-            await MoveToTargetPosition(target, 5, 2.5f);
-            CameraManager.Instance.SetBounds(IncomingCameraBounds);
-            IncomingCameraBounds = null;
-            CameraManager.Instance.SetDoorCamera(false);
-            SetState(PlayerStates.DefaultMove);
-        }
-
+        
         public async Task MoveToTargetPosition(Vector3 target, float giveUpTime = 10, float speedMultiplier = 1)
         {
             float timeBegan = Time.time;
@@ -452,6 +425,43 @@ namespace RandomIsleser
             SubscribeControls();
         }
 
+        public async Task MoveThroughDoorToTargetPosition(Vector3 target)
+        {
+            SetState(PlayerStates.NullState);
+            CameraManager.Instance.SetDoorCamera(true);
+            await MoveToTargetPosition(target, 5, 2.5f);
+            CameraManager.Instance.SetBounds(IncomingCameraBounds);
+            IncomingCameraBounds = null;
+            CameraManager.Instance.SetDoorCamera(false);
+            SetState(PlayerStates.DefaultMove);
+        }
+
+        public async Task OpenChest(ChestController controller, ChestModel model)
+        {
+	        await MoveToTargetPosition(controller.ChestOpenPoint.position, 5, 2f);
+	        //Play chest music
+	        //Play chest animation
+	        model.Reward.UnlockReward();
+        }
+        
+        public void BoardShip()
+        {
+	        UnsubscribeControls();
+	        BoatController.Instance.SubscribeControls();
+	        transform.parent = BoatController.Instance.transform;
+	        CameraManager.Instance.SetBoatCamera(true);
+        }
+
+        public void DisembarkShip()
+        {
+	        SubscribeControls();
+	        BoatController.Instance.UnsubscribeControls();
+	        transform.parent = null;
+	        CameraManager.Instance.SetBoatCamera(false);
+        }
+        #endregion
+        
+		#region Movement
         public void Move()
         {
             if (!_isGrounded)
@@ -549,7 +559,50 @@ namespace RandomIsleser
 
             _characterController.Move(Time.deltaTime * _fishingRodController.Model.GrappleSpeed * grappleDirection.normalized);
         }
+        
+        public void RotatePlayer()
+        {
+	        if (CanRotate)
+		        RotateTowards(RotateVectorToCamera(_movementInput));
+        }
 
+        public void RotatePlayer(Vector3 direction)
+        {
+	        if (CanRotate)
+		        RotateTowards(direction);
+        }
+        
+        public void CycloneRotatePlayer()
+        {
+	        if (CanRotate)
+		        RotateTowards(RotateVectorToCamera(_cycloneCameraInput));
+        }
+
+        public void SnapToInputDirection(Vector3 direction)
+        {
+	        if (direction != Vector3.zero)
+		        transform.forward = direction.normalized;
+        }
+
+        public void ResetUp()
+        {
+	        transform.up = Vector3.up;
+        }
+
+        private void RotateTowards(Vector3 direction)
+        {
+	        if (direction == Vector3.zero)
+		        return;
+
+	        transform.forward = Vector3.RotateTowards(
+		        transform.forward, 
+		        direction, 
+		        Time.deltaTime * _model.RotationSpeed * _stateRotationMultiplier, 
+		        0);
+        }
+        #endregion
+
+        #region Combat
         private void TryAim()
         {
             if (CanAim)
@@ -601,56 +654,15 @@ namespace RandomIsleser
             CurrentlyEquippedItem.CheckAim(_aimCamera.transform.forward);
         }
 
-        public void RotatePlayer()
-        {
-            if (CanRotate)
-                RotateTowards(RotateVectorToCamera(_movementInput));
-        }
-
-        public void RotatePlayer(Vector3 direction)
-        {
-            if (CanRotate)
-                RotateTowards(direction);
-        }
-        
-        public void CycloneRotatePlayer()
-        {
-            if (CanRotate)
-                RotateTowards(RotateVectorToCamera(_cycloneCameraInput));
-        }
-
-        public void SnapToInputDirection(Vector3 direction)
-        {
-            if (direction != Vector3.zero)
-                transform.forward = direction.normalized;
-        }
-
-        public void ResetUp()
-        {
-            transform.up = Vector3.up;
-        }
-
-        private void RotateTowards(Vector3 direction)
-        {
-            if (direction == Vector3.zero)
-                return;
-
-            transform.forward = Vector3.RotateTowards(
-                transform.forward, 
-                direction, 
-                Time.deltaTime * _model.RotationSpeed * _stateRotationMultiplier, 
-                0);
-        }
-
         public void Attack()
         {
             _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, 0);
             _equipmentAnimator.ResetTrigger(Animations.HammerAttackHash);
             _equipmentAnimator.SetTrigger(Animations.HammerAttackHash);
         }
+        #endregion
         
-#region Input
-
+		#region Input
         private void SetInteractInput()
         {
             CurrentState.Interact(this);

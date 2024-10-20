@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "DungeonModel", menuName = "RandomIsler/Dungeons/DungeonModel")]
+    [CreateAssetMenu(fileName = "DungeonModel", menuName = AssetMenuNames.Dungeons + "DungeonModel")]
     public class DungeonModel : SaveableObject
     {
         public int SmallKeys;
@@ -36,5 +36,12 @@ namespace RandomIsleser
                 HasBossKey = HasBossKey
             };
         }
+    }
+    
+    public class DungeonData : SOData
+    {
+	    public int SmallKeys;
+	    public bool HasBossKey;
+	    public bool IsComplete;
     }
 }

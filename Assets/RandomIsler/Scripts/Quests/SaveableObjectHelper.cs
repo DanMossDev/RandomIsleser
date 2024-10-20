@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "SaveableObjectHelper", menuName = "RandomIsler/Quests/SaveableObjectHelper")]
+    [CreateAssetMenu(fileName = "SaveableObjectHelper", menuName = AssetMenuNames.Models + "SaveableObjectHelper")]
     public class SaveableObjectHelper : ScriptableObject
     {
         public List<QuestModel> AllQuests;
         public List<ObjectiveModel> AllObjectives;
         public List<DialogueTree> AllDialogueTrees;
-        
-        
         
         #region Singleton
         private static SaveableObjectHelper _instance;

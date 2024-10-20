@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "DialogueNode", menuName = "RandomIsler/Dialogue/DialogueNode")]
+    [CreateAssetMenu(fileName = "DialogueNode", menuName = AssetMenuNames.Dialogue + "DialogueNode")]
     public class DialogueNode : ScriptableObject
     {
         [SerializeField] private NPCModel _npcModel;

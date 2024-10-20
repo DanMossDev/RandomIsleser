@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "CurrencyPickupModel", menuName = "RandomIsler/Models/Pickups/CurrencyModel")]
+    [CreateAssetMenu(fileName = "CurrencyPickupModel", menuName = AssetMenuNames.PickupModels + "CurrencyModel")]
     public class CurrencyPickupModel : PickupModel
     {
         [SerializeField] private int _value;

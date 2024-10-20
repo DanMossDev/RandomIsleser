@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "CharacterDialogueModel", menuName = "RandomIsler/Dialogue/CharacterDialogueModel")]
+    [CreateAssetMenu(fileName = "CharacterDialogueModel", menuName = AssetMenuNames.Dialogue + "CharacterDialogueModel")]
     public class CharacterDialogueModel : ScriptableObject
     {
         [SerializeField] private List<DialogueTree> _genericDialogueTrees;

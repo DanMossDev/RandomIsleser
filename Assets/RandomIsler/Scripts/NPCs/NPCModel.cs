@@ -4,7 +4,7 @@ using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "NPCModel", menuName = "RandomIsler/Models/NPC")]
+    [CreateAssetMenu(fileName = "NPCModel", menuName = AssetMenuNames.Models + "NPC")]
     public class NPCModel : ScriptableObject
     {
         [Header("NPC Model")] [Space, Header("Character Details")] 

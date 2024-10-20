@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "DialogueTree", menuName = "RandomIsler/Dialogue/DialogueTree")]
+    [CreateAssetMenu(fileName = "DialogueTree", menuName = AssetMenuNames.Dialogue + "DialogueTree")]
     public class DialogueTree : SaveableObject
     {
         [SerializeField] private DialogueNode _firstDialogueNode;
@@ -50,5 +51,11 @@ namespace RandomIsleser
                 HasBeenSeen = HasBeenSeen
             };
         }
+    }
+    
+    [Serializable]
+    public class DialogueData : SOData
+    {
+	    public bool HasBeenSeen = false;
     }
 }

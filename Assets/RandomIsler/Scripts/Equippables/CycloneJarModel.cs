@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    [CreateAssetMenu(fileName = "CycloneJarEquippableModel", menuName = "RandomIsler/Models/Equippables/CycloneJarModel")]
+    [CreateAssetMenu(fileName = "CycloneJarEquippableModel", menuName = AssetMenuNames.EquippableModels + "CycloneJarModel")]
     public class CycloneJarModel : EquippableModel
     {
         [Space, Header("Cyclone Jar")]

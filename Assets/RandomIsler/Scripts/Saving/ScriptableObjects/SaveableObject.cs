@@ -3,15 +3,13 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class SaveableObject : ScriptableObject
+    public abstract class SaveableObject : ScriptableObject
     {
         public int ID;
-        
-        public virtual void Load(SOData data)
-        { }
 
-        public virtual SOData GetData()
-        { return null; }
+        public abstract void Load(SOData data);
+
+        public abstract SOData GetData();
         
         protected void OnValidate()
         {
@@ -25,5 +23,11 @@ namespace RandomIsleser
             if (ID == 0)
                 ID = Guid.NewGuid().GetHashCode();
         }
+    }
+    
+    [Serializable]
+    public class SOData
+    {
+	    public int ID;
     }
 }
