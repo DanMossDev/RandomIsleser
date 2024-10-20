@@ -12,7 +12,7 @@ namespace MossUtils
 		public InventoryData InventoryData;
 		public SaveDataFlags ExampleFlagData;
 		
-		public List<DialogueData> DialogueData;
+		public Dictionary<int, SOData> ScriptableObjectData;
         
 		#region Properties
 		[JsonIgnore] public bool ExampleCheckBool => ExampleFlagData.HasFlag(SaveDataFlags.ExampleOne);
@@ -23,7 +23,7 @@ namespace MossUtils
 			ExampleFlagData = SaveDataFlags.None;
 			InventoryData = new InventoryData();
 			QuestSaveData = new QuestLogSaveData();
-			DialogueData = new List<DialogueData>();
+			ScriptableObjectData = new Dictionary<int, SOData>();
 			
 			InventoryData.Initialise();
 			QuestSaveData.Initialise();

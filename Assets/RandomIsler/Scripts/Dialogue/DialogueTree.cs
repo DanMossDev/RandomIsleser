@@ -8,7 +8,6 @@ namespace RandomIsleser
     public class DialogueTree : SaveableObject
     {
         [SerializeField] private DialogueNode _firstDialogueNode;
-
         
         public UnlockCriteria UnlockCriteria;
         public bool HasBeenSeen = false;
@@ -19,6 +18,7 @@ namespace RandomIsleser
         public DialogueNode GetFirstDialogueNode()
         {
             HasBeenSeen = true;
+            Services.Instance.RuntimeSaveManager.LocalSaveData.ScriptableObjectData[ID] = GetData();
             return _firstDialogueNode;
         }
 

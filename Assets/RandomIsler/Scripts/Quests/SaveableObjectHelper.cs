@@ -41,6 +41,12 @@ namespace RandomIsleser
         }
         #endregion
 
+        public void SaveScriptableData()
+        {
+            foreach (var obj in AllSaveableObjects)
+                obj.Save();
+        }
+        
         public void ClearAll()
         {
             AllSaveableObjects.Clear();

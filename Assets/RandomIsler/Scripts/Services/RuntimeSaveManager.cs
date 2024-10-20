@@ -46,19 +46,26 @@ namespace RandomIsleser
 				Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
 				
 				//Load Scriptable Objects
-				Services.Instance.QuestManager.LoadQuestData(_localSaveData.QuestSaveData.StartedQuests);
-				Services.Instance.QuestManager.LoadQuestData(_localSaveData.QuestSaveData.CompletedQuests);
-				Services.Instance.DialogueManager.LoadDialogueData(_localSaveData.DialogueData);
+				LoadSaveableObjectData(_localSaveData.ScriptableObjectData);
+				
 				return true;
 			}
 
 			return false;
+		}
+		
+		private void LoadSaveableObjectData(Dictionary<int, SOData> data)
+		{
+			var saveableObjects = SaveableObjectHelper.Instance.AllSaveableObjectsDictionary;
+			foreach (var (id, datum) in data) 
+				saveableObjects[id].Load(datum);
 		}
 
 		public async void SaveGame()
 		{
 			if (_localSaveData != null)
 			{
+				SaveableObjectHelper.Instance.SaveScriptableData();
 				await SaveDataManager.SaveGame(_localSaveData);
 			}
 		}

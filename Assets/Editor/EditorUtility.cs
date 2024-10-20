@@ -12,7 +12,7 @@ namespace RandomIsleser.Editor
         [MenuItem("MossUtils/Clear Save Data")]
         private static void ClearSaveData()
         {
-            File.Delete(SaveHandlerPersistent.kSaveFilePath);
+            File.Delete(SaveHandlerPersistent.k_SaveFilePath);
         }
         
         [MenuItem("MossUtils/Clear Saveable Objects")]

@@ -30,15 +30,6 @@ namespace RandomIsleser
             InputManager.AcceptInput -= OnContinue;
             InputManager.BackInput -= OnBack;
         }
-        
-        public void LoadDialogueData(List<DialogueData> dialogue)
-        {
-            var questLookup = SaveableObjectHelper.Instance.AllSaveableObjects;
-            foreach (var tree in dialogue)
-            {
-                questLookup[tree.ID].Load(tree);
-            }
-        }
 
         public void BeginDialogueTree(DialogueTree dialogueTree)
         {

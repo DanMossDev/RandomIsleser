@@ -28,20 +28,5 @@ namespace RandomIsleser
         {
             Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.QuestCompleted(quest);
         }
-
-        public void LoadQuestData(List<QuestData> quests)
-        {
-            var data = Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData;
-            var soLookup = SaveableObjectHelper.Instance.AllSaveableObjectsDictionary;
-            foreach (var quest in quests)
-            {
-                soLookup[quest.ID].Load(quest);
-            
-                foreach (var objective in quest.Objectives)
-                {
-                    soLookup[objective.ID].Load(objective);
-                }
-            }
-        }
     }
 }

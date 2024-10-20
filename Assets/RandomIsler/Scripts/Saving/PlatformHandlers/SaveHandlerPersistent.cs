@@ -7,18 +7,19 @@ namespace MossUtils
 {
 	public class SaveHandlerPersistent : ISaveHandler
 	{
-		public static readonly string kSaveFilePath = $"{Application.persistentDataPath}/saves/save.ppg";
+		public static readonly string k_SaveFilePath = $"{Application.persistentDataPath}/saves/save.json";
 		public async Task<bool> SaveGame(SaveData dataToSave)
 		{
 			try
 			{
-				Directory.CreateDirectory(Path.GetDirectoryName(kSaveFilePath));
-				await File.WriteAllTextAsync(kSaveFilePath, JsonConvert.SerializeObject(dataToSave));
+				Directory.CreateDirectory(Path.GetDirectoryName(k_SaveFilePath));
+				JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+				await File.WriteAllTextAsync(k_SaveFilePath, JsonConvert.SerializeObject(dataToSave, settings));
 				return true;
 			}
 			catch (System.Exception error)
 			{
-				Debug.LogError($"Failed to write to {kSaveFilePath} with exception {error}");
+				Debug.LogError($"Failed to write to {k_SaveFilePath} with exception {error}");
 				return false;
 			}
 		}
@@ -28,15 +29,15 @@ namespace MossUtils
 			string jsonData;
 			try
 			{
-				jsonData = await File.ReadAllTextAsync(kSaveFilePath);
+				jsonData = await File.ReadAllTextAsync(k_SaveFilePath);
 			}
 			catch (System.Exception error)
 			{
-				Debug.Log($"Failed to load from {kSaveFilePath} with exception {error}");
+				Debug.Log($"Failed to load from {k_SaveFilePath} with exception {error}");
 				return null;
 			}
-
-			SaveData loadedSaveData = JsonConvert.DeserializeObject<SaveData>(jsonData);
+			JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+			SaveData loadedSaveData = JsonConvert.DeserializeObject<SaveData>(jsonData, settings);
 			return loadedSaveData;
 		}
 
@@ -45,12 +46,12 @@ namespace MossUtils
 			await Task.Yield();
 			try
 			{
-				File.Delete(kSaveFilePath);
+				File.Delete(k_SaveFilePath);
 				return true;
 			}
 			catch (System.Exception error)
 			{
-				Debug.LogError($"Failed to delete {kSaveFilePath} with exception {error}");
+				Debug.LogError($"Failed to delete {k_SaveFilePath} with exception {error}");
 				return false;
 			}
 		}
