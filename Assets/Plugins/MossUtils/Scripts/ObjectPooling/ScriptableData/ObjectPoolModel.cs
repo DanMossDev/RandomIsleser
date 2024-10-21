@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 namespace MossUtils
@@ -6,7 +6,6 @@ namespace MossUtils
     [CreateAssetMenu(menuName="MossUtils/Models/ObjectPool", fileName="ObjectPoolModel")]
     public class ObjectPoolModel : ScriptableObject
     {
-        public List<string> PrefabNames;
-        public List<GameObject> Prefabs;
+        [SerializedDictionary] public SerializedDictionary<string, GameObject> PrefabLookup;
     }
 }

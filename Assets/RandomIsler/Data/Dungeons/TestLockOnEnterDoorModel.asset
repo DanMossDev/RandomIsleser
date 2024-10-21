@@ -17,5 +17,5 @@ MonoBehaviour:
   IsBossDoor: 0
   LockOnEnter: 1
   IsTemporaryLocked: 0
-  _unlockCondition: {fileID: 11400000, guid: 3fed115681f49cc4cb21b380479d577d, type: 2}
+  _unlockCondition: {fileID: 11400000, guid: c4f74eaac7b054c4caa4b7ec1a05e484, type: 2}
   _beginsLocked: 0

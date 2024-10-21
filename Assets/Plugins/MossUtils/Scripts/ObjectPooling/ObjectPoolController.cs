@@ -20,7 +20,7 @@ namespace MossUtils
             {
                 var parent = new GameObject($"{key} pool");
                 parent.transform.parent = transform;
-                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+                _pools.Add(key, new ObjectPool(_model.PrefabLookup[key], parent.transform));
             }
 
             return _pools[key].Get();
@@ -32,7 +32,7 @@ namespace MossUtils
             {
                 var parent = new GameObject($"{key} pool");
                 parent.transform.parent = transform;
-                _pools.Add(key, new ObjectPool(_model.Prefabs[_model.PrefabNames.IndexOf(key)], parent.transform));
+                _pools.Add(key, new ObjectPool(_model.PrefabLookup[key], parent.transform));
             }
 
             var obj = _pools[key].Get();

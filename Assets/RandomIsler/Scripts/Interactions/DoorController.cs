@@ -7,7 +7,7 @@ namespace RandomIsleser
         [SerializeField] protected DoorModel _model;
         
         [SerializeField] protected Transform[] _entryPoint;
-        [SerializeField] private RoomCameraController[] _roomCameraControllers;
+        [SerializeField] private RoomController[] _roomCameraControllers;
 
         [SerializeField] protected Animator _doorAnimator;
 
