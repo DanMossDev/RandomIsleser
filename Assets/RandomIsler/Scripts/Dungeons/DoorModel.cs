@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -9,10 +10,23 @@ namespace RandomIsleser
         
         public bool IsBossDoor;
 
+        public bool LockOnEnter;
+
+        public bool IsTemporaryLocked;
+
         [SerializeField] private SaveableBool _unlockCondition;
         [SerializeField] private bool _beginsLocked;
 
-        public DoorController Controller;
+        public bool ConditionMet => _unlockCondition != null && _unlockCondition.Value;
+        [NonSerialized] public DoorController Controller;
+
+        public void SubscribeConditions()
+        {
+            if (_unlockCondition == null || _unlockCondition.Value)
+                return;
+
+            _unlockCondition.OnValueChanged += ReleaseTemporaryLock;
+        }
 
         public bool TryUnlockDoor()
         {
@@ -24,7 +38,7 @@ namespace RandomIsleser
 
             if (_unlockCondition != null)
             {
-                IsLocked = false;
+                IsLocked = !_unlockCondition.Value;
                 return _unlockCondition.Value;
             }
 
@@ -35,6 +49,20 @@ namespace RandomIsleser
                 return true;
             }
             return false;
+        }
+
+        public void TemporaryLock()
+        {
+            IsTemporaryLocked = true;
+        }
+
+        private void ReleaseTemporaryLock(bool complete)
+        {
+            if (!complete)
+                return;
+            
+            IsTemporaryLocked = false;
+            Controller.DoorUnlocked();
         }
         
         public override void Load(SOData data)
@@ -60,6 +88,7 @@ namespace RandomIsleser
             base.Cleanup();
 
             IsLocked = _beginsLocked;
+            IsTemporaryLocked = false;
         }
     }
     

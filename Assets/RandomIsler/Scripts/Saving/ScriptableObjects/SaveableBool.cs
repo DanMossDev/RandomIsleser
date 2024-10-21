@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -5,9 +6,21 @@ namespace RandomIsleser
     [CreateAssetMenu(fileName = "SaveableBool", menuName = AssetMenuNames.SaveableData + "SaveableBool")]
     public class SaveableBool : SaveableObject
     {
-        public bool Value;
+        private bool _value;
+
+        public bool Value
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                OnValueChanged?.Invoke(_value);
+            }
+        }
 
         [SerializeField] private bool _defaultValue;
+
+        public event Action<bool> OnValueChanged;
 
         public override void Load(SOData data)
         {

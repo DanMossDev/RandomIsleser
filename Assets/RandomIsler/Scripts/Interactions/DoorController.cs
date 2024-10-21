@@ -14,18 +14,35 @@ namespace RandomIsleser
         protected virtual void Awake()
         {
             if (_model != null)
+            {
                 _model.Controller = this;
+                _model.SubscribeConditions();
+            }
         }
         
         public virtual void Interact()
         {
-            if (_model != null && _model.IsLocked)
+            bool hasModel = _model != null;
+
+            if (hasModel && _model.IsTemporaryLocked)
+            {
+                //Maybe some SFX here too
+                return;
+            }
+            
+            if (hasModel && _model.LockOnEnter && !_model.ConditionMet && !_model.IsTemporaryLocked)
+            {
+                _model.TemporaryLock();
+            }
+            
+            if (hasModel && _model.IsLocked)
             {
                 if (!_model.TryUnlockDoor())
                 {
                     //Play some kind of "door locked" sfx/anims
                     return;
                 }
+                DoorUnlocked();
             }
             
             _doorAnimator.SetTrigger(Animations.OpenDoorHash);
@@ -42,6 +59,11 @@ namespace RandomIsleser
                 _roomCameraControllers[currentIndex].OnRoomExit();
             if (_roomCameraControllers[targetIndex] != null)
                 _roomCameraControllers[targetIndex].OnRoomEnter();
+        }
+
+        public void DoorUnlocked()
+        {
+            //Show some unlock stuff
         }
     }
 }

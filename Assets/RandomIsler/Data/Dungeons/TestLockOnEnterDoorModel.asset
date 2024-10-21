@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cf827dec193ae5419554117410c07d5, type: 3}
-  m_Name: TestDoorModel
+  m_Name: TestLockOnEnterDoorModel
   m_EditorClassIdentifier: 
-  ID: -1772693572
-  IsLocked: 1
+  ID: -1345751081
+  IsLocked: 0
   IsBossDoor: 0
-  _unlockCondition: {fileID: 0}
-  _beginsLocked: 1
-  Controller: {fileID: 0}
+  LockOnEnter: 1
+  IsTemporaryLocked: 0
+  _unlockCondition: {fileID: 11400000, guid: 3fed115681f49cc4cb21b380479d577d, type: 2}
+  _beginsLocked: 0
