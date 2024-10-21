@@ -25,21 +25,18 @@ namespace RandomIsleser
             if (_unlockCondition == null || _unlockCondition.Value)
                 return;
 
-            _unlockCondition.OnValueChanged += ReleaseTemporaryLock;
+            _unlockCondition.OnValueChanged += UnlockDoor;
         }
 
         public bool TryUnlockDoor()
         {
+            if (_unlockCondition != null)
+                return false;
+            
             if (IsBossDoor)
             {
                 IsLocked = false;
                 return true;
-            }
-
-            if (_unlockCondition != null)
-            {
-                IsLocked = !_unlockCondition.Value;
-                return _unlockCondition.Value;
             }
 
             if (DungeonController.Instance.DungeonModel.SmallKeys > 0)
@@ -56,12 +53,13 @@ namespace RandomIsleser
             IsTemporaryLocked = true;
         }
 
-        private void ReleaseTemporaryLock(bool complete)
+        private void UnlockDoor(bool complete)
         {
             if (!complete)
                 return;
             
             IsTemporaryLocked = false;
+            IsLocked = false;
             Controller.DoorUnlocked();
         }
         
