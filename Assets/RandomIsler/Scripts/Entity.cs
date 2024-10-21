@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class Entity : MonoBehaviour, IDamageable
+    public class Entity : MonoBehaviour
     {
         
     }

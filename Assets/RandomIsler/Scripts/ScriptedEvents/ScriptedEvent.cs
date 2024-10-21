@@ -13,6 +13,8 @@ namespace RandomIsleser
 
         public virtual void BeginEvent()
         {
+            if (_alreadyCompletedBool.Value)
+                return;
             OnEventStarted?.Invoke();
         }
 

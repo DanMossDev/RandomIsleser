@@ -6,12 +6,19 @@ namespace RandomIsleser
     {
         [Space, Header("Spawn Enemies Event Settings")]
         [SerializeField] private SpawnPoint[] _onStartSpawnPoints;
-        [SerializeField] private SpawnPoint[] _onEndSpawnPoints;
+        
+        [SerializeField] private GameObject[] _onEndActivate;
 
         private int _enemyCount;
 
         public override void BeginEvent()
         {
+            if (_alreadyCompletedBool.Value)
+            {
+                SpawnRewards();
+                return;
+            }
+            
             base.BeginEvent();
 
             foreach (var spawnPoint in _onStartSpawnPoints)
@@ -30,8 +37,13 @@ namespace RandomIsleser
         {
             base.EndEvent();
 
-            foreach (var spawnPoint in _onEndSpawnPoints)
-                spawnPoint.Spawn();
+            SpawnRewards();
+        }
+
+        private void SpawnRewards()
+        {
+            foreach (var GO in _onEndActivate)
+                GO.SetActive(true);
         }
 
         private void OnEnemyDeath(Enemy enemy)
