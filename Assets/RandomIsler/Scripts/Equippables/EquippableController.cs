@@ -45,7 +45,7 @@ namespace RandomIsleser
         public virtual void UpdateEquippable()
         { }
         
-        public virtual void CheckAim(Vector3 aimDirection)
+        public virtual void CheckAim(Vector3 origin, Vector3 aimDirection)
         { }
         
         public virtual void UseItem()

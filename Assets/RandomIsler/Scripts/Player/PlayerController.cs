@@ -58,6 +58,7 @@ namespace RandomIsleser
         public bool IsAttacking => CurrentState is AttackCombatState;
         public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState;
 
+        public Vector3 AimPosition => _aimCamera.position;
         public Vector3 AimDirection => _aimCamera.forward;
 
         [NonSerialized] public Transform StateChangeCause;
@@ -655,7 +656,7 @@ namespace RandomIsleser
             transEulerAngles.y += _cameraInput.x * _model.AimSpeed * Time.deltaTime;
             transform.eulerAngles = transEulerAngles;
             
-            CurrentlyEquippedItem.CheckAim(_aimCamera.transform.forward);
+            CurrentlyEquippedItem.CheckAim(_aimCamera.position, _aimCamera.forward);
         }
 
         public void Attack()

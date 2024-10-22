@@ -31,11 +31,11 @@ namespace RandomIsleser
             _fishHook.transform.localPosition = _startingHookPosition;
         }
         
-        public override void CheckAim(Vector3 aimDirection)
+        public override void CheckAim(Vector3 origin, Vector3 aimDirection)
         {
             bool showInteractReticle = false;
             if (Physics.SphereCast(
-                    transform.position, 
+                    origin, 
                     _model.AimTolerance, 
                     aimDirection, 
                     out RaycastHit hit,
@@ -50,10 +50,11 @@ namespace RandomIsleser
         public override void UseItem()
         {
             PlayerController.Instance.SetState(PlayerStates.CastRodMove);
+            var aimPos = PlayerController.Instance.AimPosition;
             var aimDirection = PlayerController.Instance.AimDirection;
 
             if (Physics.SphereCast(
-                    transform.position,
+                    aimPos,
                     _model.AimTolerance,
                     aimDirection,
                     out RaycastHit hit,
@@ -91,7 +92,6 @@ namespace RandomIsleser
             }
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);
             PlayerController.Instance.SetState(PlayerStates.RodGrappleMove);
-            //TODO - Make a grapple state
         }
     }
 }
