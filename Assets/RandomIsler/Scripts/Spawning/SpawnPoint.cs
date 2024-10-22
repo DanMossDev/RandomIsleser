@@ -6,13 +6,24 @@ namespace RandomIsleser
 {
     public class SpawnPoint : MonoBehaviour
     {
-        [SerializeField] private Spawnable _spawnable;
+        [SerializeField] protected Spawnable _spawnable;
 
-        public GameObject Spawn()
+        protected Spawnable _spawnedObject;
+
+        public virtual GameObject Spawn()
         {
             var GO = Services.Instance.ObjectPoolController.Get(_spawnable.ObjectPoolKey);
             GO.transform.position = transform.position;
+            _spawnedObject = GO.GetComponent<Spawnable>();
+            _spawnedObject.OnSpawned(this);
             return GO;
+        }
+
+        public virtual void Despawn()
+        {
+            if (_spawnedObject == null || !_spawnedObject.gameObject.activeSelf) return;
+            
+            Services.Instance.ObjectPoolController.Return(_spawnedObject.gameObject, _spawnable.ObjectPoolKey);
         }
     }
 }

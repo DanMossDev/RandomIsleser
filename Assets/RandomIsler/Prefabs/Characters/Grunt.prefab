@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPoolKey: Grunt
   _enemyModel: {fileID: 11400000, guid: 457e9503e08434d428b958452b0dd6ad, type: 2}
+  _patrolPoints: []
 --- !u!136 &8382373404040844433
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -130,7 +131,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &3172507333279685932
 Animator:

@@ -6,5 +6,8 @@ namespace RandomIsleser
     {
         [Header("Spawnable")]
         public string ObjectPoolKey;
+        
+        public virtual void OnSpawned(SpawnPoint spawner)
+        {}
     }
 }

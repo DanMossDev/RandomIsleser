@@ -11,5 +11,6 @@ namespace RandomIsleser
         public float MovementSpeed;
         public float InvincibleTime;
         public float AggroRange;
+        public float WanderRadius;
     }
 }
