@@ -15,9 +15,10 @@ namespace RandomIsleser
         protected float _lastHitTime;
         protected Vector3 _startPosition;
         protected Vector3 _wanderPosition;
+
+        protected float _lastExpensiveUpdateTime;
         
         protected SpawnPoint _spawner;
-        
         protected Animator _animator;
         protected Rigidbody _rigidbody;
         protected NavMeshAgent _navMeshAgent;
@@ -36,13 +37,6 @@ namespace RandomIsleser
         {
             _spawner = spawnPoint;
             Initialise();
-            
-            _startPosition = transform.position;
-            _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _enemyModel.WanderRadius;
-            _wanderPosition.y = transform.position.y;
-
-            _navMeshAgent.enabled = true;
-            _navMeshAgent.destination = _wanderPosition;
         }
 
         public override void OnDespawned()
@@ -54,6 +48,16 @@ namespace RandomIsleser
         {
             _hp = _enemyModel.HP;
             ResetAllAnimParams();
+
+            _lastExpensiveUpdateTime = UnityEngine.Random.Range(0, 20);
+            _startPosition = transform.position;
+            _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _enemyModel.WanderRadius;
+            _wanderPosition.y = transform.position.y;
+
+            _navMeshAgent.enabled = true;
+            _navMeshAgent.destination = _wanderPosition;
+            _navMeshAgent.speed = _enemyModel.WanderSpeed;
+            _navMeshAgent.angularSpeed = _enemyModel.TurnSpeed;
         }
 
         protected virtual void ResetAllAnimParams()
@@ -78,6 +82,45 @@ namespace RandomIsleser
             }
         }
 
+        protected void SetState(EnemyState state)
+        {
+            LeaveState(_currentState);
+            _currentState = state;
+            EnterState(_currentState);
+        }
+
+        protected virtual void LeaveState(EnemyState state)
+        {
+            switch (state)
+            {
+                case EnemyState.Idle:
+                    break;
+                case EnemyState.Aggro:
+                    break;
+                case EnemyState.Attack:
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        protected virtual void EnterState(EnemyState state)
+        {
+            switch (state)
+            {
+                case EnemyState.Idle:
+                    _navMeshAgent.speed = _enemyModel.WanderSpeed;
+                    break;
+                case EnemyState.Aggro:
+                    _navMeshAgent.speed = _enemyModel.ChaseSpeed;
+                    break;
+                case EnemyState.Attack:
+                    break;
+                default:
+                    break;
+            }
+        }
+
         protected virtual void FixedUpdate()
         {
             switch (_currentState)
@@ -94,6 +137,28 @@ namespace RandomIsleser
                 default:
                     break;
             }
+            
+            if (Time.time - _lastExpensiveUpdateTime > 0.2f)
+                ExpensiveUpdate();
+        }
+
+        protected virtual void ExpensiveUpdate()
+        {
+            _lastExpensiveUpdateTime = Time.time;
+            switch (_currentState)
+            {
+                case EnemyState.Idle:
+                    ExpensiveIdle();
+                    break;
+                case EnemyState.Aggro:
+                    ExpensiveAggro();
+                    break;
+                case EnemyState.Attack:
+                    ExpensiveAttack();
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected virtual void Idle()
@@ -102,6 +167,10 @@ namespace RandomIsleser
                 Patrol();
             else
                 Wander();
+        }
+        
+        protected virtual void ExpensiveIdle()
+        {
         }
 
         protected virtual void Patrol()
@@ -117,21 +186,33 @@ namespace RandomIsleser
                 _wanderPosition.y = transform.position.y;
                 _navMeshAgent.destination = _wanderPosition;
             }
-            
-            _animator.SetFloat(Animations.MovementSpeedHash, _navMeshAgent.velocity.magnitude);
+
+            _animator.SetFloat(Animations.MovementSpeedHash, _navMeshAgent.velocity.magnitude / _enemyModel.ChaseSpeed);
+            CheckAggro();
         }
 
-        private void OnDrawGizmos()
+        protected virtual void CheckAggro()
         {
-            Gizmos.DrawSphere(_wanderPosition, 0.1f);
+            if (Vector3.SqrMagnitude(transform.position - PlayerController.Instance.transform.position) < _enemyModel.AggroRange * _enemyModel.AggroRange)
+                SetState(EnemyState.Aggro);
         }
         
         protected virtual void Aggro()
         {
-            
+            _animator.SetFloat(Animations.MovementSpeedHash, _navMeshAgent.velocity.magnitude / _enemyModel.ChaseSpeed);
+        }
+
+        protected virtual void ExpensiveAggro()
+        {
+            _navMeshAgent.destination = PlayerController.Instance.transform.position;
         }
         
         protected virtual void Attack()
+        {
+            
+        }
+
+        protected virtual void ExpensiveAttack()
         {
             
         }
