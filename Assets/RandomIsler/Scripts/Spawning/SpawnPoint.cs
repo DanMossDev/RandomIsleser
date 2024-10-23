@@ -22,7 +22,7 @@ namespace RandomIsleser
         public virtual void Despawn()
         {
             if (_spawnedObject == null || !_spawnedObject.gameObject.activeSelf) return;
-            
+            _spawnedObject.OnDespawned();
             Services.Instance.ObjectPoolController.Return(_spawnedObject.gameObject, _spawnable.ObjectPoolKey);
         }
     }

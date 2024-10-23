@@ -9,5 +9,8 @@ namespace RandomIsleser
         
         public virtual void OnSpawned(SpawnPoint spawner)
         {}
+
+        public virtual void OnDespawned()
+        {}
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RandomIsleser
 {
@@ -19,6 +20,7 @@ namespace RandomIsleser
         
         protected Animator _animator;
         protected Rigidbody _rigidbody;
+        protected NavMeshAgent _navMeshAgent;
 
         protected EnemyState _currentState;
         public event Action<Enemy> OnDeath;
@@ -27,6 +29,7 @@ namespace RandomIsleser
         {
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         public override void OnSpawned(SpawnPoint spawnPoint)
@@ -37,6 +40,14 @@ namespace RandomIsleser
             _startPosition = transform.position;
             _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _enemyModel.WanderRadius;
             _wanderPosition.y = transform.position.y;
+
+            _navMeshAgent.enabled = true;
+            _navMeshAgent.destination = _wanderPosition;
+        }
+
+        public override void OnDespawned()
+        {
+            _navMeshAgent.enabled = false;
         }
 
         protected virtual void Initialise()
@@ -104,12 +115,15 @@ namespace RandomIsleser
             {
                 _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _enemyModel.WanderRadius;
                 _wanderPosition.y = transform.position.y;
+                _navMeshAgent.destination = _wanderPosition;
             }
             
-            Vector3 direction = (_wanderPosition - transform.position).normalized;
-            
-            _rigidbody.AddForce(_enemyModel.MovementSpeed * Time.deltaTime * direction, ForceMode.Force);
-            _animator.SetFloat(Animations.MovementSpeedHash, _rigidbody.velocity.magnitude);
+            _animator.SetFloat(Animations.MovementSpeedHash, _navMeshAgent.velocity.magnitude);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(_wanderPosition, 0.1f);
         }
         
         protected virtual void Aggro()
