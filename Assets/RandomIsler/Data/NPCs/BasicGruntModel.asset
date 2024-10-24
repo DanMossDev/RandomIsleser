@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: BasicGruntModel
   m_EditorClassIdentifier: 
   HP: 3
-  MovementSpeed: 2
   InvincibleTime: 0.5
+  DeathTime: 5
+  WanderSpeed: 1
+  ChaseSpeed: 2
+  TurnSpeed: 360
   AggroRange: 20
   WanderRadius: 10

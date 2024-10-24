@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -219,8 +220,16 @@ namespace RandomIsleser
         
         protected virtual void Die()
         {
+            _animator.SetBool(Animations.IsDeadHash, true);
             OnDeath?.Invoke(this);
-            _spawner.Despawn();
+            SetState(EnemyState.Dead);
+            
+            var seq = DOTween.Sequence();
+            seq.AppendInterval(_enemyModel.DeathTime);
+            seq.OnComplete(() =>
+            {
+                _spawner.Despawn();
+            });
         }
 
         public virtual void TakeDamage(int damage)
@@ -242,6 +251,7 @@ namespace RandomIsleser
         Idle,
         Aggro,
         Attack,
-        Stunned
+        Stunned,
+        Dead
     }
 }
