@@ -8,5 +8,6 @@ namespace RandomIsleser
         public float ChargeSpeed = 0.5f;
         public float FireSpeed = 1f;
         public float MaxDistance = 100f;
+        public float RayWidth = 0.5f;
     }
 }
