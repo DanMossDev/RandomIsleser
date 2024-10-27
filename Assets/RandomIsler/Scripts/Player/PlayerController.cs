@@ -44,8 +44,8 @@ namespace RandomIsleser
         private Vector3 _grapplePoint;
 
         public bool IsGrounded => _isGrounded;
-        public bool SuctionHeld { get; private set; }
-        public bool BlowHeld { get; private set; }
+        public bool ChargeHeld { get; private set; }
+        public bool FireHeld { get; private set; }
         public Vector3 LastMoveDirection { get; private set; }
         
         //Properties
@@ -90,6 +90,7 @@ namespace RandomIsleser
         [SerializeField] private EquippableController _mainWeapon;
         [SerializeField] private FishingRodController _fishingRodController;
         [SerializeField] private CycloneJarController _cycloneJarController;
+        [SerializeField] private SolarPanelController _solarPanelController;
 
         private Dictionary<Equippables, EquippableController> _equippableLookup;
 
@@ -189,7 +190,6 @@ namespace RandomIsleser
             CurrentlyEquippedItem = equippable;
             CurrentlyEquippedItem.OnEquip();
             _equipmentAnimator.SetBool(Animations.WeaponEquippedHash, true);
-            _locomotionAnimator.SetBool(Animations.WeaponEquippedHash, true);
             _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, CurrentlyEquippedItem.ItemIndex);
         }
 
@@ -306,7 +306,8 @@ namespace RandomIsleser
             _equippableLookup = new Dictionary<Equippables, EquippableController>()
             {
                 {Equippables.FishingRod, _fishingRodController},
-                {Equippables.CycloneJar, _cycloneJarController}
+                {Equippables.CycloneJar, _cycloneJarController},
+                {Equippables.SolarPanel, _solarPanelController}
             };
         }
 
@@ -325,8 +326,8 @@ namespace RandomIsleser
             InputManager.HammerAttackInput += HammerAttackPressed;
             InputManager.ItemSlot1Input += ItemSlot1Pressed;
             InputManager.BackInput += SetBackInput;
-            InputManager.SuctionInput += SetSuctionInput;
-            InputManager.BlowInput += SetBlowInput;
+            InputManager.ChargeInput += SetChargeInput;
+            InputManager.FireInput += SetFireInput;
         }
 
         public void UnsubscribeControls()
@@ -339,8 +340,8 @@ namespace RandomIsleser
             InputManager.HammerAttackInput -= HammerAttackPressed;
             InputManager.ItemSlot1Input -= ItemSlot1Pressed;
             InputManager.BackInput -= SetBackInput;
-            InputManager.SuctionInput -= SetSuctionInput;
-            InputManager.BlowInput -= SetBlowInput;
+            InputManager.ChargeInput -= SetChargeInput;
+            InputManager.FireInput -= SetFireInput;
 
             ClearInputCache();
         }
@@ -663,7 +664,9 @@ namespace RandomIsleser
         {
             _equipmentAnimator.SetInteger(Animations.WeaponIndexHash, 0);
             _equipmentAnimator.ResetTrigger(Animations.HammerAttackHash);
+            _locomotionAnimator.ResetTrigger(Animations.HammerAttackHash);
             _equipmentAnimator.SetTrigger(Animations.HammerAttackHash);
+            _locomotionAnimator.SetTrigger(Animations.HammerAttackHash);
         }
         #endregion
         
@@ -705,14 +708,14 @@ namespace RandomIsleser
             _targetHeld = isHeld;
         }
 
-        private void SetSuctionInput(bool isHeld)
+        private void SetChargeInput(bool isHeld)
         {
-            SuctionHeld = isHeld;
+            ChargeHeld = isHeld;
         }
         
-        private void SetBlowInput(bool isHeld)
+        private void SetFireInput(bool isHeld)
         {
-            BlowHeld = isHeld;
+            FireHeld = isHeld;
         }
 
         private void HammerAttackPressed()

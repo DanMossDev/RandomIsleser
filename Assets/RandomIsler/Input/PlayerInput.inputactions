@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Suck",
+                    "name": "Charge",
                     "type": "Button",
                     "id": "7d478ce5-37dc-4b32-8b8e-ce1cc5c6e14f",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Blow",
+                    "name": "Fire",
                     "type": "Button",
                     "id": "8b692110-70f8-447a-989e-037c6b98e017",
                     "expectedControlType": "Button",
@@ -327,7 +327,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Suck",
+                    "action": "Charge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -338,7 +338,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Blow",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

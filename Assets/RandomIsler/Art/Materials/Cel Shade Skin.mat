@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cel Shade Black
+  m_Name: Cel Shade Skin
   m_Shader: {fileID: -6465566751694194690, guid: 4691c4a1406db4943833e60fed93bc27,
     type: 3}
   m_Parent: {fileID: 0}
@@ -68,10 +68,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Rim_Strength: 0.5
-    - _Smoothness: 0.5
+    - _Smoothness: 10
     - _USE_FRESNEL: 1
     m_Colors:
-    - _Specular_Colour: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 0}
-    - _Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Specular_Colour: {r: 0.8113208, g: 0.57022077, b: 0.57022077, a: 0}
+    - _Tint: {r: 0.9528302, g: 0.66967785, b: 0.66967785, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

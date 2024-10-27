@@ -15,8 +15,8 @@ namespace RandomIsleser
         public static event Action<bool> TargetInput;
         public static event Action HammerAttackInput;
         public static event Action<bool> ItemSlot1Input;
-        public static event Action<bool> SuctionInput;
-        public static event Action<bool> BlowInput;
+        public static event Action<bool> ChargeInput;
+        public static event Action<bool> FireInput;
         
         public static event Action PauseInput;
         public static event Action AcceptInput;
@@ -71,11 +71,11 @@ namespace RandomIsleser
 
             _inputActions["HammerAttack"].performed += OnHammerAttack;
 
-            _inputActions["Suck"].started += OnSuctionStart;
-            _inputActions["Suck"].canceled += OnSuctionEnd;
+            _inputActions["Charge"].started += OnChargeStart;
+            _inputActions["Charge"].canceled += OnChargeEnd;
             
-            _inputActions["Blow"].started += OnBlowStart;
-            _inputActions["Blow"].canceled += OnBlowEnd;
+            _inputActions["Fire"].started += OnFireStart;
+            _inputActions["Fire"].canceled += OnFireEnd;
 
             _inputActions["ItemSlot1"].started += OnItemSlot1Pressed;
             _inputActions["ItemSlot1"].canceled += OnItemSlot1Released;
@@ -109,11 +109,11 @@ namespace RandomIsleser
             
             _inputActions["HammerAttack"].performed -= OnHammerAttack;
             
-            _inputActions["Suck"].started -= OnSuctionStart;
-            _inputActions["Suck"].canceled -= OnSuctionEnd;
+            _inputActions["Charge"].started -= OnChargeStart;
+            _inputActions["Charge"].canceled -= OnChargeEnd;
             
-            _inputActions["Blow"].started -= OnBlowStart;
-            _inputActions["Blow"].canceled -= OnBlowEnd;
+            _inputActions["Fire"].started -= OnFireStart;
+            _inputActions["Fire"].canceled -= OnFireEnd;
             
             _inputActions["ItemSlot1"].started -= OnItemSlot1Pressed;
             _inputActions["ItemSlot1"].canceled -= OnItemSlot1Released;
@@ -175,24 +175,24 @@ namespace RandomIsleser
             ItemSlot1Input?.Invoke(false);
         }
         
-        private void OnSuctionStart(InputAction.CallbackContext context)
+        private void OnChargeStart(InputAction.CallbackContext context)
         {
-            SuctionInput?.Invoke(true);
+            ChargeInput?.Invoke(true);
         }
 
-        private void OnSuctionEnd(InputAction.CallbackContext context)
+        private void OnChargeEnd(InputAction.CallbackContext context)
         {
-            SuctionInput?.Invoke(false);
+            ChargeInput?.Invoke(false);
         }
         
-        private void OnBlowStart(InputAction.CallbackContext context)
+        private void OnFireStart(InputAction.CallbackContext context)
         {
-            BlowInput?.Invoke(true);
+            FireInput?.Invoke(true);
         }
 
-        private void OnBlowEnd(InputAction.CallbackContext context)
+        private void OnFireEnd(InputAction.CallbackContext context)
         {
-            BlowInput?.Invoke(false);
+            FireInput?.Invoke(false);
         }
         
         //UI

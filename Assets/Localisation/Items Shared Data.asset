@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Key: Hammer
     m_Metadata:
       m_Items: []
+  - m_Id: 6775241262329856
+    m_Key: SolarPanel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -78,12 +78,12 @@ namespace RandomIsleser
                 return;
             }
 
-            if (PlayerController.Instance.BlowHeld)
+            if (PlayerController.Instance.FireHeld)
             {
                 inUse = true;
                 Cyclone(false);
             }
-            else if (PlayerController.Instance.SuctionHeld)
+            else if (PlayerController.Instance.ChargeHeld)
             {
                 inUse = true;
                 Cyclone(true);
@@ -161,6 +161,7 @@ namespace RandomIsleser
         public override void OnUnequip()
         {
             base.OnUnequip();
+            
             PlayerController.Instance.SetState(PlayerStates.DefaultMove);
             CameraManager.Instance.SetCycloneCamera(false);
 
@@ -171,6 +172,7 @@ namespace RandomIsleser
         public override void OnEquip()
         {
             base.OnEquip();
+            
             PlayerController.Instance.SetState(PlayerStates.CycloneCombat);
             CycloneCameraTarget.Instance.SetRotation();
             CameraManager.Instance.SetCycloneCamera(true);

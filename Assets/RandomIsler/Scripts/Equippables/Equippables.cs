@@ -4,6 +4,7 @@ namespace RandomIsleser
     {
         Hammer,
         FishingRod,
-        CycloneJar
+        CycloneJar,
+        SolarPanel
     }
 }
