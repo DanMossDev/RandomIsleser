@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RandomIsleser
 {
     [ExecuteAlways]
-    public class LightingController : MonoBehaviour
+    public class TimeOfDayController : MonoBehaviour
     {
         [SerializeField] private Light _directionalLight;
         [SerializeField] private LightingData _lightingData;

@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RigLayers:
-  - m_Rig: {fileID: 0}
+  - m_Rig: {fileID: 1378953643423217798}
     m_Active: 1
   m_Effectors:
   - m_Transform: {fileID: 0}
@@ -681,6 +681,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af0661737a785204298faceba25bdd22, type: 3}
+--- !u!114 &1378953643423217798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4824813110458862732, guid: af0661737a785204298faceba25bdd22,
+    type: 3}
+  m_PrefabInstance: {fileID: 5896948033999139850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1503376035433030281 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4975134498865206915, guid: af0661737a785204298faceba25bdd22,
@@ -747,6 +759,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SolarPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3305133024264812927, guid: 6716306eabe897a449c943c8f1cd39f4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8540515041372624151, guid: 6716306eabe897a449c943c8f1cd39f4,
         type: 3}

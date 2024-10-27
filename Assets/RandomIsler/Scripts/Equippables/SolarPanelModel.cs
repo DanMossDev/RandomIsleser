@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -9,5 +7,6 @@ namespace RandomIsleser
     {
         public float ChargeSpeed = 0.5f;
         public float FireSpeed = 1f;
+        public float MaxDistance = 100f;
     }
 }
