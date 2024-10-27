@@ -12,6 +12,7 @@ namespace RandomIsleser
         [SerializeField] private CinemachineFreeLook _followCamera;
         [SerializeField] private GameObject _aimCamera;
         [SerializeField] private GameObject _cycloneCamera;
+        [SerializeField] private GameObject _solarPanelAimCamera;
         [SerializeField] private GameObject _boatCamera;
         [SerializeField] private GameObject _dialogueCamera;
         [SerializeField] private GameObject _doorCamera;
@@ -51,6 +52,11 @@ namespace RandomIsleser
         public void SetCycloneCamera(bool value)
         {
             _cycloneCamera.SetActive(value);
+        }
+
+        public void SetSolarPanelAimCamera(bool value)
+        {
+            _solarPanelAimCamera.SetActive(value);
         }
 
         public void SetBoatCamera(bool value)

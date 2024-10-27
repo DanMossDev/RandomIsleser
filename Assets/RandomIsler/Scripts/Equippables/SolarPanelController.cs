@@ -16,12 +16,16 @@ namespace RandomIsleser
         
         protected override void Cleanup()
         { }
-        
-        public override void UpdateEquippable()
-        { }
 
-        public override void CheckAim(Vector3 origin, Vector3 aimDirection)
+        public override void UpdateEquippable()
         {
+            if (PlayerController.Instance.FireHeld)
+                FireLightBeam();
+        }
+
+        private void FireLightBeam()
+        {
+            Debug.DrawRay(_beamOrigin.position, _beamOrigin.forward * 100f, Color.red);
         }
         
         public override void UseItem()
@@ -29,5 +33,22 @@ namespace RandomIsleser
         
         public override void ReleaseItem()
         { }
+        
+        public override void OnUnequip()
+        {
+            base.OnUnequip();
+            
+            PlayerController.Instance.RecenterCamera();
+            PlayerController.Instance.SetState(PlayerStates.DefaultMove);
+            CameraManager.Instance.SetSolarPanelAimCamera(false);
+        }
+
+        public override void OnEquip()
+        {
+            base.OnEquip();
+            
+            PlayerController.Instance.SetState(PlayerStates.SolarPanelCombat);
+            CameraManager.Instance.SetSolarPanelAimCamera(true);
+        }
     }
 }

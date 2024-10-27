@@ -9,21 +9,40 @@ namespace RandomIsleser
         [SerializeField] private bool _setFollow;
         [SerializeField] private bool _isOrbitalCam;
         
+        private CinemachineVirtualCamera _vcam;
+        private CinemachineFreeLook _freeLook;
+        
         private void OnEnable()
         {
             if (!_isOrbitalCam)
             {
+                _vcam = GetComponent<CinemachineVirtualCamera>();
                 if (_setLookAt)
-                    GetComponent<CinemachineVirtualCamera>().LookAt = PlayerController.Instance.transform;
+                    _vcam.LookAt = PlayerController.Instance.transform;
                 if (_setFollow)
-                    GetComponent<CinemachineVirtualCamera>().Follow = PlayerController.Instance.transform;
+                    _vcam.Follow = PlayerController.Instance.transform;
             }
             else
             {
+                _freeLook = GetComponent<CinemachineFreeLook>();
                 if (_setLookAt)
-                    GetComponent<CinemachineFreeLook>().LookAt = PlayerController.Instance.CameraFollowTarget;
+                    _freeLook.LookAt = PlayerController.Instance.CameraFollowTarget;
                 if (_setFollow)
-                    GetComponent<CinemachineFreeLook>().Follow = PlayerController.Instance.CameraFollowTarget;
+                    _freeLook.Follow = PlayerController.Instance.CameraFollowTarget;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (!_isOrbitalCam)
+            {
+                _vcam.LookAt = null;
+                _vcam.Follow = null;
+            }
+            else
+            {
+                _freeLook.LookAt = null;
+                _freeLook.Follow = null;
             }
         }
     }

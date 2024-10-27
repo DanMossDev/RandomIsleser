@@ -77,8 +77,8 @@ namespace RandomIsleser
         private readonly CastRodMovementState _castRodMovementState = new CastRodMovementState();
         private readonly RodGrappleMovementState _rodGrappleMovementState = new RodGrappleMovementState();
         private readonly GrappleMovementState _grappleMovementState = new GrappleMovementState();
-
         private readonly CycloneCombatState _cycloneCombatState = new CycloneCombatState();
+        private readonly SolarPanelCombatState _solarPanelCombatState = new SolarPanelCombatState();
 
         private readonly NullState _nullState = new NullState();
         
@@ -101,6 +101,8 @@ namespace RandomIsleser
         private Camera _mainCamera;
         private CinemachineFreeLook _followCamera;
         private Transform _aimCamera;
+
+        private bool _cameraBeingRecentered;
         
         //Cached components
         [Header("Cached Components")]
@@ -141,6 +143,14 @@ namespace RandomIsleser
             
             if (GUI.Button(new Rect(10, 150, 200, 25), "Save Game"))
                 Services.Instance.RuntimeSaveManager.SaveGame();
+
+            if (GUI.Button(new Rect(10, 200, 200, 25), "Unlock all"))
+            {
+                foreach (Unlockables unlockable in Enum.GetValues(typeof(Unlockables)))
+                {
+                    UnlockItem(unlockable);
+                }
+            }
         }
         #endregion
         
@@ -209,6 +219,12 @@ namespace RandomIsleser
             _grapplePoint = grapplePoint;
         }
 
+        public void SetSolarPanelInput()
+        {
+            _equipmentAnimator.SetFloat(Animations.SolarPanelHorizontalHash, _cameraInput.x); //consider squaring the values if it's too sensitive
+            _equipmentAnimator.SetFloat(Animations.SolarPanelVerticalHash, _cameraInput.y);
+        }
+
         public void SetLeftHandIK(bool enable, Transform target = null)
         {
             _leftHandFollowIK.SetTarget(target);
@@ -266,6 +282,8 @@ namespace RandomIsleser
                     return _rodGrappleMovementState;
                 case PlayerStates.CycloneCombat:
                     return _cycloneCombatState;
+                case PlayerStates.SolarPanelCombat:
+                    return _solarPanelCombatState;
                 case PlayerStates.NullState:
                     return _nullState;
             }
@@ -363,7 +381,8 @@ namespace RandomIsleser
             
             CurrentState.OnUpdateState(this);
             
-            _followCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
+            if (!_cameraBeingRecentered)
+                _followCamera.m_RecenterToTargetHeading.m_enabled = _targetHeld || CurrentState is AimCombatState;
         }
         
         private void OnAnimatorMove()
@@ -613,6 +632,28 @@ namespace RandomIsleser
         {
             if (CanAim)
                 SetState(PlayerStates.AimCombat);
+        }
+
+        public void RecenterCamera()
+        {
+            _cameraBeingRecentered = true;
+            _followCamera.m_YAxisRecentering.m_enabled = true;
+            _followCamera.m_RecenterToTargetHeading.m_enabled = true;
+            var prevYTime = _followCamera.m_YAxisRecentering.m_RecenteringTime;
+            _followCamera.m_YAxisRecentering.m_RecenteringTime = 0;
+            var prexXTime = _followCamera.m_RecenterToTargetHeading.m_RecenteringTime;
+            _followCamera.m_RecenterToTargetHeading.m_RecenteringTime = 0;
+            
+            var seq = DOTween.Sequence();
+            seq.AppendInterval(0.1f);
+            seq.OnComplete(() =>
+            {
+                _followCamera.m_YAxisRecentering.m_RecenteringTime = prevYTime;
+                _followCamera.m_RecenterToTargetHeading.m_RecenteringTime = prexXTime;
+                _followCamera.m_YAxisRecentering.m_enabled = false;
+                _followCamera.m_RecenterToTargetHeading.m_enabled = false;
+                _cameraBeingRecentered = false;
+            });
         }
 
         public void BeginAim()

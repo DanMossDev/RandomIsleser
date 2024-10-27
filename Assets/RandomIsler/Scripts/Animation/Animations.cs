@@ -24,6 +24,8 @@ namespace RandomIsleser
         public static int ExitLadderHash = Animator.StringToHash("ExitLadder");
         public static int IsDeadHash = Animator.StringToHash("IsDead");
         public static int AttackHash = Animator.StringToHash("Attack");
+        public static int SolarPanelHorizontalHash = Animator.StringToHash("SolarPanelHorizontal");
+        public static int SolarPanelVerticalHash = Animator.StringToHash("SolarPanelVertical");
         
         //Environment
         public static int OpenDoorHash = Animator.StringToHash("OpenDoor");

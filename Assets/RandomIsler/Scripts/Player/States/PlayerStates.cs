@@ -18,6 +18,7 @@ namespace RandomIsleser
         AimCombat,
         AttackCombat,
         CycloneCombat,
+        SolarPanelCombat,
         
         NullState
     }
