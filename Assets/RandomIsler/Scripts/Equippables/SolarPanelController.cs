@@ -8,6 +8,12 @@ namespace RandomIsleser
     {
         [SerializeField] private SolarPanelModel _model;
         [SerializeField] private Transform _beamOrigin;
+
+        [SerializeField] private LayerMask _lightCheckLayers;
+        
+        private Collider[] _lightCheck = new Collider[1];
+
+        private float _chargeAmount;
         
         public override int ItemIndex => _model.ItemIndex;
         
@@ -19,13 +25,21 @@ namespace RandomIsleser
 
         public override void UpdateEquippable()
         {
+            if (Physics.OverlapSphereNonAlloc(transform.position, 1, _lightCheck, _lightCheckLayers) > 0)
+                _chargeAmount += Time.deltaTime * _model.ChargeSpeed;
+            
             if (PlayerController.Instance.FireHeld)
                 FireLightBeam();
         }
 
         private void FireLightBeam()
         {
+            if (_chargeAmount <= 0)
+                return;
+            
+            
             Debug.DrawRay(_beamOrigin.position, _beamOrigin.forward * 100f, Color.red);
+            _chargeAmount -= Time.deltaTime * _model.FireSpeed;
         }
         
         public override void UseItem()

@@ -51,6 +51,9 @@ MonoBehaviour:
   _rightHandIKTarget: {fileID: 8312440099276389599}
   _model: {fileID: 11400000, guid: 34e03f4f7460e8b4a8489496c4be86e4, type: 2}
   _beamOrigin: {fileID: 8540515041372624151}
+  _lightCheckLayers:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!1 &5396075175868048769
 GameObject:
   m_ObjectHideFlags: 0
