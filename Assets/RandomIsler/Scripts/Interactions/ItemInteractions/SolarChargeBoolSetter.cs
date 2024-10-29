@@ -4,7 +4,7 @@ namespace RandomIsleser
 {
     public class SolarChargeBoolSetter : SolarChargeAbsorber
     {
-        [SerializeField] private SaveableBool _boolToSet;
+        [SerializeField] protected SaveableBool _boolToSet;
 
         public override void CompleteCharge()
         {

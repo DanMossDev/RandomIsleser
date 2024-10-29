@@ -133,7 +133,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 28b6dc1c03ea44a44bd1e7d8aa56444c, type: 3}
   m_Controller: {fileID: 9100000, guid: 17306897033d8234a8f373c49360e595, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -676,7 +676,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaleCharacter
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2477601052084097969, guid: af0661737a785204298faceba25bdd22, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

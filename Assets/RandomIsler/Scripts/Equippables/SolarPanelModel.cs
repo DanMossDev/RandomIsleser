@@ -9,5 +9,8 @@ namespace RandomIsleser
         public float FireSpeed = 1f;
         public float MaxDistance = 100f;
         public float RayWidth = 0.5f;
+
+        public LayerMask LightCheckLayers;
+        public LayerMask InteractionLayers;
     }
 }

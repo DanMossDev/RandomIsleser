@@ -30,6 +30,13 @@ MonoBehaviour:
   ChargeSpeed: 0.5
   FireSpeed: 1
   MaxDistance: 50
+  RayWidth: 0.5
+  LightCheckLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  InteractionLayers:
+    serializedVersion: 2
+    m_Bits: 65536
   references:
     version: 2
     RefIds: []

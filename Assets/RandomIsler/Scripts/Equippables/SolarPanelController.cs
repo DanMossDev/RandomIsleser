@@ -8,8 +8,6 @@ namespace RandomIsleser
         [SerializeField] private Transform _beamOrigin;
         
         [SerializeField] private LineRenderer _lightBeam;
-
-        [SerializeField] private LayerMask _lightCheckLayers;
         
         private Collider[] _lightCheck = new Collider[1];
         private Collider[] _beamHitCheck = new Collider[3];
@@ -28,7 +26,7 @@ namespace RandomIsleser
 
         public override void UpdateEquippable()
         {
-            if (Physics.OverlapSphereNonAlloc(transform.position, 1, _lightCheck, _lightCheckLayers) > 0 || CheckIfInSunlight())
+            if (Physics.OverlapSphereNonAlloc(transform.position, 1, _lightCheck, _model.LightCheckLayers) > 0 || CheckIfInSunlight())
                 _chargeAmount += Time.deltaTime * _model.ChargeSpeed;
 
             if (PlayerController.Instance.FireHeld)
@@ -63,12 +61,13 @@ namespace RandomIsleser
             {
                 _lightBeam.SetPosition(1, info.point);
 
-                var amount = Physics.OverlapSphereNonAlloc(info.point, 1, _beamHitCheck);
+                var amount = Physics.OverlapSphereNonAlloc(info.point, 1, _beamHitCheck, _model.InteractionLayers, QueryTriggerInteraction.Collide);
                 for (int i = 0; i < amount; i++)
                 {
                     if (_beamHitCheck[i].TryGetComponent(out SolarChargeAbsorber absorber))
                     {
                         absorber.ReceiveCharge(Time.deltaTime);
+                        absorber.Reflect(info.point, info.normal, _lightBeam);
                     }
                 }
             }
