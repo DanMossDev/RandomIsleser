@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using RandomIsleser;
 
 namespace MossUtils
@@ -10,17 +9,20 @@ namespace MossUtils
 	{
 		public QuestLogSaveData QuestSaveData;
 		public InventoryData InventoryData;
-		public SaveDataFlags ExampleFlagData;
+		
+		
+		public AnimalFlags AnimalData;
+		public FishFlags FishData;
+		public BirdFlags BirdData;
 		
 		public Dictionary<int, SOData> ScriptableObjectData;
         
 		#region Properties
-		[JsonIgnore] public bool ExampleCheckBool => ExampleFlagData.HasFlag(SaveDataFlags.ExampleOne);
+		//[JsonIgnore] public bool ExampleCheckBool => ExampleFlagData.HasFlag(SaveDataFlags.ExampleOne);
 		#endregion
 
 		public void InitialiseSaveData()
 		{
-			ExampleFlagData = SaveDataFlags.None;
 			InventoryData = new InventoryData();
 			QuestSaveData = new QuestLogSaveData();
 			ScriptableObjectData = new Dictionary<int, SOData>();
@@ -29,12 +31,28 @@ namespace MossUtils
 			QuestSaveData.Initialise();
 		}
 
-		public void SetFlags(SaveDataFlags flag, bool value)
+		public void SetFlags(AnimalFlags flag, bool value)
 		{
 			if (value)
-				ExampleFlagData |= flag;
+				AnimalData |= flag;
 			else
-				ExampleFlagData &= ~flag;
+				AnimalData &= ~flag;
+		}
+		
+		public void SetFlags(FishFlags flag, bool value)
+		{
+			if (value)
+				FishData |= flag;
+			else
+				FishData &= ~flag;
+		}
+		
+		public void SetFlags(BirdFlags flag, bool value)
+		{
+			if (value)
+				BirdData |= flag;
+			else
+				BirdData &= ~flag;
 		}
 	}
 }
