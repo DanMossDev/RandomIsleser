@@ -20,3 +20,6 @@ MonoBehaviour:
     - Key: Grunt
       Value: {fileID: 8607477488094722279, guid: bfb895be09f799f41a109e256b0c3228,
         type: 3}
+    - Key: ArcticFox
+      Value: {fileID: 5949498086150160902, guid: eb633a10fa15fa2448e3cfea891cb7bb,
+        type: 3}

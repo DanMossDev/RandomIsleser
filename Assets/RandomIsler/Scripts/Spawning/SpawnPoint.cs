@@ -7,8 +7,15 @@ namespace RandomIsleser
     public class SpawnPoint : MonoBehaviour
     {
         [SerializeField] protected Spawnable _spawnable;
+        [SerializeField] private bool _spawnOnEnable;
 
         protected Spawnable _spawnedObject;
+
+        private void Start()
+        {
+            if (_spawnOnEnable)
+                Spawn();
+        }
 
         public virtual GameObject Spawn()
         {

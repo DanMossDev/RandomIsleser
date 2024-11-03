@@ -429,6 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1001 &147715571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1473,6 +1474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1 &1019905407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,74 +1996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
---- !u!1001 &1336451815
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481345, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528603755101481349, guid: 8640f86cc1cb10448814047cfd71eec9,
-        type: 3}
-      propertyPath: m_Name
-      value: ArcticFox
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8640f86cc1cb10448814047cfd71eec9, type: 3}
+  _spawnOnEnable: 0
 --- !u!1001 &1348634880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2199,6 +2134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1001 &1424598573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2465,6 +2401,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477325417}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1576035332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1576035334}
+  - component: {fileID: 1576035333}
+  m_Layer: 0
+  m_Name: FoxSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1576035333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576035332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513b8ed02465fd64b84280ddc5de1c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnable: {fileID: 5778031008568938599, guid: eb633a10fa15fa2448e3cfea891cb7bb,
+    type: 3}
+  _spawnOnEnable: 1
+--- !u!4 &1576035334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576035332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.83, y: 0, z: 4.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1602064504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2636,6 +2619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1 &1882089168
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,6 +2666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1 &1901010878
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,6 +3043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1 &1986501290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,6 +3207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnable: {fileID: 7579702368733576253, guid: bfb895be09f799f41a109e256b0c3228,
     type: 3}
+  _spawnOnEnable: 0
 --- !u!1 &2008633879 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1638947952388940193, guid: 34ef1cb8c36a08a48ba42798b4c45c58,
@@ -5499,5 +5486,5 @@ SceneRoots:
   - {fileID: 8352411294857003980}
   - {fileID: 8455203446397846421}
   - {fileID: 4553690391377226978}
-  - {fileID: 1336451815}
   - {fileID: 74255903}
+  - {fileID: 1576035334}
