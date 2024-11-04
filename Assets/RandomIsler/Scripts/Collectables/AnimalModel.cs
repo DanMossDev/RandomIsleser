@@ -3,8 +3,9 @@ using UnityEngine;
 namespace RandomIsleser
 {
     [CreateAssetMenu(fileName = "AnimalModel", menuName = AssetMenuNames.Models + "AnimalModel")]
-    public class AnimalModel : ScriptableObject
+    public class AnimalModel : CollectableModel
     {
+        [Space, Header("Animal")]
         public float WanderSpeed = 1;
         public float FleeSpeed = 2;
         public float TurnSpeed = 360;

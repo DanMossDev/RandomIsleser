@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 810dc6317f911fe4b90d3b7263934847, type: 3}
-  m_Name: ArcticFoxModel
+  m_Script: {fileID: 11500000, guid: f9c194f19f5e88f4d8059e3ef4882a56, type: 3}
+  m_Name: ArcticOverworldDropTableModel
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 5778031008568938599, guid: eb633a10fa15fa2448e3cfea891cb7bb, type: 3}
-  WanderSpeed: 1
-  FleeSpeed: 9
-  TurnSpeed: 360
-  FleeRange: 10
-  WanderRadius: 20
+  _drops:
+  - Chance: 0.5
+    Collectable: {fileID: 11400000, guid: c5896a6c8d03f224a82f4866f639dccd, type: 2}
