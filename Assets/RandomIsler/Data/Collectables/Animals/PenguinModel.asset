@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 810dc6317f911fe4b90d3b7263934847, type: 3}
-  m_Name: ArcticFoxModel
+  m_Name: PenguinModel
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 2370925379126176326, guid: 9ee16f73656e56f41ba6f3a5af35ab92, type: 3}
+  Prefab: {fileID: 515628840596207558, guid: 20f3ebf2befedaa44a360ac30ecfbfae, type: 3}
   WanderSpeed: 1
-  FleeSpeed: 9
+  FleeSpeed: 2
   TurnSpeed: 360
   FleeRange: 10
   WanderRadius: 20
   StunTime: 1
-  CanBePulled: 0
+  CanBePulled: 1

@@ -144,6 +144,13 @@ namespace RandomIsleser
                         }
                     }
                 }
+                else if (coll.TryGetComponent(out AnimalController animalController))
+                {
+                    Vector3 force = animalController.transform.position - _holdPoint.position;
+                    force *= isSucking ? -1 : 1;
+
+                    animalController.ApplyWindForce(force.normalized * _model.SuctionForce);
+                }
             }
         }
 

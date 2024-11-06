@@ -12,5 +12,9 @@ namespace RandomIsleser
         
         public float FleeRange = 10;
         public float WanderRadius = 20;
+
+        public float StunTime = 1;
+        
+        public bool CanBePulled = false;
     }
 }

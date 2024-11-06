@@ -14,6 +14,8 @@ namespace RandomIsleser
         protected Vector3 _wanderPosition;
 
         protected float _lastExpensiveUpdateTime;
+
+        protected float _timeStunned;
         
         protected Animator _animator;
         protected Rigidbody _rigidbody;
@@ -87,6 +89,8 @@ namespace RandomIsleser
                 case AnimalState.Idle:
                     break;
                 case AnimalState.Stunned:
+                    _navMeshAgent.enabled = true;
+                    _rigidbody.isKinematic = true;
                     break;
                 case AnimalState.Captured:
                     break;
@@ -104,6 +108,11 @@ namespace RandomIsleser
                 case AnimalState.Flee:
                     _navMeshAgent.speed = _animalModel.FleeSpeed;
                     break;
+                case AnimalState.Stunned:
+                    _navMeshAgent.enabled = false;
+                    _rigidbody.isKinematic = false;
+                    _timeStunned = 0;
+                    break;
             }
         }
 
@@ -116,6 +125,9 @@ namespace RandomIsleser
                     break;
                 case AnimalState.Flee:
                     Flee();
+                    break;
+                case AnimalState.Stunned:
+                    Stunned();
                     break;
             }
             
@@ -133,6 +145,9 @@ namespace RandomIsleser
                     break;
                 case AnimalState.Flee:
                     ExpensiveFlee();
+                    break;
+                case AnimalState.Stunned:
+                    ExpensiveStunned();
                     break;
             }
         }
@@ -160,6 +175,20 @@ namespace RandomIsleser
             var dir = transform.position - PlayerController.Instance.transform.position;
             dir.y = transform.position.y;
             _navMeshAgent.destination = transform.position + dir;
+        }
+
+        protected virtual void Stunned()
+        {
+            _timeStunned += Time.deltaTime;
+            if (_timeStunned > _animalModel.StunTime)
+            {
+                SetState(AnimalState.Idle);
+            }
+        }
+        
+        protected virtual void ExpensiveStunned()
+        {
+            
         }
 
         protected virtual void Patrol()
@@ -193,6 +222,18 @@ namespace RandomIsleser
         {
             if (Vector3.SqrMagnitude(transform.position - PlayerController.Instance.transform.position) > _animalModel.FleeRange * _animalModel.FleeRange * 2)
                 SetState(AnimalState.Idle);
+        }
+
+        public void ApplyWindForce(Vector3 force)
+        {
+            if (!_animalModel.CanBePulled)
+                return;
+            if (_currentState != AnimalState.Stunned)
+                SetState(AnimalState.Stunned);
+            else
+                _timeStunned = 0;
+            
+            _rigidbody.AddForce(force, ForceMode.Force);
         }
     }
     

@@ -21,5 +21,8 @@ MonoBehaviour:
       Value: {fileID: 8607477488094722279, guid: bfb895be09f799f41a109e256b0c3228,
         type: 3}
     - Key: ArcticFox
-      Value: {fileID: 5949498086150160902, guid: eb633a10fa15fa2448e3cfea891cb7bb,
+      Value: {fileID: 2474820869712476199, guid: 9ee16f73656e56f41ba6f3a5af35ab92,
+        type: 3}
+    - Key: Penguin
+      Value: {fileID: 403228128749004199, guid: 20f3ebf2befedaa44a360ac30ecfbfae,
         type: 3}
