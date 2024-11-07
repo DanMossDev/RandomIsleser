@@ -12,11 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810dc6317f911fe4b90d3b7263934847, type: 3}
   m_Name: ArcticFoxModel
   m_EditorClassIdentifier: 
+  Type: 0
+  Name:
+    m_TableReference:
+      m_TableCollectionName: GUID:5ec2d2f623dbae3419e1b0305a613099
+    m_TableEntryReference:
+      m_KeyId: 5535789056
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  FlavourText:
+    m_TableReference:
+      m_TableCollectionName: GUID:5ec2d2f623dbae3419e1b0305a613099
+    m_TableEntryReference:
+      m_KeyId: 66613243904
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   Prefab: {fileID: 2370925379126176326, guid: 9ee16f73656e56f41ba6f3a5af35ab92, type: 3}
   WanderSpeed: 1
-  FleeSpeed: 9
+  FleeSpeed: 7
   TurnSpeed: 360
   FleeRange: 10
   WanderRadius: 20
   StunTime: 1
-  CanBePulled: 0
+  PickupShowTime: 1
+  CanBePulled: 1
+  Species: 1
+  references:
+    version: 2
+    RefIds: []

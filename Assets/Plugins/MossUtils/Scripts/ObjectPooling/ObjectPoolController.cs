@@ -8,6 +8,8 @@ namespace MossUtils
         private ObjectPoolModel _model;
         private Dictionary<string, ObjectPool> _pools = new Dictionary<string, ObjectPool>();
 
+        public Transform FloatingPoolParent;
+
         private void Awake()
         {
             _model = Resources.Load<ObjectPoolModel>("Models/ObjectPoolModel");

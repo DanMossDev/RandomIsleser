@@ -7,16 +7,4 @@ namespace RandomIsleser
         ArcticFox = 1,
         Penguin = 2,
     }
-
-    [System.Flags]
-    public enum FishFlags
-    {
-        None = 0,
-    }
-    
-    [System.Flags]
-    public enum BirdFlags
-    {
-        None = 0,
-    }
 }

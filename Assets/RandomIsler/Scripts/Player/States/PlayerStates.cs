@@ -20,6 +20,9 @@ namespace RandomIsleser
         CycloneCombat,
         SolarPanelCombat,
         
+        //Misc
+        ItemGetState,
+        
         NullState
     }
 }

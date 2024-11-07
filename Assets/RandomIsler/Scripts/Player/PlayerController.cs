@@ -19,6 +19,8 @@ namespace RandomIsleser
         
         public Collider IncomingCameraBounds;
         public bool HasInteractable => _hasInteractable;
+
+        private PickupModel _lastPickup;
         
         //Cached Input
         private Vector3 _movementInput;
@@ -80,8 +82,8 @@ namespace RandomIsleser
         private readonly CycloneCombatState _cycloneCombatState = new CycloneCombatState();
         private readonly SolarPanelCombatState _solarPanelCombatState = new SolarPanelCombatState();
 
+        private readonly ItemGetState _itemGetState = new ItemGetState();
         private readonly NullState _nullState = new NullState();
-        
         
         //Weapons
         public EquippableController CurrentlyEquippedItem;
@@ -114,6 +116,10 @@ namespace RandomIsleser
 
         [SerializeField] private Transform _cameraFollowTarget;
         public Transform CameraFollowTarget => _cameraFollowTarget;
+
+        [SerializeField] private Transform _pickupHoldPoint;
+
+        public Transform PickupHoldPoint => _pickupHoldPoint;
         
         //IK and Animations
         [SerializeField] private Animator _equipmentAnimator;
@@ -172,7 +178,7 @@ namespace RandomIsleser
             SetState(GetState(newState));
         }
         
-        private void SetState(BasePlayerState newState)
+        public void SetState(BasePlayerState newState)
         {
             CurrentState.OnExitState(this, newState);
             newState.OnEnterState(this, CurrentState);
@@ -284,6 +290,8 @@ namespace RandomIsleser
                     return _cycloneCombatState;
                 case PlayerStates.SolarPanelCombat:
                     return _solarPanelCombatState;
+                case PlayerStates.ItemGetState:
+                    return _itemGetState;
                 case PlayerStates.NullState:
                     return _nullState;
             }
@@ -484,6 +492,23 @@ namespace RandomIsleser
 	        transform.parent = null;
 	        CameraManager.Instance.SetBoatCamera(false);
         }
+
+        public void NewItemGet(PickupModel pickup)
+        {
+            _lastPickup = pickup;
+            SetState(PlayerStates.ItemGetState);
+        }
+
+        public void ShowItemGetUI()
+        {
+            Services.Instance.UIManager.ShowItemGetUI(_lastPickup);
+        }
+
+        public bool CloseItemGetUI()
+        {
+            return Services.Instance.UIManager.CloseItemGetUI();
+        }
+        
         #endregion
         
 		#region Movement

@@ -29,5 +29,9 @@ namespace RandomIsleser
         
         //Environment
         public static int OpenDoorHash = Animator.StringToHash("OpenDoor");
+        
+        //Animals
+        public static int IsStunnedHash = Animator.StringToHash("IsStunned");
+        public static int IsCaughtHash = Animator.StringToHash("IsCaught");
     }
 }

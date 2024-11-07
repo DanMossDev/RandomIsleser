@@ -16,6 +16,7 @@ namespace RandomIsleser
         [SerializeField] private GameObject _boatCamera;
         [SerializeField] private GameObject _dialogueCamera;
         [SerializeField] private GameObject _doorCamera;
+        [SerializeField] private GameObject _itemGetCamera;
 
         [Space, Header("Extensions")] 
         [SerializeField] private CinemachineTargetGroup _dialogueGroup;
@@ -73,6 +74,11 @@ namespace RandomIsleser
         public void SetDoorCamera(bool value)
         {
             _doorCamera.SetActive(value);
+        }
+
+        public void SetItemGetCamera(bool value)
+        {
+            _itemGetCamera.SetActive(value);
         }
 
         public void SetParticipants(List<NPCModel> participants)

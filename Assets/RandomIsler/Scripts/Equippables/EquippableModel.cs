@@ -7,7 +7,6 @@ namespace RandomIsleser
     public class EquippableModel : PickupModel
     {
         [Space, Header("Equippable Settings")] 
-        public LocalizedString Name;
         public int ItemIndex; //TODO consider cha
         public Equippables EquippableType;
         public Unlockables UnlockableType;

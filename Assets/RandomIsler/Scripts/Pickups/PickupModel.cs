@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace RandomIsleser
 {
@@ -6,6 +7,8 @@ namespace RandomIsleser
     {
         [Header("Pickup Settings")]
         public PickupType Type;
+        public LocalizedString Name;
+        public LocalizedString FlavourText;
         
         public virtual void PickUp()
         { }

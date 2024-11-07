@@ -12,6 +12,8 @@ namespace RandomIsleser
         [SerializeField] private InGameOverlay _inGameOverlay;
         [SerializeField] private DialogueUI _dialogueUI;
         
+        [SerializeField] private ItemGetUI _itemGetUI;
+        
         public DialogueUI DialogueUI => _dialogueUI;
         
         #region Overlay
@@ -67,6 +69,27 @@ namespace RandomIsleser
         {
             _dialogueUI.gameObject.SetActive(false);
         }
+        #endregion
+
+        #region Context Sensitive UI
+
+        public void ShowItemGetUI(PickupModel pickup)
+        {
+            _itemGetUI.Populate(pickup);
+            _itemGetUI.gameObject.SetActive(true);
+        }
+
+        public bool CloseItemGetUI()
+        {
+            if (_itemGetUI.CanClose)
+            {
+                _itemGetUI.gameObject.SetActive(false);
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
     }
 }

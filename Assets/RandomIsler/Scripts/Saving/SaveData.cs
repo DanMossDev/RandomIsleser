@@ -12,8 +12,6 @@ namespace MossUtils
 		
 		
 		public AnimalFlags AnimalData;
-		public FishFlags FishData;
-		public BirdFlags BirdData;
 		
 		public Dictionary<int, SOData> ScriptableObjectData;
         
@@ -31,28 +29,14 @@ namespace MossUtils
 			QuestSaveData.Initialise();
 		}
 
-		public void SetFlags(AnimalFlags flag, bool value)
+		public bool UnlockAnimal(AnimalFlags flag)
 		{
-			if (value)
-				AnimalData |= flag;
-			else
-				AnimalData &= ~flag;
-		}
-		
-		public void SetFlags(FishFlags flag, bool value)
-		{
-			if (value)
-				FishData |= flag;
-			else
-				FishData &= ~flag;
-		}
-		
-		public void SetFlags(BirdFlags flag, bool value)
-		{
-			if (value)
-				BirdData |= flag;
-			else
-				BirdData &= ~flag;
+			if (AnimalData.HasFlag(flag))
+				return false;
+			
+			AnimalData |= flag;
+
+			return true;
 		}
 	}
 }

@@ -14,7 +14,10 @@ namespace RandomIsleser
         public float WanderRadius = 20;
 
         public float StunTime = 1;
+        public float PickupShowTime = 1;
         
         public bool CanBePulled = false;
+
+        public AnimalFlags Species;
     }
 }

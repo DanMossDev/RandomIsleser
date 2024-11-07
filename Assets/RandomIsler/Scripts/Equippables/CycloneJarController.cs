@@ -38,6 +38,7 @@ namespace RandomIsleser
             _itemEquipped = false;
             _chargingJump = false;
             _jumpChargeRatio = 0;
+            _suckCollider.gameObject.SetActive(false);
         }
 
         public override void UseItem()
@@ -150,6 +151,11 @@ namespace RandomIsleser
                     force *= isSucking ? -1 : 1;
 
                     animalController.ApplyWindForce(force.normalized * _model.SuctionForce);
+
+                    if (isSucking && force.sqrMagnitude < _model.SuckDistance * _model.SuckDistance)
+                    {
+                        animalController.PickUp();
+                    }
                 }
             }
         }
