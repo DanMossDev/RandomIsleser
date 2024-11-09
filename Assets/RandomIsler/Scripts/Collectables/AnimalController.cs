@@ -7,6 +7,10 @@ namespace RandomIsleser
     {
         [Space, Header("Animal")]
         [SerializeField] protected AnimalModel _animalModel;
+        [SerializeField] protected CollectableSettingsModel _collectableSettingsModel;
+
+        protected SkinnedMeshRenderer _skinnedMeshRenderer;
+        [SerializeField] protected Material[] _graphicsVariants;
 
         [SerializeField] protected Transform[] _patrolPoints;
         
@@ -21,6 +25,8 @@ namespace RandomIsleser
 
         protected bool _isNewItem;
         protected float _timePickedUp;
+
+        protected int _rarityLevel;
         
         protected Animator _animator;
         protected Rigidbody _rigidbody;
@@ -33,6 +39,7 @@ namespace RandomIsleser
             _animator = GetComponentInChildren<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
             _useGravity = _rigidbody.useGravity;
         }
@@ -50,6 +57,13 @@ namespace RandomIsleser
         protected virtual void Initialise()
         {
             ResetAllAnimParams();
+
+            _rarityLevel = _collectableSettingsModel.GetAnimalRarityLevel();
+            for (int i = 0; i < _graphicsVariants.Length; i++)
+            {
+                if (i == _rarityLevel)
+                    _skinnedMeshRenderer.material = _graphicsVariants[i];
+            }
 
             _lastExpensiveUpdateTime = UnityEngine.Random.Range(0, 0.2f);
             _startPosition = transform.position;
@@ -149,7 +163,7 @@ namespace RandomIsleser
                     transform.localPosition = Vector3.zero;
                     _animator.SetBool(Animations.IsCaughtHash, true);
 
-                    if (Services.Instance.RuntimeSaveManager.LocalSaveData.UnlockAnimal(_animalModel.Species))
+                    if (Services.Instance.RuntimeSaveManager.LocalSaveData.UnlockAnimal(_animalModel.Species, _rarityLevel))
                     {
                         _isNewItem = true;
                         PlayerController.Instance.NewItemGet(_animalModel);
@@ -233,7 +247,7 @@ namespace RandomIsleser
             {
                 SetState(AnimalState.Idle);
             }
-            _rigidbody.useGravity = _timeStunned >= Time.deltaTime * 2 && _useGravity;
+            _rigidbody.useGravity = _timeSuctioned >= Time.deltaTime * 2 && _useGravity;
         }
         
         protected virtual void ExpensiveStunned()

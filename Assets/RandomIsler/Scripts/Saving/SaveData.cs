@@ -12,6 +12,7 @@ namespace MossUtils
 		
 		
 		public AnimalFlags AnimalData;
+		public AnimalFlags RareAnimalData;
 		
 		public Dictionary<int, SOData> ScriptableObjectData;
         
@@ -29,12 +30,31 @@ namespace MossUtils
 			QuestSaveData.Initialise();
 		}
 
-		public bool UnlockAnimal(AnimalFlags flag)
+		public bool UnlockAnimal(AnimalFlags flag, int rarityVariant = 0)
+		{
+			switch (rarityVariant)
+			{
+				case 1: return UnlockRareAnimal(flag);
+				default: return UnlockNormalAnimal(flag);
+			}
+		}
+
+		private bool UnlockNormalAnimal(AnimalFlags flag)
 		{
 			if (AnimalData.HasFlag(flag))
 				return false;
 			
 			AnimalData |= flag;
+
+			return true;
+		}
+		
+		private bool UnlockRareAnimal(AnimalFlags flag)
+		{
+			if (RareAnimalData.HasFlag(flag))
+				return false;
+			
+			RareAnimalData |= flag;
 
 			return true;
 		}

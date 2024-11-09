@@ -50,6 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPoolKey: 
   _animalModel: {fileID: 0}
+  _collectableSettingsModel: {fileID: 11400000, guid: 43075d25951a9f8408ab26d848247d56,
+    type: 2}
+  _skinnedMeshRenderer: {fileID: 0}
+  _graphicsVariants: []
   _patrolPoints: []
 --- !u!195 &2769281582331028388
 NavMeshAgent:
