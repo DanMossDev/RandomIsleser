@@ -34,27 +34,17 @@ namespace MossUtils
 		{
 			switch (rarityVariant)
 			{
-				case 1: return UnlockRareAnimal(flag);
-				default: return UnlockNormalAnimal(flag);
+				case 1: return UnlockAnimal(flag, ref RareAnimalData);
+				default: return UnlockAnimal(flag, ref AnimalData);
 			}
 		}
 
-		private bool UnlockNormalAnimal(AnimalFlags flag)
+		private bool UnlockAnimal(AnimalFlags flagToSet, ref AnimalFlags data)
 		{
-			if (AnimalData.HasFlag(flag))
+			if (data.HasFlag(flagToSet))
 				return false;
 			
-			AnimalData |= flag;
-
-			return true;
-		}
-		
-		private bool UnlockRareAnimal(AnimalFlags flag)
-		{
-			if (RareAnimalData.HasFlag(flag))
-				return false;
-			
-			RareAnimalData |= flag;
+			data |= flagToSet;
 
 			return true;
 		}
