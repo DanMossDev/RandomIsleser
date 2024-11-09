@@ -52,7 +52,6 @@ MonoBehaviour:
   _animalModel: {fileID: 0}
   _collectableSettingsModel: {fileID: 11400000, guid: 43075d25951a9f8408ab26d848247d56,
     type: 2}
-  _skinnedMeshRenderer: {fileID: 0}
   _graphicsVariants: []
   _patrolPoints: []
 --- !u!195 &2769281582331028388
@@ -123,8 +122,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 0.38, z: 0}
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0.475, z: 0}
 --- !u!1 &6412490298522953577
 GameObject:
   m_ObjectHideFlags: 0

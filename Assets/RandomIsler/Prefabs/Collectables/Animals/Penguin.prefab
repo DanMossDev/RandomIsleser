@@ -154,6 +154,21 @@ PrefabInstance:
       propertyPath: _skinnedMeshRenderer
       value: 
       objectReference: {fileID: 6958755476177906799}
+    - target: {fileID: 5778031008568938599, guid: 006e20028f202f344ad42af0a783abd3,
+        type: 3}
+      propertyPath: _graphicsVariants.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5778031008568938599, guid: 006e20028f202f344ad42af0a783abd3,
+        type: 3}
+      propertyPath: '_graphicsVariants.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 76198734b86c6f84092e520e9fff3cbb, type: 2}
+    - target: {fileID: 5778031008568938599, guid: 006e20028f202f344ad42af0a783abd3,
+        type: 3}
+      propertyPath: '_graphicsVariants.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 86b9a9e194a1349428a26e0af9e9504e, type: 2}
     - target: {fileID: 5949498086150160902, guid: 006e20028f202f344ad42af0a783abd3,
         type: 3}
       propertyPath: m_Name

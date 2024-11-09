@@ -39,6 +39,7 @@ MonoBehaviour:
   WanderRadius: 20
   StunTime: 1
   PickupShowTime: 1
+  CollectOnContact: 1
   CanBePulled: 1
   Species: 1
   references:

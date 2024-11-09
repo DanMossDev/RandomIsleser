@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArcticOverworldDropTableModel
   m_EditorClassIdentifier: 
   _drops:
-  - Chance: 1
+  - Chance: 0.5
     Collectable: {fileID: 11400000, guid: c5896a6c8d03f224a82f4866f639dccd, type: 2}
-  - Chance: 0
+  - Chance: 0.5
     Collectable: {fileID: 11400000, guid: 0567593ebbe139c40a495bd08c48bbce, type: 2}

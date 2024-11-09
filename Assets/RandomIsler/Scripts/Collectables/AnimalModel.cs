@@ -15,7 +15,8 @@ namespace RandomIsleser
 
         public float StunTime = 1;
         public float PickupShowTime = 1;
-        
+
+        public bool CollectOnContact = true;
         public bool CanBePulled = false;
 
         public AnimalFlags Species;

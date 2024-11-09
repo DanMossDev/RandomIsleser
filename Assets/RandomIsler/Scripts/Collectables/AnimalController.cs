@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -34,6 +35,7 @@ namespace RandomIsleser
 
         protected AnimalState _currentState;
 
+        #region Initialisation
         protected virtual void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -77,11 +79,6 @@ namespace RandomIsleser
             _timePickedUp = 0;
         }
 
-        public virtual void PickUp()
-        {
-            SetState(AnimalState.Captured);
-        }
-
         protected virtual void ResetAllAnimParams()
         {
             foreach (var param in _animator.parameters)
@@ -103,7 +100,9 @@ namespace RandomIsleser
                 }
             }
         }
+        #endregion
 
+        #region States
         protected void SetState(AnimalState state)
         {
             LeaveState(_currentState);
@@ -172,7 +171,9 @@ namespace RandomIsleser
                     break;
             }
         }
+        #endregion
 
+        #region Update
         protected virtual void FixedUpdate()
         {
             switch (_currentState)
@@ -318,8 +319,15 @@ namespace RandomIsleser
             if (Vector3.SqrMagnitude(transform.position - PlayerController.Instance.transform.position) > _animalModel.FleeRange * _animalModel.FleeRange * 2)
                 SetState(AnimalState.Idle);
         }
-
-        public void ApplyWindForce(Vector3 force)
+        #endregion
+        
+        #region Interactions
+        public virtual void PickUp()
+        {
+            SetState(AnimalState.Captured);
+        }
+        
+        public virtual void ApplyWindForce(Vector3 force)
         {
             if (!_animalModel.CanBePulled)
                 return;
@@ -331,6 +339,16 @@ namespace RandomIsleser
             _timeSuctioned = 0;
             _rigidbody.AddForce(force, ForceMode.Force);
         }
+
+        protected void OnTriggerEnter(Collider other)
+        {
+            if (!_animalModel.CollectOnContact || other.gameObject.layer != ProjectLayers.PlayerLayer)
+                return;
+            
+            PickUp();
+        }
+
+        #endregion
     }
     
     public enum AnimalState
