@@ -19,6 +19,7 @@ namespace RandomIsleser
         [Space, Header("Swimming")]
         [SerializeField] private float _swimSpeed = 5;
         [SerializeField] private float _buoyancyForce = 3f;
+        [SerializeField] private float _swimDrag = 3;
         
         [Space, Header("Ladder Climb")]
         [SerializeField] private float _ladderClimbDistance = 0.5f;
@@ -35,6 +36,7 @@ namespace RandomIsleser
         public float AttackingRotationMultiplier  => _attackingRotationMultiplier;
         public float SwimSpeed => _swimSpeed;
         public float BuoyancyForce => _buoyancyForce;
+        public float SwimDrag => _swimDrag;
         public float LadderClimbDistance => _ladderClimbDistance;
         public float AimSpeed => _aimSpeed; //TODO get this from settings instead
         public float GravityMultiplier => _gravityMultiplier;

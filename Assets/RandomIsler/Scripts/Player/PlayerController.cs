@@ -37,7 +37,8 @@ namespace RandomIsleser
         private bool _canMove = true;
         private bool _canRotate = true;
         private bool _isGrounded = false;
-        
+
+        private bool _isInWater;
         private float _heightRelativeToWater;
 
         private float _stateSpeedMultiplier = 1;
@@ -110,6 +111,8 @@ namespace RandomIsleser
         [Header("Cached Components")]
         private Transform _cameraTransform;
         private CharacterController _characterController;
+        private Rigidbody _rigidbody;
+        private CapsuleCollider _capsuleCollider;
 
         public Transform MainCameraTransform => _cameraTransform;
         public CharacterController CharacterController => _characterController;
@@ -253,6 +256,22 @@ namespace RandomIsleser
             _rightHand.weight = 1;
         }
 
+        public void SetRigidbodyMovement(bool enable)
+        {
+            _characterController.enabled = !enable;
+            _capsuleCollider.enabled = enable;
+            _rigidbody.isKinematic = !enable;
+            _rigidbody.useGravity = enable;
+        }
+
+        public void SetControllerAndRigidbodyVelocitiesEqual(bool useRigidbody)
+        {
+            if (useRigidbody)
+                _movement = _rigidbody.velocity;
+            else
+                _rigidbody.velocity = _movement;
+        }
+
         public void ExitLadder()
         {
             if (CurrentState is LadderMovementState)
@@ -319,6 +338,7 @@ namespace RandomIsleser
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
+            _rigidbody = GetComponent<Rigidbody>();
             
             SubscribeControls();
 
@@ -407,10 +427,11 @@ namespace RandomIsleser
 
         private float GetHeightRelativeToWater()
         {
-            _heightRelativeToWater = transform.position.y + 1 - OceanController.Instance.GetHeightAtPosition(transform.position);
+            _heightRelativeToWater = transform.position.y + _characterController.center.y - OceanController.Instance.GetHeightAtPosition(transform.position);
 
             return _heightRelativeToWater;
         }
+        
         #endregion
 
         #region Interactions
@@ -557,11 +578,12 @@ namespace RandomIsleser
         public void Swim()
         {
             if (_heightRelativeToWater < 0)
-                    _movement.y += _model.BuoyancyForce * Time.deltaTime * Mathf.Abs(_heightRelativeToWater);
-            else if (_movement.y > 0) 
-                _movement.y = 0;
-            
-            _movement.y += Physics.gravity.y * _model.GravityMultiplier * Time.deltaTime;
+            {
+                _rigidbody.drag = _model.SwimDrag;
+                _rigidbody.AddForceAtPosition(_model.BuoyancyForce * Mathf.Abs(_heightRelativeToWater) * Vector3.up, transform.position, ForceMode.Force);
+            }
+            else
+                _rigidbody.drag = 0;
             
             var movement = Vector3.zero;
             if (_canMove)
@@ -572,15 +594,16 @@ namespace RandomIsleser
             
             _movement.x = movement.x;
             _movement.z = movement.z;
-            
-            _characterController.Move(Time.deltaTime * _movement);
+            _movement.y = _rigidbody.velocity.y;
+
+            _rigidbody.velocity = _movement;
             _isGrounded = _characterController.isGrounded;
             GetHeightRelativeToWater();
-
-            if (_isGrounded || _heightRelativeToWater > 1)
-            {
-                SetState(PlayerStates.DefaultMove);
-            }
+            // if (_isGrounded || !IsInWater())
+            // {
+            //     _movement = Vector3.zero;
+            //     SetState(PlayerStates.DefaultMove);
+            // }
         }
 
         public void LadderMove()

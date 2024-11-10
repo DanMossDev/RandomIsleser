@@ -63,7 +63,7 @@ namespace RandomIsleser
             {
                 _distanceTravelled = hit.distance;
                 _grappleHit = (_model.InteractLayer & 1 << hit.collider.gameObject.layer) != 0;
-
+//do a check here to see if it hits water
                 if (_grappleHit)
                     _grapplePoint = hit.point;
             }
@@ -79,8 +79,17 @@ namespace RandomIsleser
 
             seq.AppendInterval(_model.WindUpTime);
             seq.Append(_fishHook.transform.DOMove(targetPos, _model.CastTime));
+            seq.OnUpdate(() => CheckForWater(seq)); //only do this if it didn't hit water
             seq.OnComplete(ReelComplete);
             //seq.Join(_fishHook.transform.DOLocalMoveY())
+        }
+
+        private void CheckForWater(Sequence sequence)
+        {
+            if (OceanController.Instance.CheckIfUnderWater(_fishHook.transform.position))
+            {
+                sequence.Kill(); //maybe make this be a true to Complete
+            }
         }
 
         private void ReelComplete()
@@ -89,7 +98,7 @@ namespace RandomIsleser
             {
                 PlayerController.Instance.EquipmentAnimator.SetTrigger(Animations.FishingRodReturnHash);
                 return;
-            }
+            }//else if hit water, go into fishing state
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);
             PlayerController.Instance.SetState(PlayerStates.RodGrappleMove);
         }

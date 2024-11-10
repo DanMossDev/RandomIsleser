@@ -9,9 +9,9 @@ namespace RandomIsleser
         [SerializeField] private float _waveFrequency;
         [SerializeField] private float _waveSpeed;
 
-        private GameObject _ocean;
-
         [SerializeField] private Material _oceanMaterial;
+        
+        private Collider[] _waterCollider = new Collider[1];
 
         // private void Update()
         // {
@@ -33,13 +33,24 @@ namespace RandomIsleser
 
         public float GetHeightAtPosition(Vector3 worldPosition)
         {
+            if (Physics.OverlapSphereNonAlloc(worldPosition, 1f, _waterCollider, 1 << ProjectLayers.WaterLayer, QueryTriggerInteraction.Collide) > 0)
+            {
+                return _waterCollider[0].bounds.max.y;
+            }
+            
+            
             var posSum = worldPosition.x + worldPosition.z;
             var posDif = worldPosition.x - worldPosition.z;
             var t = Time.time * _waveSpeed;
 
-            var sineAmoumnt = Mathf.Sin((posSum + t) * _waveFrequency) * _waveAmplitude;
+            var sineAmount = Mathf.Sin((posSum + t) * _waveFrequency) * _waveAmplitude;
             var cosineAmount = Mathf.Cos((posDif + t) * _waveFrequency) * _waveAmplitude; 
-            return sineAmoumnt * cosineAmount + transform.position.y;
+            return sineAmount * cosineAmount + transform.position.y;
+        }
+
+        public bool CheckIfUnderWater(Vector3 worldPosition)
+        {
+            return GetHeightAtPosition(worldPosition) > worldPosition.y;
         }
     }
 
