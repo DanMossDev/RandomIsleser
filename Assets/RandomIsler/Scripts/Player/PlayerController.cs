@@ -84,6 +84,7 @@ namespace RandomIsleser
         private readonly SolarPanelCombatState _solarPanelCombatState = new SolarPanelCombatState();
 
         private readonly ItemGetState _itemGetState = new ItemGetState();
+        private readonly FishingState _fishingState = new FishingState();
         private readonly NullState _nullState = new NullState();
         
         //Weapons
@@ -311,6 +312,8 @@ namespace RandomIsleser
                     return _solarPanelCombatState;
                 case PlayerStates.ItemGetState:
                     return _itemGetState;
+                case PlayerStates.FishingState:
+                    return _fishingState;
                 case PlayerStates.NullState:
                     return _nullState;
             }
@@ -339,6 +342,7 @@ namespace RandomIsleser
         {
             _characterController = GetComponent<CharacterController>();
             _rigidbody = GetComponent<Rigidbody>();
+            _capsuleCollider = GetComponent<CapsuleCollider>();
             
             SubscribeControls();
 

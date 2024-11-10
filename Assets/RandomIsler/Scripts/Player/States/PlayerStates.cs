@@ -22,6 +22,7 @@ namespace RandomIsleser
         
         //Misc
         ItemGetState,
+        FishingState,
         
         NullState
     }

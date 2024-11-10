@@ -5,6 +5,7 @@ namespace RandomIsleser
         public override void OnEnterState(PlayerController context, BasePlayerState previousState)
         {
             PlayerController.Instance.EquipmentAnimator.SetTrigger(Animations.FishingRodCastHash);
+            context.LocomotionAnimator.SetFloat(Animations.MovementSpeedHash, 0);
         }
 
         public override void OnExitState(PlayerController context, BasePlayerState nextState)

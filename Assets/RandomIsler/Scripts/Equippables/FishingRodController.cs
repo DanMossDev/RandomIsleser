@@ -6,21 +6,23 @@ namespace RandomIsleser
     public class FishingRodController : EquippableController
     {
         [SerializeField] private FishingRodModel _model;
-        [SerializeField] private GameObject _fishHook;
-
+        [SerializeField] private FishingRodHookController _fishHookPrefab;
+        [SerializeField] private Transform _fishHookStart;
+        
         private Vector3 _grapplePoint;
 
         private float _distanceTravelled;
         private bool _grappleHit;
-
-        private Vector3 _startingHookPosition;
+        
+        private FishingRodHookController _fishHook;
 
         public override int ItemIndex => _model.ItemIndex;
         public FishingRodModel Model => _model;
 
         private void Awake()
         {
-            _startingHookPosition = _fishHook.transform.localPosition;
+            _fishHook = Instantiate(_fishHookPrefab, _fishHookStart);
+            GetComponentInChildren<FishingLineController>().SetTarget(_fishHook.transform);
         }
 
         protected override void Initialise()
@@ -28,22 +30,20 @@ namespace RandomIsleser
             _grapplePoint = Vector3.zero;
             _distanceTravelled = 0;
             _grappleHit = false;
-            _fishHook.transform.localPosition = _startingHookPosition;
+            _fishHook.transform.localPosition = Vector3.zero;
+            _fishHook.Init(this);
         }
         
         public override void CheckAim(Vector3 origin, Vector3 aimDirection)
         {
-            bool showInteractReticle = false;
-            if (Physics.SphereCast(
-                    origin, 
-                    _model.AimTolerance, 
-                    aimDirection, 
-                    out RaycastHit hit,
-                    _model.Range, 
-                    _model.HitLayers))
-            {
-                showInteractReticle = (_model.InteractLayer & 1 << hit.collider.gameObject.layer) != 0;
-            }
+            bool showInteractReticle = Physics.SphereCast(
+                origin,
+                _model.AimTolerance,
+                aimDirection,
+                out _,
+                _model.Range,
+                _model.InteractLayer);
+            
             Services.Instance.UIManager.SetAimingReticle(showInteractReticle);
         }
 
@@ -63,7 +63,6 @@ namespace RandomIsleser
             {
                 _distanceTravelled = hit.distance;
                 _grappleHit = (_model.InteractLayer & 1 << hit.collider.gameObject.layer) != 0;
-//do a check here to see if it hits water
                 if (_grappleHit)
                     _grapplePoint = hit.point;
             }
@@ -76,31 +75,38 @@ namespace RandomIsleser
             Vector3 targetPos = transform.position + aimDirection * _distanceTravelled;
             
             var seq = DOTween.Sequence();
-
             seq.AppendInterval(_model.WindUpTime);
-            seq.Append(_fishHook.transform.DOMove(targetPos, _model.CastTime));
-            seq.OnUpdate(() => CheckForWater(seq)); //only do this if it didn't hit water
-            seq.OnComplete(ReelComplete);
-            //seq.Join(_fishHook.transform.DOLocalMoveY())
-        }
-
-        private void CheckForWater(Sequence sequence)
-        {
-            if (OceanController.Instance.CheckIfUnderWater(_fishHook.transform.position))
+            seq.OnComplete(() =>
             {
-                sequence.Kill(); //maybe make this be a true to Complete
-            }
+                _rodCast = true;
+                _fishHook.CastRod(targetPos);
+            });
         }
 
-        private void ReelComplete()
+        public void ReelComplete()
         {
             if (!_grappleHit)
             {
                 PlayerController.Instance.EquipmentAnimator.SetTrigger(Animations.FishingRodReturnHash);
+                _fishHook.ReturnHook(_fishHookStart);
+                _rodCast = false;
                 return;
-            }//else if hit water, go into fishing state
+            }
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);
             PlayerController.Instance.SetState(PlayerStates.RodGrappleMove);
+        }
+
+        private bool _rodCast = false;
+
+        public void BackPressed()
+        {
+            if (_rodCast)
+            {
+                ReelComplete();
+                PlayerController.Instance.SetState(PlayerStates.AimCombat);
+            }
+            else
+                PlayerController.Instance.SetState(PlayerStates.DefaultMove);
         }
     }
 }
