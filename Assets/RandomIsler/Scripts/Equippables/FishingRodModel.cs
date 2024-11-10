@@ -10,7 +10,7 @@ namespace RandomIsleser
         public float AimTolerance = 1;
 
         public float WindUpTime = 0.5f;
-        public float CastTime = 0.5f;
+        public float CastSpeed = 40f;
         public float GrappleSpeed = 15f;
         
         public LayerMask HitLayers;

@@ -72,14 +72,14 @@ namespace RandomIsleser
                 _grappleHit = false;
             }
             
-            Vector3 targetPos = transform.position + aimDirection * _distanceTravelled;
+            Vector3 targetPos = aimPos + aimDirection * _distanceTravelled;
             
             var seq = DOTween.Sequence();
             seq.AppendInterval(_model.WindUpTime);
             seq.OnComplete(() =>
             {
                 _rodCast = true;
-                _fishHook.CastRod(targetPos);
+                _fishHook.CastRod(targetPos, _model.CastSpeed / _distanceTravelled);
             });
         }
 

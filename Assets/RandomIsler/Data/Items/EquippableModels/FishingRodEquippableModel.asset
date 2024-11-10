@@ -39,7 +39,7 @@ MonoBehaviour:
   Range: 30
   AimTolerance: 0.1
   WindUpTime: 0.5
-  CastTime: 0.5
+  CastSpeed: 40
   GrappleSpeed: 45
   HitLayers:
     serializedVersion: 2

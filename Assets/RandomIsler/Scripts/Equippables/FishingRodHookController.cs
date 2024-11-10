@@ -13,6 +13,7 @@ namespace RandomIsleser
         private bool _isReturn = false;
 
         private float _lerpRatio = 0;
+        private float _speedMultiplier = 1;
 
         private Transform _parent;
 
@@ -29,12 +30,13 @@ namespace RandomIsleser
             _owner = owner;
         }
 
-        public void CastRod(Vector3 targetPosition)
+        public void CastRod(Vector3 targetPosition, float speedMulti)
         {
             _startPosition = transform.position;
             _targetPosition = targetPosition;
             _lerpRatio = 0;
-
+            _speedMultiplier = speedMulti;
+            
             transform.parent = null;
             
             EnableRigidbody(false);
@@ -55,7 +57,7 @@ namespace RandomIsleser
         {
             if (!(_isCast || _isReturn)) return;
 
-            _lerpRatio += Time.deltaTime;
+            _lerpRatio += Time.deltaTime * _speedMultiplier;
 
             if (_isCast)
             {
