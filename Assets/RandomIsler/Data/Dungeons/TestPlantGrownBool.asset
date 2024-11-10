@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TestPlantGrownBool
   m_EditorClassIdentifier: 
   ID: -403425974
+  Name: 
   _defaultValue: 0

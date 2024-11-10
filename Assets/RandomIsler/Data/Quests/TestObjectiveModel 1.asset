@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestObjectiveModel 1
   m_EditorClassIdentifier: 
   ID: 1698247796
+  Name: 
   Owner: {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
   IsStarted: 0
   IsComplete: 0
@@ -36,11 +37,14 @@ MonoBehaviour:
     m_LocalVariables: []
   _prerequisiteObjective: {fileID: 0}
   OnStartDialogue: {fileID: 0}
-  InProgressDialogue: {fileID: 0}
   OnCompleteDialogue: {fileID: 11400000, guid: f58e905d551ffef4f910f270e8b4033a, type: 2}
+  OnCompleteReward: {fileID: 0}
+  InProgressDialogue:
+    _serializedList: []
   HasStartDialogue: 0
   HasProgressDialogue: 0
   HasCompleteDialogue: 1
+  HasReward: 0
   references:
     version: 2
     RefIds: []

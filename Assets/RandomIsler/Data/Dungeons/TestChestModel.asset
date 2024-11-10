@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: TestChestModel
   m_EditorClassIdentifier: 
   ID: -1484881114
-  HasBeenOpened: 1
+  Name: 
+  HasBeenOpened: 0
   Reward: {fileID: 11400000, guid: 904cb10abb3d24146877161de462698b, type: 2}

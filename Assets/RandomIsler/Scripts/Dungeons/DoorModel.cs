@@ -77,6 +77,7 @@ namespace RandomIsleser
             return new DungeonDoorData()
             {
                 ID = ID,
+                Name = name,
                 IsLocked = IsLocked
             };
         }

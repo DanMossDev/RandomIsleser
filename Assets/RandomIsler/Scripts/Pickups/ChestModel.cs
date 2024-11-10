@@ -25,6 +25,7 @@ namespace RandomIsleser
 		    return new ChestData()
 		    {
 			    ID = ID,
+			    Name = name,
 			    HasBeenOpened = HasBeenOpened
 		    };
 	    }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestLockOnEnterDoorModel
   m_EditorClassIdentifier: 
   ID: -1345751081
+  Name: 
   IsLocked: 0
   IsBossDoor: 0
   LockOnEnter: 1

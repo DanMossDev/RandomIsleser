@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SolarPanelLockedDoor
   m_EditorClassIdentifier: 
   ID: -88944572
+  Name: 
   IsLocked: 1
   IsBossDoor: 0
   LockOnEnter: 0

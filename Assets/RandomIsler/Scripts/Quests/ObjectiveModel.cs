@@ -82,6 +82,7 @@ namespace RandomIsleser
             return new ObjectiveData()
             {
                 ID = ID,
+                Name = name,
                 IsStarted = IsStarted,
                 IsComplete = IsComplete,
             };

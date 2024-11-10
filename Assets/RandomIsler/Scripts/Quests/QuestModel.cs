@@ -100,6 +100,7 @@ namespace RandomIsleser
             var data = new QuestData()
             {
                 ID = ID,
+                Name = name,
                 IsStarted = IsStarted,
                 IsComplete = IsComplete, 
                 ObjectiveIndex = ObjectiveIndex,

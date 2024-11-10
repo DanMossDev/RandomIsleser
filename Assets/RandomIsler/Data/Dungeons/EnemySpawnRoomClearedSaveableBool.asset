@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a695b55d29f649c408a917ec3e6fc325, type: 3}
   m_Name: EnemySpawnRoomClearedSaveableBool
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1642624699
+  Name: 
   _defaultValue: 0

@@ -6,6 +6,7 @@ namespace RandomIsleser
     public abstract class SaveableObject : ScriptableObject
     {
         public int ID;
+        [HideInInspector] public string Name;
 
         public virtual void Save()
         {
@@ -20,6 +21,7 @@ namespace RandomIsleser
         {
 #if UNITY_EDITOR
             Cleanup();
+            UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
 
@@ -37,5 +39,6 @@ namespace RandomIsleser
     public class SOData
     {
 	    public int ID;
+        public string Name;
     }
 }

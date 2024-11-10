@@ -32,6 +32,7 @@ namespace RandomIsleser
             return new DungeonData()
             {
                 ID = ID,
+                Name = name,
                 SmallKeys = SmallKeys,
                 IsComplete = IsComplete,
                 HasBossKey = HasBossKey

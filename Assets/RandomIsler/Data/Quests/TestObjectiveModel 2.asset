@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: TestObjectiveModel 2
   m_EditorClassIdentifier: 
   ID: 245123613
+  Name: 
   Owner: {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
-  IsStarted: 1
-  IsComplete: 1
+  IsStarted: 0
+  IsComplete: 0
   ObjectiveName:
     m_TableReference:
       m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
@@ -38,6 +39,7 @@ MonoBehaviour:
     type: 2}
   OnStartDialogue: {fileID: 0}
   OnCompleteDialogue: {fileID: 0}
+  OnCompleteReward: {fileID: 0}
   InProgressDialogue:
     _serializedList:
     - Key: {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}
@@ -45,6 +47,7 @@ MonoBehaviour:
   HasStartDialogue: 0
   HasProgressDialogue: 1
   HasCompleteDialogue: 0
+  HasReward: 0
   references:
     version: 2
     RefIds: []

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: TestBoolLockedDoorModel
   m_EditorClassIdentifier: 
   ID: -727163599
+  Name: 
   IsLocked: 1
   IsBossDoor: 0
+  LockOnEnter: 0
+  IsTemporaryLocked: 0
   _unlockCondition: {fileID: 11400000, guid: 70cf95bbf794f3f438dd731aabe1d413, type: 2}
   _beginsLocked: 1
-  Controller: {fileID: 0}

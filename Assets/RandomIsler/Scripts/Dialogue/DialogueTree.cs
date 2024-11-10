@@ -45,6 +45,7 @@ namespace RandomIsleser
             return new DialogueData()
             {
                 ID = ID,
+                Name = name,
                 HasBeenSeen = HasBeenSeen
             };
         }

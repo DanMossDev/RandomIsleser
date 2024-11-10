@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: TestKeyLockedDoorModel
   m_EditorClassIdentifier: 
   ID: -1772693572
+  Name: 
   IsLocked: 1
   IsBossDoor: 0
+  LockOnEnter: 0
+  IsTemporaryLocked: 0
   _unlockCondition: {fileID: 0}
   _beginsLocked: 1
-  Controller: {fileID: 0}

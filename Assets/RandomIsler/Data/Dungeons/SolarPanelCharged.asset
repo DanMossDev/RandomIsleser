@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SolarPanelCharged
   m_EditorClassIdentifier: 
   ID: -264840496
+  Name: 
   _defaultValue: 0

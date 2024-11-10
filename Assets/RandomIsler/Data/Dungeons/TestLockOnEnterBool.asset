@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a695b55d29f649c408a917ec3e6fc325, type: 3}
   m_Name: TestLockOnEnterBool
   m_EditorClassIdentifier: 
-  ID: 0
-  Value: 0
+  ID: 760807933
+  Name: 
   _defaultValue: 0

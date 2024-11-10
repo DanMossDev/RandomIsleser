@@ -36,6 +36,7 @@ namespace RandomIsleser
             return new BoolData()
             {
                 ID = ID,
+                Name = name,
                 Value = Value
             };
         }

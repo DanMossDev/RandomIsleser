@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: TC1_DialogueTree_Generic1
   m_EditorClassIdentifier: 
   ID: 1442554118
+  Name: 
   _firstDialogueNode: {fileID: 11400000, guid: 24f71b3c890db184ca984b90cea9b237, type: 2}
   UnlockCriteria:
     _unlockingQuests: []
     _unlockingObjectives:
     - {fileID: 11400000, guid: f5c1d3e5909ab7a4e8d919a7f77334b3, type: 2}
   HasBeenSeen: 0
+  Participants:
+  - {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}

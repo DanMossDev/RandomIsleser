@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: TC1_DialogueTree_CompleteObjective3
   m_EditorClassIdentifier: 
   ID: -804385901
+  Name: 
   _firstDialogueNode: {fileID: 11400000, guid: fe2ab17dbfce342479ac404a5e6f1d65, type: 2}
   UnlockCriteria:
     _unlockingQuests: []
     _unlockingObjectives: []
   HasBeenSeen: 0
+  Participants:
+  - {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}
