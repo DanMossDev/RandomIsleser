@@ -162,7 +162,7 @@ namespace RandomIsleser
                     transform.localPosition = Vector3.zero;
                     _animator.SetBool(Animations.IsCaughtHash, true);
 
-                    if (Services.Instance.RuntimeSaveManager.LocalSaveData.UnlockAnimal(_animalModel.Species, _rarityLevel))
+                    if (RuntimeSaveManager.Instance.LocalSaveData.UnlockAnimal(_animalModel.Species, _rarityLevel))
                     {
                         _isNewItem = true;
                         PlayerController.Instance.NewItemGet(_animalModel);

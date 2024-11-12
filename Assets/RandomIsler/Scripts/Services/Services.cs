@@ -6,16 +6,12 @@ namespace RandomIsleser
     public class Services : MonoBehaviour
     {
 	    private GameManager _gameManager;
-	    private RuntimeSaveManager _runtimeSaveManager;
-		private InputManager _inputManager;
 		private ObjectPoolController _objectPoolController;
 		private UIManager _uiManager;
 		private QuestManager _questManager;
 		private DialogueManager _dialogueManager;
         
 		public GameManager GameManager => _gameManager;
-		public RuntimeSaveManager RuntimeSaveManager => _runtimeSaveManager;
-		public InputManager InputManager => _inputManager;
 		public ObjectPoolController ObjectPoolController => _objectPoolController;
 		public UIManager UIManager => _uiManager;
 		public QuestManager QuestManager => _questManager;
@@ -33,10 +29,6 @@ namespace RandomIsleser
 			
 			_gameManager = GetComponentInChildren<GameManager>(true);
 			_gameManager.gameObject.SetActive(true);
-			_runtimeSaveManager = GetComponentInChildren<RuntimeSaveManager>(true);
-			_runtimeSaveManager.gameObject.SetActive(true);
-			_inputManager = GetComponentInChildren<InputManager>(true);
-			_inputManager.gameObject.SetActive(true);
 			_objectPoolController = GetComponentInChildren<ObjectPoolController>(true);
 			_objectPoolController.gameObject.SetActive(true);
 			_uiManager = GetComponentInChildren<UIManager>(true);

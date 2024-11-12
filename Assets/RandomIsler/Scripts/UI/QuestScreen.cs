@@ -35,7 +35,7 @@ namespace RandomIsleser
 
         private void Populate()
         {
-            var data = Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData;
+            var data = RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData;
 
             foreach (var quest in data.InProgressQuestModels)
             {

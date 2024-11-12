@@ -90,9 +90,9 @@ namespace RandomIsleser
             ObjectiveIndex = questData.ObjectiveIndex;
             
             if (IsComplete)
-                Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.CompletedQuestModels.Add(this);
+                RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.CompletedQuestModels.Add(this);
             else if (IsStarted)
-                Services.Instance.RuntimeSaveManager.LocalSaveData.QuestSaveData.InProgressQuestModels.Add(this);
+                RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.InProgressQuestModels.Add(this);
         }
 
         public override SOData GetData()

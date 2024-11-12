@@ -10,7 +10,7 @@ namespace RandomIsleser
 
         public virtual void Save()
         {
-            Services.Instance.RuntimeSaveManager.LocalSaveData.ScriptableObjectData[ID] = GetData();
+            RuntimeSaveManager.Instance.LocalSaveData.ScriptableObjectData[ID] = GetData();
         }
         
         public abstract void Load(SOData data);

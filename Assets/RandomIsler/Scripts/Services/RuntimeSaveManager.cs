@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-	public class RuntimeSaveManager : MonoBehaviour
+	public class RuntimeSaveManager : MonoSingleton<RuntimeSaveManager>
 	{
 
 		private SaveData _localSaveData = null;
@@ -43,7 +43,8 @@ namespace RandomIsleser
 			if (loadedSaveData != null)
 			{
 				_localSaveData = loadedSaveData;
-				Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
+				if (Services.Instance)
+					Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
 				
 				//Load Scriptable Objects
 				LoadSaveableObjectData(_localSaveData.ScriptableObjectData);

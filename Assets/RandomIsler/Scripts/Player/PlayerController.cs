@@ -152,7 +152,7 @@ namespace RandomIsleser
                 SceneTransitionManager.LoadChunks(new List<string> {"TestChunk"});
             
             if (GUI.Button(new Rect(10, 150, 200, 25), "Save Game"))
-                Services.Instance.RuntimeSaveManager.SaveGame();
+                RuntimeSaveManager.Instance.SaveGame();
 
             if (GUI.Button(new Rect(10, 200, 200, 25), "Unlock all"))
             {
@@ -191,13 +191,13 @@ namespace RandomIsleser
 
         public void AddCurrency(int value)
         {
-            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.AddCurrency(value);
+            RuntimeSaveManager.Instance.LocalSaveData.InventoryData.AddCurrency(value);
             Services.Instance.UIManager.UpdateCurrency(value);
         }
 
         public void UnlockItem(Unlockables unlockable)
         {
-            Services.Instance.RuntimeSaveManager.LocalSaveData.InventoryData.SetItemUnlocked(unlockable, true);
+            RuntimeSaveManager.Instance.LocalSaveData.InventoryData.SetItemUnlocked(unlockable, true);
         }
 
         public void EquipItem(EquippableController equippable)

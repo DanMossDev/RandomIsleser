@@ -7,7 +7,8 @@ namespace RandomIsleser
     public class InputManager : MonoBehaviour
     {
         [SerializeField] private InputActionAsset _inputActions;
-        
+
+        public static event Action AnyInput;
         public static event Action InteractInput;
         public static event Action<Vector2> MoveInput;
         public static event Action<Vector2> CameraInput;
@@ -54,6 +55,8 @@ namespace RandomIsleser
 
         private void Subscribe()
         {
+            _inputActions["Any"].performed += OnAnyInput;
+            
             _inputActions["Interact"].performed += OnInteract;
             
             _inputActions["Move"].started += OnMove;
@@ -92,6 +95,8 @@ namespace RandomIsleser
 
         private void Unsubscribe()
         {
+            _inputActions["Any"].performed -= OnAnyInput;
+            
             _inputActions["Interact"].performed -= OnInteract;
             
             _inputActions["Move"].started -= OnMove;
@@ -126,6 +131,11 @@ namespace RandomIsleser
             
             _inputActions["LeftTab"].performed -= OnLeftTab;
             _inputActions["RightTab"].performed -= OnRightTab;
+        }
+
+        private void OnAnyInput(InputAction.CallbackContext context)
+        {
+            AnyInput?.Invoke();
         }
 
         private void OnInteract(InputAction.CallbackContext context)

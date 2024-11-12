@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/RandomIsler/Scenes/Bootstrap.unity
+    guid: 5ce338cd9eb63704faf3ee54942713d1
+  - enabled: 1
     path: Assets/RandomIsler/Scenes/LoadingScene.unity
     guid: 32c5fb40d3266df4294f353b8d6147b3
   - enabled: 1
