@@ -2,21 +2,23 @@ using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class EngageScreen : MenuScreen
+    public class SettingsScreen : MenuScreen
     {
         [SerializeField] private MenuScreenManager _manager;
-
+        
         protected override void OnEnable()
         {
-            InputManager.AnyInput += GoToMainMenu;
+            base.OnEnable();
+            InputManager.BackInput += Back;
         }
-
+        
         protected override void OnDisable()
         {
-            InputManager.AnyInput -= GoToMainMenu;
+            base.OnDisable();
+            InputManager.BackInput -= Back;
         }
-
-        private void GoToMainMenu()
+        
+        private void Back()
         {
             _manager.GoToMainMenu();
         }

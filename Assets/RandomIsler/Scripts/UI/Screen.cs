@@ -6,7 +6,7 @@ namespace RandomIsleser
     public class Screen : MonoBehaviour
     {
         [SerializeField] private GameObject _firstSelected;
-
+        
         private GameObject _lastSelected;
 
         protected virtual void Awake()
@@ -22,7 +22,8 @@ namespace RandomIsleser
         protected virtual void OnDisable()
         {
             if (Application.isPlaying)
-                _lastSelected = EventSystem.current.currentSelectedGameObject;
+                if (EventSystem.current.currentSelectedGameObject)
+                    _lastSelected = EventSystem.current.currentSelectedGameObject;
         }
     }
 }
