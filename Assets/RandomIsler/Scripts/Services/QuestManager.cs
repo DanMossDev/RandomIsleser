@@ -5,7 +5,7 @@ namespace RandomIsleser
 {
     public class QuestManager : MonoBehaviour
     {
-        public List<QuestModel> InProgressQuests => RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.InProgressQuestModels;
+        public List<QuestModel> InProgressQuests => RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.InProgressQuestModels;
         
         private void Awake()
         {
@@ -21,12 +21,12 @@ namespace RandomIsleser
 
         private void QuestStarted(QuestModel quest)
         {
-            RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.QuestStarted(quest);
+            RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestStarted(quest);
         }
         
         private void QuestCompleted(QuestModel quest)
         {
-            RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.QuestCompleted(quest);
+            RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestCompleted(quest);
         }
     }
 }

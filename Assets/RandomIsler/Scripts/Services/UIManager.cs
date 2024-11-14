@@ -15,6 +15,11 @@ namespace RandomIsleser
         [SerializeField] private ItemGetUI _itemGetUI;
         
         public DialogueUI DialogueUI => _dialogueUI;
+
+        private void Start()
+        {
+            InstantlySetCurrency(RuntimeSaveManager.Instance.CurrentSaveSlot.InventoryData.Currency);
+        }
         
         #region Overlay
         public void SetPause(bool show)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using RandomIsleser;
 
 namespace MossUtils
@@ -7,14 +6,11 @@ namespace MossUtils
 	[Serializable]
 	public class SaveData
 	{
-		public QuestLogSaveData QuestSaveData;
-		public InventoryData InventoryData;
-		
-		
 		public AnimalFlags AnimalData;
 		public AnimalFlags RareAnimalData;
+
+		public SaveSlotData[] SaveSlots;
 		
-		public Dictionary<int, SOData> ScriptableObjectData;
         
 		#region Properties
 		//[JsonIgnore] public bool ExampleCheckBool => ExampleFlagData.HasFlag(SaveDataFlags.ExampleOne);
@@ -22,12 +18,10 @@ namespace MossUtils
 
 		public void InitialiseSaveData()
 		{
-			InventoryData = new InventoryData();
-			QuestSaveData = new QuestLogSaveData();
-			ScriptableObjectData = new Dictionary<int, SOData>();
+			SaveSlots = new SaveSlotData[3];
 			
-			InventoryData.Initialise();
-			QuestSaveData.Initialise();
+			foreach (var slot in SaveSlots)
+				slot.Initialise();
 		}
 
 		public bool UnlockAnimal(AnimalFlags flag, int rarityVariant = 0)

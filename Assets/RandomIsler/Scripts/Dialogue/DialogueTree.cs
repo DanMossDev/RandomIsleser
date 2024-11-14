@@ -18,7 +18,7 @@ namespace RandomIsleser
         public DialogueNode GetFirstDialogueNode()
         {
             HasBeenSeen = true;
-            RuntimeSaveManager.Instance.LocalSaveData.ScriptableObjectData[ID] = GetData();
+            RuntimeSaveManager.Instance.CurrentSaveSlot.ScriptableObjectData[ID] = GetData();
             return _firstDialogueNode;
         }
 

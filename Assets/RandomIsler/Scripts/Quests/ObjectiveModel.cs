@@ -39,7 +39,7 @@ namespace RandomIsleser
                 Owner.BeginQuest(false);
             
             IsStarted = true;
-            RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.QuestUpdated(Owner);
+            RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestUpdated(Owner);
         }
 
         public void CompleteObjective()
@@ -52,7 +52,7 @@ namespace RandomIsleser
                 OnCompleteReward.UnlockReward();
             Owner.ObjectiveCompleted(this);
             
-            RuntimeSaveManager.Instance.LocalSaveData.QuestSaveData.QuestUpdated(Owner);
+            RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestUpdated(Owner);
         }
         
         protected override void Cleanup()

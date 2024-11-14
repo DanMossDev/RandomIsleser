@@ -11,6 +11,9 @@ namespace RandomIsleser
 		private SaveData _localSaveData = null;
 		public SaveData LocalSaveData => _localSaveData;
 
+		private int _loadedSlot = 0;
+		public SaveSlotData CurrentSaveSlot => _localSaveData.SaveSlots[_loadedSlot];
+
 		public bool ReadyToLoad => _localSaveData != null;
 		public bool IsFTUE { get; private set; } = false;
 
@@ -43,16 +46,37 @@ namespace RandomIsleser
 			if (loadedSaveData != null)
 			{
 				_localSaveData = loadedSaveData;
-				if (Services.Instance)
-					Services.Instance.UIManager.InstantlySetCurrency(_localSaveData.InventoryData.Currency);
-				
-				//Load Scriptable Objects
-				LoadSaveableObjectData(_localSaveData.ScriptableObjectData);
-				
+				LoadSaveableObjectData(CurrentSaveSlot.ScriptableObjectData);
 				return true;
 			}
 
 			return false;
+		}
+
+		public void BeginNewGame(int selectedSlot, string playerName)
+		{
+			if (selectedSlot == _loadedSlot)
+			{
+				_localSaveData.SaveSlots[selectedSlot] = new SaveSlotData();
+				_loadedSlot = selectedSlot;
+			}
+			
+			CurrentSaveSlot.PlayerName = playerName;
+			SceneTransitionManager.LoadOpeningScene();
+		}
+
+		public void LoadIntoSlot(int selectedSlot)
+		{
+			
+			_loadedSlot = selectedSlot;
+			LoadSaveableObjectData(CurrentSaveSlot.ScriptableObjectData);
+
+			LoadSavedScene();
+		}
+
+		private void LoadSavedScene()
+		{
+			SceneTransitionManager.LoadScene(CurrentSaveSlot.LastSceneName);
 		}
 		
 		private void LoadSaveableObjectData(Dictionary<int, SOData> data)
@@ -66,6 +90,12 @@ namespace RandomIsleser
 		{
 			if (_localSaveData != null)
 			{
+				if (SceneTransitionManager.CurrentSceneIsSaveable())
+				{
+					CurrentSaveSlot.LastSceneName = SceneTransitionManager.CurrentScene;
+					//Serialize something to the effect of "spawn location"
+				}
+				
 				SaveableObjectHelper.Instance.SaveScriptableData();
 				await SaveDataManager.SaveGame(_localSaveData);
 			}

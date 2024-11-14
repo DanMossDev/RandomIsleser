@@ -6,10 +6,18 @@ using UnityEngine.SceneManagement;
 
 public static class SceneTransitionManager
 {
+    private const string k_OpeningScene = "TestOpenWorld";
     const string k_OpenWorldScene = "TestOpenWorld";
     const string k_LoadingSceneName = "LoadingScene";
 
     private static List<string> _loadedChunks = new List<string>();
+    
+    public static string CurrentScene => SceneManager.GetActiveScene().name;
+
+    public static bool CurrentSceneIsSaveable()
+    {
+        return !CurrentSceneIsLoading();
+    }
 
     public static bool CurrentSceneIsOpenWorld()
     {
@@ -24,6 +32,11 @@ public static class SceneTransitionManager
     public static async void LoadScene(string sceneName)
     {
         await LoadSceneAsync(sceneName, SceneManager.GetActiveScene().name);
+    }
+
+    public static void LoadOpeningScene()
+    {
+        LoadScene(k_OpeningScene);
     }
 
     public static async void LoadOpenWorld()
