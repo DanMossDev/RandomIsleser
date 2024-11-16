@@ -21,9 +21,8 @@ namespace RandomIsleser
         
         protected virtual void OnDisable()
         {
-            if (Application.isPlaying)
-                if (EventSystem.current.currentSelectedGameObject)
-                    _lastSelected = EventSystem.current.currentSelectedGameObject;
+            if (EventSystem.current && EventSystem.current.currentSelectedGameObject)
+                _lastSelected = EventSystem.current.currentSelectedGameObject;
         }
     }
 }

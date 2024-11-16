@@ -30,6 +30,7 @@ namespace RandomIsleser
 
         private void OnDisable()
         {
+            _inputAction.Disable();
             _inputAction.performed -= LetterPressed;
         }
 
