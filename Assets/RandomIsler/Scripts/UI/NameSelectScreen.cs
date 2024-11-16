@@ -53,7 +53,7 @@ namespace RandomIsleser
 
         public void SetName()
         {
-            RuntimeSaveManager.Instance.LocalSaveData.SaveSlots[_slot].PlayerName = "Test";
+            RuntimeSaveManager.Instance.LocalSaveData.SaveSlots[_slot].PlayerName = _nameText.text;
             MenuScreenManager.Instance.GoToFileManage(_slot);
         }
     }

@@ -53,7 +53,7 @@ namespace RandomIsleser
 			return false;
 		}
 
-		public void BeginNewGame(int selectedSlot, string playerName)
+		public void BeginNewGame(int selectedSlot, string playerName) //consider removing this
 		{
 			if (selectedSlot == _loadedSlot)
 			{
@@ -67,10 +67,10 @@ namespace RandomIsleser
 
 		public void LoadIntoSlot(int selectedSlot)
 		{
-			
 			_loadedSlot = selectedSlot;
 			LoadSaveableObjectData(CurrentSaveSlot.ScriptableObjectData);
 
+			CurrentSaveSlot.Loaded();
 			LoadSavedScene();
 		}
 
@@ -81,6 +81,8 @@ namespace RandomIsleser
 		
 		private void LoadSaveableObjectData(Dictionary<int, SOData> data)
 		{
+			CurrentSaveSlot.ResetRuntimeValues();
+			
 			var saveableObjects = SaveableObjectHelper.Instance.AllSaveableObjectsDictionary;
 			foreach (var (id, datum) in data) 
 				saveableObjects[id].Load(datum);
@@ -93,6 +95,7 @@ namespace RandomIsleser
 				if (SceneTransitionManager.CurrentSceneIsSaveable())
 				{
 					CurrentSaveSlot.LastSceneName = SceneTransitionManager.CurrentScene;
+					CurrentSaveSlot.Saved(); 
 					//Serialize something to the effect of "spawn location"
 				}
 				

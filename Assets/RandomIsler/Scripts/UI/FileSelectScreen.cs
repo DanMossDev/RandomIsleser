@@ -12,7 +12,7 @@ namespace RandomIsleser
             InputManager.BackInput += Back;
             
             for (int i = 0; i < _saveSlots.Length; i++)
-                _saveSlots[i].Populate(i + 1, RuntimeSaveManager.Instance.LocalSaveData.SaveSlots[i]);
+                _saveSlots[i].Populate(i, RuntimeSaveManager.Instance.LocalSaveData.SaveSlots[i]);
         }
         
         protected override void OnDisable()

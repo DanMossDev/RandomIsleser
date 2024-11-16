@@ -20,7 +20,7 @@ namespace RandomIsleser
 
         public void Populate(int slot, SaveSlotData data)
         {
-            _slotLabel.text = slot.ToString();
+            _slotLabel.text = data.DisplaySlot.ToString();
             _slot = slot;
 
             if (!data.DataExists)
