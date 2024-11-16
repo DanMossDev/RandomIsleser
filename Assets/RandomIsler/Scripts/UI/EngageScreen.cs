@@ -4,8 +4,6 @@ namespace RandomIsleser
 {
     public class EngageScreen : MenuScreen
     {
-        [SerializeField] private MenuScreenManager _manager;
-
         protected override void OnEnable()
         {
             InputManager.AnyInput += GoToMainMenu;

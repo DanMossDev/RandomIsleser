@@ -19,9 +19,12 @@ namespace MossUtils
 		public void InitialiseSaveData()
 		{
 			SaveSlots = new SaveSlotData[3];
-			
-			foreach (var slot in SaveSlots)
-				slot.Initialise();
+
+			for (int i = 0; i < SaveSlots.Length; i++)
+			{
+				SaveSlots[i] = new SaveSlotData();
+				SaveSlots[i].Initialise(i);
+			}
 		}
 
 		public bool UnlockAnimal(AnimalFlags flag, int rarityVariant = 0)

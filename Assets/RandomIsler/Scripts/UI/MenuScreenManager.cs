@@ -1,15 +1,19 @@
 using DG.Tweening;
+using MossUtils;
 using UnityEditor;
 using UnityEngine;
 
 namespace RandomIsleser
 {
-    public class MenuScreenManager : MonoBehaviour
+    public class MenuScreenManager : MonoSingleton<MenuScreenManager>
     {
         private MenuScreen _currentScreen;
 
         [SerializeField] private MenuScreen _engageScreen;
         [SerializeField] private MenuScreen _menuScreen;
+        [SerializeField] private MenuScreen _fileSelectScreen;
+        [SerializeField] private FileManageScreen _fileManageScreen;
+        [SerializeField] private NameSelectScreen _nameSelectScreen;
         [SerializeField] private MenuScreen _settingsScreen;
 
         private void Start()
@@ -29,9 +33,29 @@ namespace RandomIsleser
             SetScreen(_menuScreen);
         }
 
-        public void StartGame()
+        public void GoToFileSelect()
         {
-            SceneTransitionManager.LoadScene("TestOpenWorld");
+            SetScreen(_fileSelectScreen);
+        }
+
+        public void GoToFileManage(int slot)
+        {
+            SaveSlotData slotData = RuntimeSaveManager.Instance.LocalSaveData.SaveSlots[slot];
+
+            if (slotData.DataExists)
+            {
+                _fileManageScreen.Populate(slotData);
+                SetScreen(_fileManageScreen);
+                return;
+            }
+
+            _nameSelectScreen.SetSlot(slot);
+            SetScreen(_nameSelectScreen);
+        }
+
+        public void StartGame(int slot)
+        {
+            RuntimeSaveManager.Instance.LoadIntoSlot(slot);
         }
 
         public void GoToSettingsScreen()

@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Key: UI_QuestComplete
     m_Metadata:
       m_Items: []
+  - m_Id: 10211740335042560
+    m_Key: UI_NewFile
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -4,8 +4,6 @@ namespace RandomIsleser
 {
     public class MainMenuScreen : MenuScreen
     {
-        [SerializeField] private MenuScreenManager _manager;
-        
         protected override void OnEnable()
         {
             base.OnEnable();
