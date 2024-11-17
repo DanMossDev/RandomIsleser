@@ -32,9 +32,9 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  IsStarted: 1
-  IsComplete: 1
-  ObjectiveIndex: 3
+  IsStarted: 0
+  IsComplete: 0
+  ObjectiveIndex: 0
   _prerequisiteQuest: {fileID: 0}
   Objectives:
   - {fileID: 11400000, guid: 84890ca73b302eb47b4e51116379ea4d, type: 2}

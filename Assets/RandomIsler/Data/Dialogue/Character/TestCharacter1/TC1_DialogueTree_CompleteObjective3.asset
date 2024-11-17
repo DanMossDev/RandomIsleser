@@ -18,6 +18,6 @@ MonoBehaviour:
   UnlockCriteria:
     _unlockingQuests: []
     _unlockingObjectives: []
-  HasBeenSeen: 1
+  HasBeenSeen: 0
   Participants:
   - {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}

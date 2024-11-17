@@ -11,7 +11,7 @@ namespace RandomIsleser
 
         private void OnTriggerEnter(Collider other)
         {
-            _parentLookup.Add(other.transform, other.transform.parent);
+            _parentLookup.TryAdd(other.transform, other.transform.parent);
             other.transform.parent = _parent;
         }
         
