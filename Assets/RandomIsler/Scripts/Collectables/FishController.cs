@@ -118,13 +118,28 @@ namespace RandomIsleser
             _targetBuoyancy = Random.Range(_animalModel.MinBuoyancy, _animalModel.MaxBuoyancy);
         }
 
-        private void CheckLured()
+        protected override void Lure()
         {
-        }
+            Vector3 dir = _currentLure.transform.position - transform.position;
 
-        protected override void Lured()
+            if (dir.sqrMagnitude < 0.5f)
+            {
+                _currentLure.Interact();
+            }
+            else
+            {
+                _rigidbody.AddForce(dir.normalized * _animalModel.WanderSpeed, ForceMode.Acceleration);
+                _buoyancyController.SetFloatingPower(Mathf.Lerp(_buoyancyController.GetFloatingPower(), 20, Time.deltaTime));
+                RotateTowards(_rigidbody.velocity);
+            }
+
+        }
+        
+        protected override void Lured(Lure lure)
         {
+            base.Lured(lure);
             
+            SetState(AnimalState.Lured);
         }
     }
 }

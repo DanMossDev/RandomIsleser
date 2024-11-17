@@ -37,11 +37,14 @@ MonoBehaviour:
   TurnSpeed: 360
   FleeRange: 0
   WanderRadius: 10
+  LureRadius: 10
   StunTime: 1
   PickupShowTime: 1
   CollectOnContact: 0
   CanBePulled: 0
   Species: 8
+  MinBuoyancy: 5
+  MaxBuoyancy: 20
   references:
     version: 2
     RefIds: []

@@ -24,6 +24,8 @@ namespace RandomIsleser
         protected float _lastExpensiveUpdateTime;
         protected float _timeStunned;
         protected float _timeSuctioned;
+        
+        protected Collider[] _lureCollider = new Collider[1];
 
         private bool _useGravity;
 
@@ -35,6 +37,8 @@ namespace RandomIsleser
         protected Animator _animator;
         protected Rigidbody _rigidbody;
         private NavMeshAgent _navMeshAgent;
+
+        protected Lure _currentLure;
 
         protected AnimalState _currentState;
 
@@ -206,7 +210,7 @@ namespace RandomIsleser
                     Captured();
                     break;
                 case AnimalState.Lured:
-                    Lured();
+                    Lure();
                     break;
             }
             
@@ -282,9 +286,25 @@ namespace RandomIsleser
             CheckDespawn();
         }
 
-        protected virtual void Lured()
+        protected virtual void Lure()
         {
             
+        }
+
+        protected virtual void Lured(Lure lure)
+        {
+            _currentLure = lure;
+        }
+
+        protected virtual void CheckLured()
+        {
+            if (Physics.OverlapSphereNonAlloc(transform.position, _animalModel.LureRadius, _lureCollider, 1<<ProjectLayers.LureLayer, QueryTriggerInteraction.Collide) == 0)
+                return;
+
+            if (!_lureCollider[0].TryGetComponent(out Lure lure))
+                return;
+            
+            Lured(lure);
         }
 
         protected virtual void CheckDespawn()

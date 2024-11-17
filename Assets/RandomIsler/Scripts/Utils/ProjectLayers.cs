@@ -6,5 +6,6 @@ namespace RandomIsleser
     {
         public static readonly int PlayerLayer = LayerMask.NameToLayer("Player");
         public static readonly int WaterLayer = LayerMask.NameToLayer("Water");
+        public static readonly int LureLayer = LayerMask.NameToLayer("Lure");
     }
 }
