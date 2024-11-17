@@ -17,13 +17,19 @@ namespace RandomIsleser
 
         public abstract SOData GetData();
         
+#if UNITY_EDITOR
         protected void OnValidate()
         {
-#if UNITY_EDITOR
             Cleanup();
             UnityEditor.EditorUtility.SetDirty(this);
-#endif
         }
+
+        public void OnForceCleanup()
+        {
+            Cleanup();
+            UnityEditor.EditorUtility.SetDirty(this);
+        }
+#endif
 
         protected virtual void Cleanup()
         {
