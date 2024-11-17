@@ -59,5 +59,15 @@ namespace RandomIsleser
             _rigidbody.drag = isUnderwater ? _underwaterDrag : _defaultDrag;
             _rigidbody.angularDrag = isUnderwater ? _underwaterAngularDrag : _defaultAngularDrag;
         }
+
+        public void SetFloatingPower(float power)
+        {
+            _floatingPower = power;
+        }
+
+        public float GetFloatingPower()
+        {
+            return _floatingPower;
+        }
     }
 }

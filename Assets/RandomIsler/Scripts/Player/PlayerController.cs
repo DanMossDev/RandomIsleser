@@ -191,8 +191,9 @@ namespace RandomIsleser
 
         public void AddCurrency(int value)
         {
-            RuntimeSaveManager.Instance.CurrentSaveSlot.InventoryData.AddCurrency(value);
-            Services.Instance.UIManager.UpdateCurrency(value);
+            int startAmount = RuntimeSaveManager.Instance.CurrentSaveSlot.InventoryData.Currency;
+            int newAmount = RuntimeSaveManager.Instance.CurrentSaveSlot.InventoryData.AddCurrency(value);
+            Services.Instance.UIManager.UpdateCurrency(newAmount - startAmount);
         }
 
         public void UnlockItem(Unlockables unlockable)

@@ -16,8 +16,10 @@ namespace RandomIsleser
         
         public DialogueUI DialogueUI => _dialogueUI;
 
-        private void Start()
+        private async void Start()
         {
+            while (!RuntimeSaveManager.Instance || !RuntimeSaveManager.Instance.ReadyToLoad)
+                await System.Threading.Tasks.Task.Delay(100);
             InstantlySetCurrency(RuntimeSaveManager.Instance.CurrentSaveSlot.InventoryData.Currency);
         }
         

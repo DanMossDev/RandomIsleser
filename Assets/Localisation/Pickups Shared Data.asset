@@ -31,6 +31,14 @@ MonoBehaviour:
     m_Key: PenguinDesc
     m_Metadata:
       m_Items: []
+  - m_Id: 3534379195658240
+    m_Key: CarpName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3534401903620096
+    m_Key: CarpDesc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,11 +19,13 @@ namespace RandomIsleser
         protected Vector3 _startPosition;
         protected Vector3 _wanderPosition;
 
+        protected float _timeStartedWandering;
+
         protected float _lastExpensiveUpdateTime;
         protected float _timeStunned;
         protected float _timeSuctioned;
 
-        protected bool _useGravity;
+        private bool _useGravity;
 
         protected bool _isNewItem;
         protected float _timePickedUp;
@@ -31,7 +34,7 @@ namespace RandomIsleser
         
         protected Animator _animator;
         protected Rigidbody _rigidbody;
-        protected NavMeshAgent _navMeshAgent;
+        private NavMeshAgent _navMeshAgent;
 
         protected AnimalState _currentState;
 
@@ -45,6 +48,17 @@ namespace RandomIsleser
 
             _useGravity = _rigidbody.useGravity;
         }
+
+        #if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (string.IsNullOrEmpty(ObjectPoolKey))
+                return;
+            
+            var pool = Resources.Load<MossUtils.ObjectPoolModel>("Models/ObjectPoolModel");
+            pool.PrefabLookup.TryAdd(ObjectPoolKey, gameObject);
+        }
+        #endif
 
         public override void OnSpawned(SpawnPoint spawnPoint)
         {
@@ -191,6 +205,9 @@ namespace RandomIsleser
                 case AnimalState.Captured:
                     Captured();
                     break;
+                case AnimalState.Lured:
+                    Lured();
+                    break;
             }
             
             if (Time.time - _lastExpensiveUpdateTime > 0.2f)
@@ -265,6 +282,11 @@ namespace RandomIsleser
             CheckDespawn();
         }
 
+        protected virtual void Lured()
+        {
+            
+        }
+
         protected virtual void CheckDespawn()
         {
             if (!_isNewItem)
@@ -294,7 +316,7 @@ namespace RandomIsleser
 
         protected virtual void Wander()
         {
-            if (Vector3.SqrMagnitude(transform.position - _wanderPosition) < 0.5f || !_navMeshAgent.hasPath)
+            if (Vector3.SqrMagnitude(transform.position - _wanderPosition) < 0.5f || !_navMeshAgent.hasPath || Time.time - _timeStartedWandering > 10)
                 SetNewWanderPoint();
 
             _animator.SetFloat(Animations.MovementSpeedHash, _navMeshAgent.velocity.magnitude / _animalModel.FleeSpeed);
@@ -303,6 +325,7 @@ namespace RandomIsleser
 
         protected virtual void SetNewWanderPoint()
         {
+            _timeStartedWandering = Time.time;
             _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _animalModel.WanderRadius;
             _wanderPosition.y = transform.position.y;
             _navMeshAgent.destination = _wanderPosition;
@@ -357,6 +380,7 @@ namespace RandomIsleser
         Flee,
         Stunned,
         Suction,
-        Captured
+        Captured,
+        Lured
     }
 }

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810dc6317f911fe4b90d3b7263934847, type: 3}
+  m_Name: CarpModel
+  m_EditorClassIdentifier: 
+  Type: 2
+  Name:
+    m_TableReference:
+      m_TableCollectionName: GUID:5ec2d2f623dbae3419e1b0305a613099
+    m_TableEntryReference:
+      m_KeyId: 3534379195658240
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  FlavourText:
+    m_TableReference:
+      m_TableCollectionName: GUID:5ec2d2f623dbae3419e1b0305a613099
+    m_TableEntryReference:
+      m_KeyId: 3534401903620096
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  Prefab: {fileID: 5525256064812316349, guid: 06bdd0f8f6e15fa4d8be18a9e3aa97d1, type: 3}
+  WanderSpeed: 1
+  FleeSpeed: 1
+  TurnSpeed: 360
+  FleeRange: 0
+  WanderRadius: 10
+  StunTime: 1
+  PickupShowTime: 1
+  CollectOnContact: 0
+  CanBePulled: 0
+  Species: 8
+  references:
+    version: 2
+    RefIds: []

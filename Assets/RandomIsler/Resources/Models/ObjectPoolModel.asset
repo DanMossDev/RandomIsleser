@@ -26,3 +26,6 @@ MonoBehaviour:
     - Key: Penguin
       Value: {fileID: 403228128749004199, guid: 20f3ebf2befedaa44a360ac30ecfbfae,
         type: 3}
+    - Key: Carp
+      Value: {fileID: 6206390474422440253, guid: 06bdd0f8f6e15fa4d8be18a9e3aa97d1,
+        type: 3}

@@ -20,9 +20,10 @@ namespace RandomIsleser
                 Unlockables &= ~flag;
         }
 
-        public void AddCurrency(int amount)
+        public int AddCurrency(int amount)
         {
             Currency += amount;
+            return Currency;
         }
 
         public bool ItemUnlocked(Unlockables flag)

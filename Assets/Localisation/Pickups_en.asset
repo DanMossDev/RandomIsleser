@@ -35,6 +35,14 @@ MonoBehaviour:
       up?
     m_Metadata:
       m_Items: []
+  - m_Id: 3534379195658240
+    m_Localized: Carp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3534401903620096
+    m_Localized: A carp! But he doesn't look very coy
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

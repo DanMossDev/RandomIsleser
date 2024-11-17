@@ -20,5 +20,8 @@ namespace RandomIsleser
         public bool CanBePulled = false;
 
         public AnimalFlags Species;
+
+        public float MinBuoyancy = 5;
+        public float MaxBuoyancy = 20;
     }
 }
