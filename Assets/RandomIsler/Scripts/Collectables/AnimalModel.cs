@@ -24,5 +24,7 @@ namespace RandomIsleser
 
         public float MinBuoyancy = 5;
         public float MaxBuoyancy = 20;
+
+        public float EscapeTime = 5;
     }
 }

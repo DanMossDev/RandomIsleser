@@ -1,38 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine; //TODO - implement some way of the fish going into "Stunned" mode if player starts reeling in a set time
 
 namespace RandomIsleser
 {
     public class Lure : MonoBehaviour
     {
-        [SerializeField] private float _nibbleForce = 5;
-        [SerializeField] private float _biteForce = 10;
+        [SerializeField] private float _nibbleForce = 1;
+        [SerializeField] private float _biteForce = 5;
 
-        [SerializeField] private float _interactCooldown = 1;
+        [SerializeField] private float _interactCooldown = 3;
 
         private Rigidbody _rigidbody;
 
         private float _interactTime;
+        private float _timeBit;
+        
+        private float _fishBiteTolerance;
+        private float _initialFloatingPower;
+        
+        private bool _biting;
+
+        private FishController _fishController;
+        private BuoyancyController _buoyancyController;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _buoyancyController = GetComponent<BuoyancyController>();
+            _initialFloatingPower = _buoyancyController.GetFloatingPower();
         }
 
-        public void Interact()
+        public void OnCast()
         {
-            if (Time.time - _interactTime < _interactCooldown)
-                return;
+            _fishController = null;
+            _fishBiteTolerance = 1;
+            _timeBit = 0;
+            _interactTime = 0;
+            _biting = false;
+            _buoyancyController.SetFloatingPower(_initialFloatingPower);
+        }
+
+        public bool Interact(FishController fishController)
+        {
+            if (_biting || Time.time - _interactTime < _interactCooldown)
+                return false;
             
             _interactTime = Time.time;
-
             float roll = Random.Range(0f, 1f);
 
             if (roll > 0.75f)
-                Bite();
-            else
-                Nibble();
+            {
+                Bite(fishController);
+                return true;
+            }
+            
+            Nibble();
+            return false;
         }
         
         private void Nibble()
@@ -40,9 +62,14 @@ namespace RandomIsleser
             ApplyDownwardsForce(_nibbleForce);
         }
 
-        private void Bite()
+        private void Bite(FishController fishController)
         {
+            _fishController = fishController;
+            _fishBiteTolerance = fishController.BiteTolerance;
+            _timeBit = Time.time;
+            _biting = true;
             ApplyDownwardsForce(_biteForce);
+            _buoyancyController.SetFloatingPower(0);
         }
 
         private void ApplyDownwardsForce(float force)

@@ -15,6 +15,7 @@ namespace RandomIsleser
         private bool _grappleHit;
         
         private FishingRodHookController _fishHook;
+        private Lure _lure;
 
         public override int ItemIndex => _model.ItemIndex;
         public FishingRodModel Model => _model;
@@ -22,6 +23,7 @@ namespace RandomIsleser
         private void Awake()
         {
             _fishHook = Instantiate(_fishHookPrefab, _fishHookStart);
+            _lure = _fishHook.GetComponent<Lure>();
             GetComponentInChildren<FishingLineController>().SetTarget(_fishHook.transform);
         }
 
@@ -52,6 +54,7 @@ namespace RandomIsleser
             PlayerController.Instance.SetState(PlayerStates.CastRodMove);
             var aimPos = PlayerController.Instance.AimPosition;
             var aimDirection = PlayerController.Instance.AimDirection;
+            _lure.OnCast();
 
             if (Physics.SphereCast(
                     aimPos,

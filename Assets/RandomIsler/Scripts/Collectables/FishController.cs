@@ -9,6 +9,8 @@ namespace RandomIsleser
         private BuoyancyController _buoyancyController;
 
         private float _targetBuoyancy;
+
+        public float BiteTolerance => _animalModel.EscapeTime;
         
         protected override void Awake()
         {
@@ -72,6 +74,7 @@ namespace RandomIsleser
                     SetNewWanderPoint();
                     break;
                 case AnimalState.Flee:
+                    _buoyancyController.SetFloatingPower(0);
                     break;
                 case AnimalState.Stunned:
                     break;
@@ -118,13 +121,26 @@ namespace RandomIsleser
             _targetBuoyancy = Random.Range(_animalModel.MinBuoyancy, _animalModel.MaxBuoyancy);
         }
 
+        protected override void Flee()
+        {
+            RotateTowards(_rigidbody.velocity);
+        }
+
+        protected override void ExpensiveFlee()
+        {
+            
+        }
+
         protected override void Lure()
         {
             Vector3 dir = _currentLure.transform.position - transform.position;
 
             if (dir.sqrMagnitude < 0.5f)
             {
-                _currentLure.Interact();
+                if (_currentLure.Interact(this))
+                {
+                    SetState(AnimalState.Flee);
+                }
             }
             else
             {
