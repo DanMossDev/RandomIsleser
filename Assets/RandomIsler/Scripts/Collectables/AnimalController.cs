@@ -121,7 +121,7 @@ namespace RandomIsleser
         #endregion
 
         #region States
-        protected void SetState(AnimalState state)
+        public void SetState(AnimalState state)
         {
             LeaveState(_currentState);
             _currentState = state;

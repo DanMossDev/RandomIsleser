@@ -59,7 +59,7 @@ namespace RandomIsleser
         public bool CanRotate => !_targetHeld && _canRotate;
         public bool CanAim => _isGrounded && CanAttack;
         public bool IsAttacking => CurrentState is AttackCombatState;
-        public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState;
+        public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState or FishingState;
 
         public Vector3 AimPosition => _aimCamera.position;
         public Vector3 AimDirection => _aimCamera.forward;

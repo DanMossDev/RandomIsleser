@@ -27,7 +27,12 @@ namespace RandomIsleser
 
         public override void UseItem(PlayerController context)
         {
-            
+            _fishingRodController.BeginReel();
+        }
+
+        public override void ReleaseItem(PlayerController context)
+        {
+            _fishingRodController.EndReel();
         }
 
         public override void Back(PlayerController context)

@@ -8,6 +8,8 @@ namespace RandomIsleser
         [SerializeField] private float _biteForce = 5;
 
         [SerializeField] private float _interactCooldown = 3;
+        
+        [SerializeField] private float _reelFloatingPower = 10;
 
         private Rigidbody _rigidbody;
 
@@ -29,6 +31,17 @@ namespace RandomIsleser
             _initialFloatingPower = _buoyancyController.GetFloatingPower();
         }
 
+        public void BeginReel()
+        {
+            _fishController.SetState(AnimalState.Stunned);
+            _fishController.transform.parent = transform;
+            _fishController.transform.localPosition = _fishController.BiteOffset;
+            _fishController.transform.localEulerAngles = _fishController.BiteRotation;
+            
+            if ((int)_buoyancyController.GetFloatingPower() != (int)_initialFloatingPower)
+                _buoyancyController.SetFloatingPower(_reelFloatingPower);
+        }
+
         public void OnCast()
         {
             _fishController = null;
@@ -37,6 +50,16 @@ namespace RandomIsleser
             _interactTime = 0;
             _biting = false;
             _buoyancyController.SetFloatingPower(_initialFloatingPower);
+        }
+
+        public bool HasBite()
+        {
+            return _biting && Time.time - _timeBit < _fishBiteTolerance;
+        }
+
+        public void ApplyForce(Vector3 force)
+        {
+            _rigidbody.AddForce(force, ForceMode.Acceleration);
         }
 
         public bool Interact(FishController fishController)

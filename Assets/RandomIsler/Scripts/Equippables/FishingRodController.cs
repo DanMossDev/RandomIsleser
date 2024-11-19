@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -13,6 +14,8 @@ namespace RandomIsleser
 
         private float _distanceTravelled;
         private bool _grappleHit;
+        private bool _rodCast = false;
+        private bool _isReeling;
         
         private FishingRodHookController _fishHook;
         private Lure _lure;
@@ -27,11 +30,18 @@ namespace RandomIsleser
             GetComponentInChildren<FishingLineController>().SetTarget(_fishHook.transform);
         }
 
+        private void FixedUpdate()
+        {
+            if (_isReeling)
+                _lure.ApplyForce(((transform.position - _lure.transform.position).normalized + Vector3.up) * _model.ReelForce);
+        }
+
         protected override void Initialise()
         {
             _grapplePoint = Vector3.zero;
             _distanceTravelled = 0;
             _grappleHit = false;
+            _isReeling = false;
             _fishHook.transform.localPosition = Vector3.zero;
             _fishHook.Init(this);
         }
@@ -99,8 +109,6 @@ namespace RandomIsleser
             PlayerController.Instance.SetState(PlayerStates.RodGrappleMove);
         }
 
-        private bool _rodCast = false;
-
         public void BackPressed()
         {
             if (_rodCast)
@@ -110,6 +118,19 @@ namespace RandomIsleser
             }
             else
                 PlayerController.Instance.SetState(PlayerStates.DefaultMove);
+        }
+
+        public void BeginReel()
+        {
+            _isReeling = true;
+
+            if (_lure.HasBite())
+                _lure.BeginReel();
+        }
+
+        public void EndReel()
+        {
+            _isReeling = false;
         }
     }
 }

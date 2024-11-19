@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomIsleser
 {
     public class FishController : AnimalController
     {
+        public Vector3 BiteOffset;
+        public Vector3 BiteRotation;
+        
         private BuoyancyController _buoyancyController;
 
         private float _targetBuoyancy;
@@ -54,11 +55,7 @@ namespace RandomIsleser
                 case AnimalState.Idle:
                     break;
                 case AnimalState.Stunned:
-                    _rigidbody.isKinematic = true;
-                    _animator.SetBool(Animations.IsStunnedHash, false);
-                    break;
-                case AnimalState.Suction:
-                    _rigidbody.isKinematic = true;
+                    _rigidbody.isKinematic = false;
                     _animator.SetBool(Animations.IsStunnedHash, false);
                     break;
                 case AnimalState.Captured:
@@ -77,6 +74,8 @@ namespace RandomIsleser
                     _buoyancyController.SetFloatingPower(0);
                     break;
                 case AnimalState.Stunned:
+                    _rigidbody.isKinematic = true;
+                    _animator.SetBool(Animations.IsStunnedHash, true);
                     break;
                 case AnimalState.Suction:
                     break;
@@ -119,6 +118,11 @@ namespace RandomIsleser
             _wanderPosition = _startPosition + UnityEngine.Random.insideUnitSphere * _animalModel.WanderRadius;
             _wanderPosition.y = transform.position.y;
             _targetBuoyancy = Random.Range(_animalModel.MinBuoyancy, _animalModel.MaxBuoyancy);
+        }
+
+        protected override void Stunned()
+        {
+            
         }
 
         protected override void Flee()

@@ -45,6 +45,7 @@ MonoBehaviour:
   Species: 8
   MinBuoyancy: 5
   MaxBuoyancy: 20
+  EscapeTime: 5
   references:
     version: 2
     RefIds: []
