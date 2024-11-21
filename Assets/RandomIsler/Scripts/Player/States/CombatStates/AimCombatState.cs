@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace RandomIsleser
 {
     public class AimCombatState : BaseCombatState

@@ -22,7 +22,8 @@ namespace RandomIsleser.Editor
 
             if (state == PlayModeStateChange.EnteredPlayMode)
             {
-                EditorSceneManager.LoadScene(0, LoadSceneMode.Additive);
+                if (RuntimeSaveManager.Instance == null)
+                    EditorSceneManager.LoadScene(0, LoadSceneMode.Additive);
             }
         }
     }

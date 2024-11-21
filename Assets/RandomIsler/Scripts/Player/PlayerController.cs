@@ -68,6 +68,8 @@ namespace RandomIsleser
         
         //States
         public BasePlayerState CurrentState { get; private set; }
+        public BasePlayerState DefaultState => _defaultMovementState;
+        
         private readonly DefaultMovementState _defaultMovementState = new DefaultMovementState();
         private readonly RollMovementState _rollMovementState = new RollMovementState();
         private readonly SwimMovementState _swimMovementState = new SwimMovementState();
@@ -184,6 +186,9 @@ namespace RandomIsleser
         
         public void SetState(BasePlayerState newState)
         {
+            if (newState == CurrentState)
+                return;
+            
             CurrentState.OnExitState(this, newState);
             newState.OnEnterState(this, CurrentState);
             CurrentState = newState;
@@ -407,7 +412,7 @@ namespace RandomIsleser
         
         #endregion
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (CurrentState is not SwimMovementState and not OnShipMovementState and not LadderMovementState && GetHeightRelativeToWater() < 0)
                 SetState(PlayerStates.SwimMove);
@@ -824,7 +829,7 @@ namespace RandomIsleser
             
             EquipItem(Slot1Item);
             
-            if (Slot1Item.IsAimable) //TODO - handle what happens if z targetting
+            if (held && Slot1Item.IsAimable) //TODO - handle what happens if z targetting
             {
                 if (CurrentState.TryAim(this))
                     return;

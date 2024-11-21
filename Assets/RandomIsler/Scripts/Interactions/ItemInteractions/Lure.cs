@@ -1,4 +1,4 @@
-using UnityEngine; //TODO - implement some way of the fish going into "Stunned" mode if player starts reeling in a set time
+using UnityEngine;
 
 namespace RandomIsleser
 {
@@ -11,6 +11,8 @@ namespace RandomIsleser
         
         [SerializeField] private float _reelFloatingPower = 10;
 
+        public float LureStrength = 1;
+
         private Rigidbody _rigidbody;
 
         private float _interactTime;
@@ -21,8 +23,13 @@ namespace RandomIsleser
         
         private bool _biting;
 
+        public int Followers { get; private set; } = 1;
+
         private FishController _fishController;
         private BuoyancyController _buoyancyController;
+        private FishingRodController _fishingRodController;
+
+        public FishingRodController FishingRodController => _fishingRodController;
 
         private void Awake()
         {
@@ -31,15 +38,41 @@ namespace RandomIsleser
             _initialFloatingPower = _buoyancyController.GetFloatingPower();
         }
 
+        public void Init(FishingRodController fishingRodController)
+        {
+            _fishingRodController = fishingRodController;
+        }
+
         public void BeginReel()
         {
-            _fishController.SetState(AnimalState.Stunned);
             _fishController.transform.parent = transform;
-            _fishController.transform.localPosition = _fishController.BiteOffset;
-            _fishController.transform.localEulerAngles = _fishController.BiteRotation;
+            _fishController.BeginReel();
             
             if ((int)_buoyancyController.GetFloatingPower() != (int)_initialFloatingPower)
                 _buoyancyController.SetFloatingPower(_reelFloatingPower);
+        }
+
+        public void ReelReturned()
+        {
+            if (_fishController != null)
+                _fishController.Capture();
+        }
+
+        public void ResetFloatingPower()
+        {
+            _buoyancyController.SetFloatingPower(_initialFloatingPower);
+        }
+
+        public void AddFollower()
+        {
+            Followers++;
+        }
+
+        public void RemoveFollower()
+        {
+            Followers--;
+            if (Followers == 0)
+                Followers = 1;
         }
 
         public void OnCast()

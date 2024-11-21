@@ -38,7 +38,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: e6d1c20c7e7b1084e814b8690f632f14, type: 3}
   Range: 30
   AimTolerance: 0.1
-  ReelForce: 5
+  ReelForce: 7
   WindUpTime: 0.5
   CastSpeed: 40
   GrappleSpeed: 45

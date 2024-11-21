@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace RandomIsleser
@@ -8,8 +9,10 @@ namespace RandomIsleser
         public Vector3 BiteRotation;
         
         private BuoyancyController _buoyancyController;
+        private FishingRodController _fishingRodController;
 
         private float _targetBuoyancy;
+        private float _timeBit;
 
         public float BiteTolerance => _animalModel.EscapeTime;
         
@@ -83,12 +86,16 @@ namespace RandomIsleser
                     transform.parent = PlayerController.Instance.PickupHoldPoint;
                     transform.localPosition = Vector3.zero;
                     _animator.SetBool(Animations.IsCaughtHash, true);
-
+                    PlayerController.Instance.SetState(PlayerStates.DefaultMove);
                     if (RuntimeSaveManager.Instance.LocalSaveData.UnlockAnimal(_animalModel.Species, _rarityLevel))
                     {
                         _isNewItem = true;
                         PlayerController.Instance.NewItemGet(_animalModel);
                     }
+                    break;
+                case AnimalState.Null:
+                    transform.parent = null;
+                    _rigidbody.isKinematic = true;
                     break;
             }
         }
@@ -109,7 +116,6 @@ namespace RandomIsleser
             _animator.SetFloat(Animations.MovementSpeedHash, _rigidbody.velocity.magnitude / _animalModel.FleeSpeed);
             RotateTowards(_rigidbody.velocity);
             _buoyancyController.SetFloatingPower(Mathf.Lerp(_buoyancyController.GetFloatingPower(), _targetBuoyancy, Time.deltaTime));
-            CheckLured();
         }
 
         protected override void SetNewWanderPoint() //TODO - add chance to go to idle state
@@ -120,13 +126,32 @@ namespace RandomIsleser
             _targetBuoyancy = Random.Range(_animalModel.MinBuoyancy, _animalModel.MaxBuoyancy);
         }
 
+        public void BeginReel()
+        {
+            SetState(AnimalState.Stunned);
+            transform.localPosition = BiteOffset;
+            transform.localEulerAngles = BiteRotation;
+        }
+
         protected override void Stunned()
         {
+            _timeBit += Time.deltaTime;
             
+            if (_timeBit >= _animalModel.EscapeTime && !_fishingRodController.IsReeling)
+            {
+                Escape();
+                return;
+            }
         }
 
         protected override void Flee()
         {
+            _timeBit += Time.deltaTime;
+            if (_timeBit >= _animalModel.EscapeTime)
+            {
+                Escape();
+                return;
+            }
             RotateTowards(_rigidbody.velocity);
         }
 
@@ -143,7 +168,9 @@ namespace RandomIsleser
             {
                 if (_currentLure.Interact(this))
                 {
+                    _timeBit = 0;
                     SetState(AnimalState.Flee);
+                    _currentLure.RemoveFollower();
                 }
             }
             else
@@ -152,14 +179,33 @@ namespace RandomIsleser
                 _buoyancyController.SetFloatingPower(Mathf.Lerp(_buoyancyController.GetFloatingPower(), 20, Time.deltaTime));
                 RotateTowards(_rigidbody.velocity);
             }
-
+            if (dir.sqrMagnitude > (_animalModel.LureRadius * _animalModel.LureRadius) + 2)
+                SetState(AnimalState.Idle);
         }
         
         protected override void Lured(Lure lure)
         {
             base.Lured(lure);
-            
+            _fishingRodController = lure.FishingRodController;
             SetState(AnimalState.Lured);
+        }
+
+        private void Escape()
+        {
+            SetState(AnimalState.Null);
+            _currentLure.ResetFloatingPower();
+            var direction = transform.position - _fishingRodController.transform.position;
+            if (direction.y > 0)
+                direction.y = -5;
+            
+            var seq = DOTween.Sequence();
+            seq.Append(transform.DOMove(transform.position + (direction.normalized * 10), 2).OnUpdate(() => RotateTowards(direction)));
+            seq.OnComplete(Despawn);
+        }
+
+        public void Capture()
+        {
+            SetState(AnimalState.Captured);
         }
     }
 }

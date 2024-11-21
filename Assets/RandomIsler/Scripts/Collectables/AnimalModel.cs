@@ -14,6 +14,8 @@ namespace RandomIsleser
         public float WanderRadius = 20;
         public float LureRadius = 10;
 
+        [Range(0,1)] public float LureResistance = 0.95f;
+
         public float StunTime = 1;
         public float PickupShowTime = 1;
 

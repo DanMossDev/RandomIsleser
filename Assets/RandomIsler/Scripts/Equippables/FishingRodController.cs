@@ -20,6 +20,7 @@ namespace RandomIsleser
         private FishingRodHookController _fishHook;
         private Lure _lure;
 
+        public bool IsReeling => _isReeling;
         public override int ItemIndex => _model.ItemIndex;
         public FishingRodModel Model => _model;
 
@@ -27,13 +28,25 @@ namespace RandomIsleser
         {
             _fishHook = Instantiate(_fishHookPrefab, _fishHookStart);
             _lure = _fishHook.GetComponent<Lure>();
+            _lure.Init(this);
             GetComponentInChildren<FishingLineController>().SetTarget(_fishHook.transform);
         }
 
         private void FixedUpdate()
         {
             if (_isReeling)
-                _lure.ApplyForce(((transform.position - _lure.transform.position).normalized + Vector3.up) * _model.ReelForce);
+            {
+                var dir = transform.position - _lure.transform.position;
+                _lure.ApplyForce((dir.normalized + Vector3.up) * _model.ReelForce);
+
+                if (dir.sqrMagnitude < 4)
+                {
+                    _fishHook.ReturnHook(_fishHookStart);
+                    _rodCast = false;
+                    _isReeling = false;
+                    _lure.ReelReturned();
+                }
+            }
         }
 
         protected override void Initialise()

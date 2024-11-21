@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/RandomIsler/Scenes/LoadingScene.unity
     guid: 32c5fb40d3266df4294f353b8d6147b3
   - enabled: 1
+    path: Assets/RandomIsler/Scenes/MenuScene.unity
+    guid: 6649dca534bc5b24c8a82c3ec3453314
+  - enabled: 1
     path: Assets/RandomIsler/Scenes/TestOpenWorld.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1

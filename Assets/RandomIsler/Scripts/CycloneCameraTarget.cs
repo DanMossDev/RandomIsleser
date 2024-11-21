@@ -14,9 +14,9 @@ namespace RandomIsleser
             _mainCameraTransform = PlayerController.Instance.MainCameraTransform;
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
-            transform.position = _playerTransform.position;
+            transform.position = _playerTransform.position;//Vector3.Lerp(transform.position, _playerTransform.position, Time.deltaTime);
         }
 
         public void SetRotation()

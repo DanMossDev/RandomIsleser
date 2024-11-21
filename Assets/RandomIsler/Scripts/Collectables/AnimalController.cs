@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace RandomIsleser
 {
@@ -121,7 +122,7 @@ namespace RandomIsleser
         #endregion
 
         #region States
-        public void SetState(AnimalState state)
+        protected void SetState(AnimalState state)
         {
             LeaveState(_currentState);
             _currentState = state;
@@ -246,6 +247,7 @@ namespace RandomIsleser
         
         protected virtual void ExpensiveIdle()
         {
+            CheckLured();
         }
 
         protected virtual void Flee()
@@ -293,6 +295,7 @@ namespace RandomIsleser
 
         protected virtual void Lured(Lure lure)
         {
+            lure.AddFollower();
             _currentLure = lure;
         }
 
@@ -303,8 +306,11 @@ namespace RandomIsleser
 
             if (!_lureCollider[0].TryGetComponent(out Lure lure))
                 return;
+
+            float roll = Random.Range(0f, 1f);
             
-            Lured(lure);
+            if (Mathf.Pow(roll * lure.LureStrength, lure.Followers) > _animalModel.LureResistance)
+                Lured(lure);
         }
 
         protected virtual void CheckDespawn()
@@ -401,6 +407,7 @@ namespace RandomIsleser
         Stunned,
         Suction,
         Captured,
-        Lured
+        Lured,
+        Null
     }
 }

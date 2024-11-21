@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public static class SceneTransitionManager
 {
+    private const string k_menuScene = "MenuScene";
     private const string k_OpeningScene = "TestOpenWorld";
-    const string k_OpenWorldScene = "TestOpenWorld";
-    const string k_LoadingSceneName = "LoadingScene";
+    private const string k_OpenWorldScene = "TestOpenWorld";
+    private const string k_LoadingSceneName = "LoadingScene";
 
     private static List<string> _loadedChunks = new List<string>();
     
@@ -32,6 +33,11 @@ public static class SceneTransitionManager
     public static async void LoadScene(string sceneName)
     {
         await LoadSceneAsync(sceneName, SceneManager.GetActiveScene().name);
+    }
+
+    public static void LoadMenuScene()
+    {
+        LoadScene(k_menuScene);
     }
 
     public static void LoadOpeningScene()
