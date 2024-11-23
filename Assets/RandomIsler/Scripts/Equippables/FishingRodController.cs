@@ -10,6 +10,8 @@ namespace RandomIsleser
         [SerializeField] private FishingRodHookController _fishHookPrefab;
         [SerializeField] private Transform _fishHookStart;
         
+        [SerializeField] private Vector3 _hookOffset;
+        
         private Vector3 _grapplePoint;
 
         private float _distanceTravelled;
@@ -19,6 +21,7 @@ namespace RandomIsleser
         
         private FishingRodHookController _fishHook;
         private Lure _lure;
+        private Animator _animator;
 
         public bool IsReeling => _isReeling;
         public override int ItemIndex => _model.ItemIndex;
@@ -27,9 +30,11 @@ namespace RandomIsleser
         private void Awake()
         {
             _fishHook = Instantiate(_fishHookPrefab, _fishHookStart);
+            _fishHook.transform.localPosition = _hookOffset;
             _lure = _fishHook.GetComponent<Lure>();
             _lure.Init(this);
             GetComponentInChildren<FishingLineController>().SetTarget(_fishHook.transform);
+            _animator = PlayerController.Instance.LocomotionAnimator;
         }
 
         private void FixedUpdate()
@@ -45,6 +50,7 @@ namespace RandomIsleser
                     _rodCast = false;
                     _isReeling = false;
                     _lure.ReelReturned();
+                    OnReelReturned();
                 }
             }
         }
@@ -78,6 +84,7 @@ namespace RandomIsleser
             var aimPos = PlayerController.Instance.AimPosition;
             var aimDirection = PlayerController.Instance.AimDirection;
             _lure.OnCast();
+            _animator.SetBool(Animations.FishingRodCastHash, true);
 
             if (Physics.SphereCast(
                     aimPos,
@@ -113,9 +120,9 @@ namespace RandomIsleser
         {
             if (!_grappleHit)
             {
-                PlayerController.Instance.EquipmentAnimator.SetTrigger(Animations.FishingRodReturnHash);
-                _fishHook.ReturnHook(_fishHookStart);
+                OnReelReturned();
                 _rodCast = false;
+                _fishHook.ReturnHook(_fishHookStart);
                 return;
             }
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);
@@ -127,14 +134,22 @@ namespace RandomIsleser
             if (_rodCast)
             {
                 ReelComplete();
-                PlayerController.Instance.SetState(PlayerStates.AimCombat);
+                OnReelReturned();
             }
             else
                 PlayerController.Instance.SetState(PlayerStates.DefaultMove);
         }
 
+        public void ReturnHook()
+        {
+            _fishHook.ReturnHook(_fishHookStart);
+            EndReel();
+            OnReelReturned();
+        }
+
         public void BeginReel()
         {
+            _animator.SetBool(Animations.FishingRodReelHash, true);
             _isReeling = true;
 
             if (_lure.HasBite())
@@ -143,7 +158,15 @@ namespace RandomIsleser
 
         public void EndReel()
         {
+            _animator.SetBool(Animations.FishingRodReelHash, false);
             _isReeling = false;
+        }
+
+        private void OnReelReturned()
+        {
+            PlayerController.Instance.SetState(PlayerStates.AimCombat);
+            _animator.SetBool(Animations.FishingRodReelHash, false);
+            _animator.SetBool(Animations.FishingRodCastHash, false);
         }
     }
 }

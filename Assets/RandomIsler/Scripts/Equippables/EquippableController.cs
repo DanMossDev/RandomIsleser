@@ -57,11 +57,13 @@ namespace RandomIsleser
         public virtual void OnUnequip()
         {
             UnsetIKTargets();
+            gameObject.SetActive(false);
         }
 
         public virtual void OnEquip()
         {
             SetIKTargets();
+            gameObject.SetActive(true);
         }
     }
 }

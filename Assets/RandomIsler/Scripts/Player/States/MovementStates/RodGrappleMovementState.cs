@@ -21,6 +21,9 @@ namespace RandomIsleser
         
         public override void OnExitState(PlayerController context, BasePlayerState previousState)
         {
+            var rod = context.CurrentlyEquippedItem as FishingRodController;
+            if (rod)
+                rod.ReturnHook();
             //context.Animator.SetBool(Animations.IsGrapplingHash, false);
         }
     }
