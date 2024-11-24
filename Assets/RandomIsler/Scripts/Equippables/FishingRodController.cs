@@ -46,11 +46,11 @@ namespace RandomIsleser
 
                 if (dir.sqrMagnitude < 4)
                 {
+                    OnReelReturned();
                     _fishHook.ReturnHook(_fishHookStart);
                     _rodCast = false;
                     _isReeling = false;
                     _lure.ReelReturned();
-                    OnReelReturned();
                 }
             }
         }

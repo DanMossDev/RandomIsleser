@@ -58,9 +58,9 @@ namespace RandomIsleser
                 _fishController.Capture();
         }
 
-        public void ResetFloatingPower()
+        public void FishEscaped()
         {
-            _buoyancyController.SetFloatingPower(_initialFloatingPower);
+            OnCast();
         }
 
         public void AddFollower()

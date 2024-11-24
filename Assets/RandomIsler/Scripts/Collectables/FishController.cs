@@ -193,7 +193,7 @@ namespace RandomIsleser
         private void Escape()
         {
             SetState(AnimalState.Null);
-            _currentLure.ResetFloatingPower();
+            _currentLure.FishEscaped();
             var direction = transform.position - _fishingRodController.transform.position;
             if (direction.y > 0)
                 direction.y = -5;

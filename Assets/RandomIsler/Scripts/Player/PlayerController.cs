@@ -60,6 +60,7 @@ namespace RandomIsleser
         public bool CanAim => _isGrounded && CanAttack;
         public bool IsAttacking => CurrentState is AttackCombatState;
         public bool CanUseItem => CurrentState is DefaultMovementState or AimCombatState or CycloneCombatState or FishingState;
+        public bool StrafeMovement => _targetHeld || CurrentState is AimCombatState;
 
         public Vector3 AimPosition => _aimCamera.position;
         public Vector3 AimDirection => _aimCamera.forward;
@@ -557,7 +558,7 @@ namespace RandomIsleser
             movement *= _model.MovementSpeed * _stateSpeedMultiplier;
             
             _locomotionAnimator.SetFloat(Animations.MovementSpeedHash, movement.magnitude / _model.MovementSpeed);
-            if (_targetHeld)
+            if (StrafeMovement)
                 _locomotionAnimator.SetFloat(Animations.HorizontalMovementSpeedHash, (_movementInput.x + 1) / 2);
             else
                 _locomotionAnimator.SetFloat(Animations.HorizontalMovementSpeedHash, 0.5f);
