@@ -120,9 +120,9 @@ namespace RandomIsleser
         {
             if (!_grappleHit)
             {
-                OnReelReturned();
+                _animator.SetBool(Animations.FishingRodReelHash, true);
                 _rodCast = false;
-                _fishHook.ReturnHook(_fishHookStart);
+                _fishHook.ReturnHook(_fishHookStart, _model.CastSpeed / _distanceTravelled, callback: OnReelReturned);
                 return;
             }
             PlayerController.Instance.SetGrapplePoint(_grapplePoint);
@@ -134,7 +134,6 @@ namespace RandomIsleser
             if (_rodCast)
             {
                 ReelComplete();
-                OnReelReturned();
             }
             else
                 PlayerController.Instance.SetState(PlayerStates.DefaultMove);
@@ -142,9 +141,9 @@ namespace RandomIsleser
 
         public void ReturnHook()
         {
-            _fishHook.ReturnHook(_fishHookStart);
+            _fishHook.ReturnHook(_fishHookStart, _model.CastSpeed / _distanceTravelled * 3);
             EndReel();
-            OnReelReturned();
+            _animator.SetBool(Animations.FishingRodCastHash, false);
         }
 
         public void BeginReel()

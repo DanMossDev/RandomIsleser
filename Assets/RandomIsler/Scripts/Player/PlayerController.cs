@@ -608,13 +608,13 @@ namespace RandomIsleser
             _movement.y = _rigidbody.velocity.y;
 
             _rigidbody.velocity = _movement;
-            _isGrounded = _characterController.isGrounded;
+
             GetHeightRelativeToWater();
-            // if (_isGrounded || !IsInWater())
-            // {
-            //     _movement = Vector3.zero;
-            //     SetState(PlayerStates.DefaultMove);
-            // }
+            if (_heightRelativeToWater > 0)
+            {
+                _movement = Vector3.zero;
+                SetState(PlayerStates.DefaultMove);
+            }
         }
 
         public void LadderMove()

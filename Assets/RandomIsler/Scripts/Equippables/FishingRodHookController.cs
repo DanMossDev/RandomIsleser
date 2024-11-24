@@ -20,6 +20,8 @@ namespace RandomIsleser
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
 
+        private System.Action _onReturnCallback;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -43,14 +45,17 @@ namespace RandomIsleser
             _isCast = true;
         }
 
-        public void ReturnHook(Transform parent)
+        public void ReturnHook(Transform parent, float speedMulti = 1, System.Action callback = null)
         {
             _parent = parent;
             _startPosition = transform.position;
             _lerpRatio = 0;
+            _onReturnCallback = callback;
+            _speedMultiplier = speedMulti;
             
             _rigidbody.isKinematic = true;
             _isReturn = true;
+            _isCast = false;
         }
 
         private void FixedUpdate()
@@ -81,6 +86,8 @@ namespace RandomIsleser
                     transform.parent = _parent;
                     transform.localPosition = Vector3.zero;
                     _isReturn = false;
+                    _onReturnCallback?.Invoke();
+                    _onReturnCallback = null;
                 }
             }
 
