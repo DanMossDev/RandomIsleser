@@ -50,6 +50,10 @@ MonoBehaviour:
       you can''t miss him! Uh... It? '
     m_Metadata:
       m_Items: []
+  - m_Id: 16583024342036480
+    m_Localized: Now go catch a fish with that rod I just gave ya!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

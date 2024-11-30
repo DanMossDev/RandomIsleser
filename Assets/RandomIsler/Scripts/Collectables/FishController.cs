@@ -83,6 +83,7 @@ namespace RandomIsleser
                 case AnimalState.Suction:
                     break;
                 case AnimalState.Captured:
+                    EventRadio.FishCaught(_animalModel.Species);
                     transform.parent = PlayerController.Instance.PickupHoldPoint;
                     transform.localPosition = Vector3.zero;
                     _animator.SetBool(Animations.IsCaughtHash, true);

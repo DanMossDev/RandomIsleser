@@ -31,7 +31,7 @@ namespace RandomIsleser
         
         public bool CanBeStarted => (Owner.IsStarted || Owner.CanBeStarted) && (_prerequisiteObjective == null || _prerequisiteObjective.IsComplete);
 
-        public void StartObjective()
+        public virtual void StartObjective()
         {
             if (IsStarted)
                 return;
@@ -42,7 +42,7 @@ namespace RandomIsleser
             RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestUpdated(Owner);
         }
 
-        public void CompleteObjective()
+        public virtual void CompleteObjective()
         {
             if (IsComplete)
                 return;
@@ -53,6 +53,11 @@ namespace RandomIsleser
             Owner.ObjectiveCompleted(this);
             
             RuntimeSaveManager.Instance.CurrentSaveSlot.QuestSaveData.QuestUpdated(Owner);
+        }
+
+        protected virtual void RestoreInProgress()
+        {
+            
         }
         
         protected override void Cleanup()
@@ -75,6 +80,9 @@ namespace RandomIsleser
                 return;
             IsStarted = objData.IsStarted;
             IsComplete = objData.IsComplete;
+            
+            if (IsStarted && !IsComplete)
+                RestoreInProgress();
         }
 
         public override SOData GetData()

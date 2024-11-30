@@ -47,6 +47,16 @@ MonoBehaviour:
     m_Key: TestObjectiveDescription3
     m_Metadata:
       m_Items: []
+  - m_Id: 17033376501690368
+    m_Key: 'TestObjectiveName4
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17033408357429248
+    m_Key: TestObjectiveDescription4
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

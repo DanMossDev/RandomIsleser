@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 634bc3626446f124694fcf377c922486, type: 3}
-  m_Name: TestObjectiveModel 3
+  m_Script: {fileID: 11500000, guid: a68ff93cbbf51be44a73dba281c38517, type: 3}
+  m_Name: CatchFishObjective
   m_EditorClassIdentifier: 
-  ID: 2078066383
+  ID: 1110557742
   Name: 
   Owner: {fileID: 11400000, guid: b1b3ae76ff2d8fe45a5706979b9675d6, type: 2}
   IsStarted: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
     m_TableEntryReference:
-      m_KeyId: 819530892144640
+      m_KeyId: 17033376501690368
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -30,22 +30,25 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:dc0ca8abd0d7c0b49b9c9e3b194e2c5f
     m_TableEntryReference:
-      m_KeyId: 822685809864704
+      m_KeyId: 17033408357429248
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _prerequisiteObjective: {fileID: 11400000, guid: fe72a918e30c2b646b50bf467f8e8179,
+  _prerequisiteObjective: {fileID: 11400000, guid: f5c1d3e5909ab7a4e8d919a7f77334b3,
     type: 2}
   OnStartDialogue: {fileID: 0}
-  OnCompleteDialogue: {fileID: 11400000, guid: c9cdb502c8234114ab25dca900c8e0be, type: 2}
-  OnCompleteReward: {fileID: 11400000, guid: 9206dea03a06f2044bd49d8cd2283f04, type: 2}
+  OnCompleteDialogue: {fileID: 0}
+  OnCompleteReward: {fileID: 0}
   InProgressDialogue:
-    _serializedList: []
+    _serializedList:
+    - Key: {fileID: 11400000, guid: 832209f3b754f8b4f9efb940b3368c2a, type: 2}
+      Value: {fileID: 11400000, guid: c9cdb502c8234114ab25dca900c8e0be, type: 2}
   HasStartDialogue: 0
-  HasProgressDialogue: 0
-  HasCompleteDialogue: 1
-  HasReward: 1
+  HasProgressDialogue: 1
+  HasCompleteDialogue: 0
+  HasReward: 0
+  _validFishCatches: 0
   references:
     version: 2
     RefIds: []

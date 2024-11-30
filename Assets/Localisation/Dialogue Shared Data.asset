@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: TC1_ObjectiveInProgress2
     m_Metadata:
       m_Items: []
+  - m_Id: 16583024342036480
+    m_Key: TC1_CatchFish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

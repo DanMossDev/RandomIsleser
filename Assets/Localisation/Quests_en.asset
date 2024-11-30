@@ -53,6 +53,14 @@ MonoBehaviour:
     m_Localized: Talk to da last boi!
     m_Metadata:
       m_Items: []
+  - m_Id: 17033376501690368
+    m_Localized: Catch a fish!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17033408357429248
+    m_Localized: Go and catch a fish with your new rod
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -175,6 +175,7 @@ namespace RandomIsleser
                     _animator.SetBool(Animations.IsStunnedHash, true);
                     break;
                 case AnimalState.Captured:
+                    EventRadio.AnimalCaught(_animalModel.Species);
                     _navMeshAgent.enabled = false;
                     _rigidbody.isKinematic = true;
                     transform.parent = PlayerController.Instance.PickupHoldPoint;
